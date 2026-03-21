@@ -11,9 +11,11 @@ export const Navbar = () => {
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
-          <span className="font-serif font-bold text-2xl tracking-widest text-white uppercase">
-            Red Stag
-          </span>
+          <img 
+            src="/images/logo/logo-light.png" 
+            alt="Red Stag Construction" 
+            className="h-10 md:h-12 w-auto object-contain"
+          />
         </Link>
 
         {/* Desktop Nav */}

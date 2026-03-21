@@ -9,9 +9,13 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand Info */}
           <div>
-            <span className="font-serif font-bold text-2xl tracking-widest text-white uppercase block mb-6">
-              Red Stag
-            </span>
+            <Link href="/" className="block mb-6">
+              <img 
+                src="/images/logo/logo-light.png" 
+                alt="Red Stag Construction" 
+                className="h-10 md:h-12 w-auto object-contain"
+              />
+            </Link>
             <p className="text-gray-400 mb-6 font-semibold">
               Built on Craft. Driven by Accountability.
             </p>
