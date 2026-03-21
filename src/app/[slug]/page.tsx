@@ -656,6 +656,202 @@ const buildBlogInternalLinkParagraphs = (serviceLinks: { href: string; label: st
   return paragraphs;
 };
 
+interface BlogFaqItem {
+  question: string;
+  answer: string;
+}
+
+interface BlogSubSection {
+  title: string;
+  paragraphs: string[];
+}
+
+interface BlogSection {
+  id: string;
+  title: string;
+  paragraphs: string[];
+  subSections?: BlogSubSection[];
+}
+
+const slugifyHeading = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+
+const countWords = (value: string) => {
+  const normalized = value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  return normalized ? normalized.split(' ').length : 0;
+};
+
+const parseBlogDate = (fileContent: string) => {
+  const match = fileContent.match(/date:\s*"([^"]+)"/);
+  return match?.[1] || null;
+};
+
+const stripMarkdownText = (value: string) =>
+  value
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .trim();
+
+const parseBlogFaqItems = (paragraphs: string[]): BlogFaqItem[] => {
+  const faqItems: BlogFaqItem[] = [];
+  let currentQuestion = '';
+
+  paragraphs.forEach((paragraph) => {
+    const questionMatch = paragraph.match(/^\*\*(.+?)\*\*$/);
+
+    if (questionMatch) {
+      currentQuestion = stripMarkdownText(questionMatch[1]);
+      return;
+    }
+
+    if (currentQuestion) {
+      faqItems.push({
+        question: currentQuestion,
+        answer: stripMarkdownText(paragraph),
+      });
+      currentQuestion = '';
+    }
+  });
+
+  return faqItems;
+};
+
+const buildBlogSupplementalSections = (
+  blog: (typeof blogsData)[number],
+  serviceLinks: { href: string; label: string }[]
+): BlogSection[] => {
+  const primaryService = serviceLinks[0] || { href: '/general-contractor-los-angeles', label: 'General Contracting' };
+  const secondaryService = serviceLinks[1] || { href: '/kitchen-remodel-los-angeles', label: 'Kitchen Remodel' };
+  const tertiaryService = serviceLinks[2] || { href: '/home-addition-contractor-los-angeles', label: 'Home Addition' };
+  const keyword = blog.keyword || blog.title;
+
+  return [
+    {
+      id: slugifyHeading('What this means for Los Angeles homeowners'),
+      title: 'What this means for Los Angeles homeowners',
+      paragraphs: [
+        `Los Angeles owners reading about ${keyword} usually are not trying to collect trivia. They are deciding whether the scope makes financial sense, whether the city will allow it, and whether the house can absorb the work without schedule drift or a stack of change orders. That is why the right next step is rarely just “get three bids.” It is understanding what triggers permits, where existing conditions are likely to break the budget, and whether the property should be treated like a focused remodel, a structural reconfiguration, or a larger design-build project.`,
+        `At Red Stag, we approach that decision with the same field logic we use on active jobs. We look at layout, utilities, structure, access, finish expectations, and the local review path before we tell an owner what the number should be. If this article connects directly to your project, our ${primaryService.label.toLowerCase()} work is usually the most relevant place to start because it shows how we price the scope, sequence approvals, and keep production accountable once the house is open. From there, we can tell you quickly whether the smartest move is to stay focused or widen the project to solve more of the house in one pass.`,
+      ],
+    },
+    {
+      id: slugifyHeading('How Red Stag plans scope, approvals, and production'),
+      title: 'How Red Stag plans scope, approvals, and production',
+      paragraphs: [
+        `The gap between a clean article and a clean build is planning. Homeowners in this market get into trouble when the scope sounds simple but the field conditions say otherwise. We close that gap by tying early decisions to the actual site. That means reviewing permit triggers, asking whether electrical or plumbing upgrades are hiding behind finished walls, confirming lead times before demolition starts, and deciding whether the work needs to be staged around an occupied home, HOA review, or a tighter city correction cycle.`,
+      ],
+      subSections: [
+        {
+          title: 'Scope and permit path',
+          paragraphs: [
+            `A lot of projects that start with one room or one upgrade expand as soon as the owner sees what else should be solved while the house is already open. That can be smart, but only if the scope expansion is managed intentionally. We usually show clients the tradeoff between staying focused and pulling in adjacent work like ${secondaryService.label.toLowerCase()} so they can compare downtime, permit exposure, and overall value before signing a contract. In Los Angeles, that kind of decision can save months of repeat disruption.`,
+          ],
+        },
+        {
+          title: 'Schedule, procurement, and site control',
+          paragraphs: [
+            `Once the path is clear, the work still needs real production control. That means ordering long-lead materials early, sequencing inspections around the actual scope, and deciding whether related items like ${tertiaryService.label.toLowerCase()} should be priced now instead of revisited after closeout. Owners who plan that far ahead usually protect both budget and momentum. Owners who do not are the ones reopening walls, paying rush fees, and wondering why the original timeline never had a chance.`,
+          ],
+        },
+      ],
+    },
+  ];
+};
+
+const parseBlogSections = (
+  blog: (typeof blogsData)[number],
+  fileContent: string,
+  serviceLinks: { href: string; label: string }[]
+) => {
+  const withoutFrontmatter = fileContent.replace(/---[\s\S]*?---/, '').trim();
+  const withoutSchema = withoutFrontmatter.replace(/<script[\s\S]*?<\/script>/g, '').trim();
+  const withoutClosingCta = withoutSchema.replace(/\n---\s*\n\*Ready[\s\S]*$/i, '').trim();
+  const lines = withoutClosingCta.split('\n');
+  const preambleParagraphs: string[] = [];
+  const contentSections: { title: string; paragraphs: string[] }[] = [];
+  let currentSection: { title: string; paragraphs: string[] } | null = null;
+  let paragraphBuffer: string[] = [];
+
+  const flushParagraph = () => {
+    const text = stripMarkdownText(paragraphBuffer.join(' ').trim());
+    if (!text) {
+      paragraphBuffer = [];
+      return;
+    }
+
+    if (currentSection) {
+      currentSection.paragraphs.push(text);
+    } else {
+      preambleParagraphs.push(text);
+    }
+
+    paragraphBuffer = [];
+  };
+
+  lines.forEach((line) => {
+    if (line.startsWith('# ')) {
+      flushParagraph();
+      return;
+    }
+
+    if (line.startsWith('## ')) {
+      flushParagraph();
+      currentSection = {
+        title: stripMarkdownText(line.replace(/^##\s+/, '')),
+        paragraphs: [],
+      };
+      contentSections.push(currentSection);
+      return;
+    }
+
+    if (!line.trim()) {
+      flushParagraph();
+      return;
+    }
+
+    paragraphBuffer.push(line.trim());
+  });
+
+  flushParagraph();
+
+  const foundationSection = contentSections.find((section) => section.title === 'The Foundation of Success');
+  const faqSourceSection = contentSections.find((section) => section.title === 'Frequently Asked Questions');
+  const faqItems = parseBlogFaqItems(faqSourceSection?.paragraphs || []);
+  const supplementalSections = buildBlogSupplementalSections(blog, serviceLinks);
+  const introSection: BlogSection = {
+    id: slugifyHeading('Why this matters in Los Angeles'),
+    title: 'Why this matters in Los Angeles',
+    paragraphs: [
+      ...preambleParagraphs,
+      `When clients call Red Stag after reading about ${blog.keyword || blog.title}, the question is usually not whether the idea sounds good. The question is whether the house, the city, and the schedule all support the same answer. That is why we put practical planning ahead of sales language. The earlier the scope is pressure-tested, the easier it is to protect the owner from false assumptions about price, permits, and timeline.`,
+    ],
+  };
+  const mainFoundationSection: BlogSection = {
+    id: slugifyHeading(foundationSection?.title || 'The Foundation of Success'),
+    title: foundationSection?.title || 'The Foundation of Success',
+    paragraphs: foundationSection?.paragraphs || [],
+  };
+  const faqSection: BlogSection = {
+    id: slugifyHeading('Frequently Asked Questions'),
+    title: 'Frequently Asked Questions',
+    paragraphs: faqItems.length === 0 ? ['Read through the planning points above, then contact Red Stag if you need a project-specific answer for your property.'] : [],
+    subSections: faqItems.map((item) => ({
+      title: item.question,
+      paragraphs: [item.answer],
+    })),
+  };
+
+  return {
+    sections: [introSection, mainFoundationSection, ...supplementalSections, faqSection],
+    faqItems,
+  };
+};
+
 const getMatrixServiceCrumb = (serviceName: string) => {
   const matchedSlug = matrixServiceMap[serviceName];
   return matchedSlug ? getServiceCrumb(matchedSlug) : { label: serviceName, href: '/' };
@@ -1864,63 +2060,300 @@ export default async function DynamicSlugPage({ params }: PageProps) {
   if (blog) {
     const filePath = path.join(process.cwd(), 'src', 'content', 'blog', `${blog.slug}.mdx`);
     let fileContent = '';
-    try { fileContent = fs.readFileSync(filePath, 'utf8'); } catch (e) {}
-    
-    let contentBody = fileContent.replace(/---[\s\S]*?---/, '').trim();
-    contentBody = contentBody.replace(/^#\s+(.*$)/gim, '<h1 class="text-4xl md:text-5xl font-serif font-bold text-text-dark mb-8">$1</h1>');
-    contentBody = contentBody.replace(/^##\s+(.*$)/gim, '<h2 class="text-3xl font-serif font-bold text-text-dark mt-12 mb-6">$1</h2>');
-    contentBody = contentBody.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    
-    const parts = contentBody.split('\n\n');
-    const blogServiceLinks = getBlogServiceLinks(`${blog.title} ${blog.keyword} ${contentBody}`);
-    const blogLinkParagraphs = buildBlogInternalLinkParagraphs(blogServiceLinks);
-    const insertAfterParagraphCounts = [1, 3, 5];
-    let paragraphCount = 0;
-    let insertedLinks = 0;
+    try {
+      fileContent = fs.readFileSync(filePath, 'utf8');
+    } catch (e) {}
 
-    const htmlContent = parts
-      .flatMap((part) => {
-        if (
-          part.trim() === '' ||
-          part.startsWith('<h') ||
-          part.startsWith('<script') ||
-          part.startsWith('</script') ||
-          part.includes('type="application/ld+json"') ||
-          part.startsWith('---')
-        ) {
-          return part;
-        }
-
-        paragraphCount += 1;
-        const renderedParts = [`<p class="mb-6 leading-relaxed text-lg">${part}</p>`];
-
-        if (
-          insertedLinks < blogLinkParagraphs.length &&
-          paragraphCount >= insertAfterParagraphCounts[insertedLinks]
-        ) {
-          renderedParts.push(blogLinkParagraphs[insertedLinks]);
-          insertedLinks += 1;
-        }
-
-        return renderedParts;
+    const datePublished = parseBlogDate(fileContent) || '2026-03-01';
+    const dateModified = fs.existsSync(filePath) ? fs.statSync(filePath).mtime.toISOString().split('T')[0] : datePublished;
+    const blogServiceLinks = getBlogServiceLinks(`${blog.title} ${blog.keyword} ${fileContent}`);
+    const [primaryService, secondaryService] = blogServiceLinks;
+    const articleSections = parseBlogSections(blog, fileContent, blogServiceLinks).sections;
+    const tableOfContents = articleSections.map((section) => ({ id: section.id, title: section.title }));
+    const relatedPosts = blogsData
+      .filter((entry) => entry.slug !== blog.slug)
+      .map((entry) => {
+        const candidateLinks = getBlogServiceLinks(`${entry.title} ${entry.keyword}`);
+        const candidatePrimary = candidateLinks[0]?.slug || 'general-contractor-los-angeles';
+        const keywordToken = (blog.keyword || '').toLowerCase().split(' ')[0];
+        const score =
+          (candidatePrimary === (primaryService?.slug || 'general-contractor-los-angeles') ? 3 : 0) +
+          (keywordToken && entry.keyword.toLowerCase().includes(keywordToken) ? 1 : 0);
+        return { ...entry, score };
       })
-      .concat(blogLinkParagraphs.slice(insertedLinks))
-      .join('\n');
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3);
+    const articleWordCount = countWords(
+      [
+        blog.title,
+        ...articleSections.flatMap((section) => [
+          section.title,
+          ...section.paragraphs,
+          ...(section.subSections?.flatMap((subSection) => [subSection.title, ...subSection.paragraphs]) || []),
+        ]),
+      ].join(' ')
+    );
+    const readTimeMinutes = Math.max(1, Math.ceil(articleWordCount / 200));
+    const articleSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: blog.title,
+      datePublished,
+      dateModified,
+      author: {
+        '@type': 'Organization',
+        name: 'Red Stag Construction',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Red Stag Construction',
+      },
+      mainEntityOfPage: `${BASE_URL}/${blog.slug}`,
+      description: `Read Red Stag Construction's guide to ${blog.keyword || blog.title}.`,
+    };
 
     return (
-      <div className="bg-white py-24 min-h-screen">
-        <div className="container mx-auto px-4 max-w-3xl">
-          <div className="prose prose-lg max-w-none text-text-body" dangerouslySetInnerHTML={{ __html: htmlContent }} />
-          
-          <div className="border-t border-gray-200 pt-10 mt-16 pb-8">
-            <h3 className="text-2xl font-serif font-bold text-text-dark mb-6">Explore Related Services</h3>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href={`/${blog.serviceSlug || ''}`} className="bg-warm-white text-text-dark border border-gray-200 px-8 py-4 rounded hover:bg-accent-red hover:text-white transition-colors font-bold text-center">Service: <span className="capitalize">{(blog.serviceSlug || '').replace(/-/g, ' ')}</span></Link>
-              <Link href={`/${blog.locationSlug || ''}`} className="bg-accent-red text-white px-8 py-4 rounded shadow-md hover:opacity-90 transition-opacity font-bold text-center">Location: <span className="capitalize">{(blog.locationSlug || '').replace('general-contractor-', '').replace(/-/g, ' ')}</span></Link>
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        />
+        <div className="bg-warm-white">
+          <section className="border-b border-gray-200 bg-white py-16 md:py-20">
+            <div className="container mx-auto max-w-6xl px-4">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-accent-red">Red Stag Journal</p>
+              <h1 className="mt-4 max-w-4xl text-4xl font-serif font-bold text-text-dark md:text-6xl">
+                {blog.title}
+              </h1>
+              <div className="mt-6 flex flex-wrap items-center gap-4 text-sm font-medium text-text-body">
+                <span>{readTimeMinutes} min read</span>
+                <span className="text-gray-400">/</span>
+                <time dateTime={datePublished}>{datePublished}</time>
+              </div>
             </div>
-          </div>
+          </section>
+
+          <section className="py-16 md:py-20">
+            <div className="container mx-auto max-w-6xl px-4 lg:grid lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-12">
+              <article className="min-w-0">
+                <details className="mb-10 border border-gray-200 bg-white p-5 md:hidden">
+                  <summary className="cursor-pointer text-sm font-bold uppercase tracking-[0.16em] text-text-dark">
+                    Table of Contents
+                  </summary>
+                  <div className="mt-4 space-y-3">
+                    {tableOfContents.map((item) => (
+                      <a
+                        key={item.id}
+                        href={`#${item.id}`}
+                        className="block text-sm font-medium text-text-body transition-colors hover:text-accent-red"
+                      >
+                        {item.title}
+                      </a>
+                    ))}
+                  </div>
+                </details>
+
+                <div className="space-y-14">
+                  {articleSections.map((section, sectionIndex) => (
+                    <section key={section.id} id={section.id}>
+                      <h2 className="mb-6 text-3xl font-serif font-bold text-text-dark md:text-4xl">
+                        {section.title}
+                      </h2>
+                      <div className="space-y-6 text-lg leading-8 text-text-body">
+                        {section.paragraphs.map((paragraph, paragraphIndex) => (
+                          <p key={`${section.id}-paragraph-${paragraphIndex}`}>{paragraph}</p>
+                        ))}
+                        {sectionIndex === 0 && primaryService && secondaryService && (
+                          <>
+                            <p>
+                              If you are already narrowing down scope, start with our{' '}
+                              <Link href={primaryService.href} className="font-semibold text-accent-red underline decoration-accent-red underline-offset-4">
+                                {primaryService.label}
+                              </Link>{' '}
+                              page. It gives the Los Angeles cost ranges, permit path, and production issues that matter once this topic moves from research into a live job.
+                            </p>
+                            <p>
+                              A lot of owners reading this article also end up comparing adjacent work like{' '}
+                              <Link href={secondaryService.href} className="font-semibold text-accent-red underline decoration-accent-red underline-offset-4">
+                                {secondaryService.label}
+                              </Link>{' '}
+                              because layout changes, inspection sequencing, and utility upgrades often overlap once the house is already open.
+                            </p>
+                          </>
+                        )}
+                        {sectionIndex === 1 && blogServiceLinks[2] && (
+                          <p>
+                            When the project starts expanding beyond the first idea on paper, our{' '}
+                            <Link href={blogServiceLinks[2].href} className="font-semibold text-accent-red underline decoration-accent-red underline-offset-4">
+                              {blogServiceLinks[2].label}
+                            </Link>{' '}
+                            page shows how Red Stag handles the larger Los Angeles scope without letting permits, procurement, or occupied-home scheduling get loose.
+                          </p>
+                        )}
+                      </div>
+
+                      {section.subSections && section.subSections.length > 0 && (
+                        <div className="mt-10 space-y-10">
+                          {section.subSections.map((subSection) => (
+                            <div key={`${section.id}-${subSection.title}`}>
+                              <h3 className="mb-4 text-2xl font-serif font-bold text-text-dark">
+                                {subSection.title}
+                              </h3>
+                              <div className="space-y-5 text-lg leading-8 text-text-body">
+                                {subSection.paragraphs.map((paragraph, paragraphIndex) => (
+                                  <p key={`${section.id}-${subSection.title}-${paragraphIndex}`}>{paragraph}</p>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {sectionIndex === 1 && (
+                        <div className="mt-10 bg-navy-deep px-8 py-10 text-center">
+                          <h3 className="text-3xl font-serif font-bold text-white">
+                            Ready to talk through your project with a Los Angeles builder?
+                          </h3>
+                          <a
+                            href={PHONE_HREF}
+                            className="mt-5 block text-4xl font-bold text-white transition-opacity hover:opacity-90"
+                          >
+                            {PHONE_NUMBER}
+                          </a>
+                          <Link
+                            href="/contact"
+                            className="mt-6 inline-flex items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90"
+                          >
+                            Get a Free Estimate
+                          </Link>
+                        </div>
+                      )}
+                    </section>
+                  ))}
+                </div>
+
+                <section className="mt-16 border-t border-gray-200 pt-12">
+                  <div className="mb-8 flex items-center gap-4">
+                    <span className="h-0.5 w-14 bg-accent-red"></span>
+                    <h2 className="text-3xl font-serif font-bold text-text-dark">Related services</h2>
+                  </div>
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    {blogServiceLinks.slice(0, 2).map((serviceLink) => (
+                      <Link
+                        key={serviceLink.slug}
+                        href={serviceLink.href}
+                        className="border border-gray-200 bg-white p-7 transition-colors hover:border-accent-red"
+                      >
+                        <h3 className="text-2xl font-serif font-bold text-text-dark">{serviceLink.label}</h3>
+                        <p className="mt-3 text-base leading-7 text-text-body">
+                          See how Red Stag approaches {serviceLink.label.toLowerCase()} work across Greater Los Angeles.
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="mt-16 border-t border-gray-200 pt-12">
+                  <div className="mb-8 flex items-center gap-4">
+                    <span className="h-0.5 w-14 bg-accent-red"></span>
+                    <h2 className="text-3xl font-serif font-bold text-text-dark">Related posts</h2>
+                  </div>
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                    {relatedPosts.map((relatedPost) => (
+                      <Link
+                        key={relatedPost.slug}
+                        href={`/${relatedPost.slug}`}
+                        className="border border-gray-200 bg-white p-7 transition-colors hover:border-accent-red"
+                      >
+                        <h3 className="text-2xl font-serif font-bold text-text-dark">{relatedPost.title}</h3>
+                        <p className="mt-3 text-base leading-7 text-text-body">{relatedPost.keyword}</p>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              </article>
+
+              <aside className="mt-14 hidden lg:block lg:mt-0">
+                <div className="sticky top-28 space-y-6">
+                  <div className="border border-gray-200 bg-white p-6">
+                    <h2 className="text-xl font-serif font-bold text-text-dark">Table of Contents</h2>
+                    <div className="mt-4 space-y-3">
+                      {tableOfContents.map((item) => (
+                        <a
+                          key={item.id}
+                          href={`#${item.id}`}
+                          className="block text-sm font-medium text-text-body transition-colors hover:text-accent-red"
+                        >
+                          {item.title}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="border border-gray-200 bg-white p-6">
+                    <h2 className="text-xl font-serif font-bold text-text-dark">Related services</h2>
+                    <div className="mt-4 space-y-4">
+                      {blogServiceLinks.slice(0, 2).map((serviceLink) => (
+                        <Link
+                          key={`sidebar-${serviceLink.slug}`}
+                          href={serviceLink.href}
+                          className="block border border-gray-200 bg-warm-white p-4 transition-colors hover:border-accent-red"
+                        >
+                          <h3 className="text-lg font-serif font-bold text-text-dark">{serviceLink.label}</h3>
+                          <p className="mt-2 text-sm leading-6 text-text-body">
+                            Review scope, cost, and permit strategy for {serviceLink.label.toLowerCase()} in Los Angeles.
+                          </p>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="border border-gray-200 bg-white p-6">
+                    <h2 className="text-xl font-serif font-bold text-text-dark">Talk to Red Stag</h2>
+                    <form
+                      action={process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL || '/contact'}
+                      method="POST"
+                      className="mt-4 space-y-4"
+                    >
+                      <input type="hidden" name="source" value={blog.slug} />
+                      <div>
+                        <label htmlFor="blog-sidebar-name" className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-text-dark">
+                          Name
+                        </label>
+                        <input
+                          id="blog-sidebar-name"
+                          name="name"
+                          type="text"
+                          required
+                          className="w-full border border-gray-300 px-4 py-3 text-sm text-text-dark focus:border-accent-red focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="blog-sidebar-phone" className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-text-dark">
+                          Phone
+                        </label>
+                        <input
+                          id="blog-sidebar-phone"
+                          name="phone"
+                          type="tel"
+                          required
+                          className="w-full border border-gray-300 px-4 py-3 text-sm text-text-dark focus:border-accent-red focus:outline-none"
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        className="w-full bg-accent-red px-4 py-3 text-sm font-bold uppercase tracking-[0.16em] text-white transition-opacity hover:opacity-90"
+                      >
+                        Send Message
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </section>
         </div>
-      </div>
+      </>
     );
   }
 
