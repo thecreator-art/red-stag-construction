@@ -1,6 +1,6 @@
 export const SplitBreak = () => {
   return (
-    <section className="relative z-10 flex h-[120px] w-full items-center overflow-hidden bg-[#152D45] px-6 text-center shadow-2xl lg:h-[180px]">
+    <section className="relative z-10 flex h-[160px] w-full items-center overflow-hidden bg-[#152D45] px-6 text-center shadow-2xl lg:h-[240px]">
       <video
         className="absolute inset-0 h-full w-full object-cover"
         autoPlay
