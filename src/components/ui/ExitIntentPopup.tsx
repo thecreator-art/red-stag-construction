@@ -93,7 +93,7 @@ export const ExitIntentPopup = () => {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-navy-deep/80 backdrop-blur-sm p-4">
-      <div className="bg-[#111] border-t-4 border-accent-red w-full max-w-lg p-8 rounded-sm shadow-2xl relative animate-in zoom-in-95 duration-300">
+      <div className="bg-navy-deep border-t-4 border-accent-red w-full max-w-lg p-8 rounded-sm shadow-2xl relative animate-in zoom-in-95 duration-300">
         
         <button 
           onClick={() => setIsVisible(false)}

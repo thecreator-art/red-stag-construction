@@ -102,14 +102,14 @@ export default function HomePage() {
             </div>
           </div>
           
-          <div className="lg:w-2/3 h-[500px] border-[6px] border-white shadow-2xl rounded-sm overflow-hidden bg-[#111]">
+          <div className="lg:w-2/3 h-[500px] border-[6px] border-white shadow-2xl rounded-sm overflow-hidden bg-navy-deep">
             <ServiceAreaMap />
           </div>
         </div>
       </section>
 
       {/* SECTION 12 */}
-      <section className="w-full bg-[#111] py-24 md:py-32 px-6 md:px-12 select-none relative overflow-hidden">
+      <section className="w-full bg-navy-deep py-24 md:py-32 px-6 md:px-12 select-none relative overflow-hidden">
         {/* Background Ghost Element */}
         <div className="absolute top-1/2 -translate-y-1/2 -right-40 opacity-[0.03] pointer-events-none w-[800px] h-[800px]">
           <svg viewBox="0 0 24 24" fill="currentColor">
