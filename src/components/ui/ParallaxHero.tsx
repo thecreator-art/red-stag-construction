@@ -65,8 +65,8 @@ export const ParallaxHero = ({
         />
       </div>
 
-      {/* Dark Overlay @ 0.6 opacity structural constraint */}
-      <div className="absolute inset-0 bg-navy-deep/60 -z-10" />
+      {/* Lighter overlay keeps text legible without burying the photo */}
+      <div className="absolute inset-0 bg-black/40 -z-10" />
 
       {/* Hero Interactive Geometry */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center text-center mt-12 md:mt-0">
