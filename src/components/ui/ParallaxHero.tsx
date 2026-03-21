@@ -1,8 +1,8 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { TrustBadge } from './TrustBadge';
+import { useRouter } from 'next/navigation';
 
 export interface ParallaxHeroProps {
   imageSrc: string;
@@ -25,7 +25,10 @@ export const ParallaxHero = ({
   phoneNumber,
   className = ''
 }: ParallaxHeroProps) => {
+  const router = useRouter();
   const bgRef = useRef<HTMLDivElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     // Highly optimized passive scroll capturing window.scrollY without triggering React render cycles.
@@ -47,8 +50,63 @@ export const ParallaxHero = ({
     };
   }, []);
 
+  const handleQuickQuoteSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrorMsg('');
+
+    const formData = new FormData(e.currentTarget);
+
+    if (formData.get('_honey')) {
+      setIsSubmitting(false);
+      return;
+    }
+
+    const payload = {
+      fullName: formData.get('fullName'),
+      phone: formData.get('phone'),
+      email: formData.get('email'),
+      message: formData.get('message'),
+      source: 'hero_quick_quote',
+    };
+
+    try {
+      const webhookUrl = process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL || '';
+      if (!webhookUrl) {
+        throw new Error('Missing webhook configuration');
+      }
+
+      const response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error('Lead submission failed');
+      }
+
+      const gtag = typeof window !== 'undefined'
+        ? (window as Window & { gtag?: (...args: unknown[]) => void }).gtag
+        : undefined;
+
+      if (gtag) {
+        gtag('event', 'contact_form_submitted', {
+          service_type: 'Quick Quote',
+          city: 'Los Angeles',
+          page_location: window.location.href,
+        });
+      }
+
+      router.push('/thank-you');
+    } catch {
+      setErrorMsg('There was an error submitting your request. Please call (626) 652-2303.');
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <section className={`relative w-full h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden ${className}`}>
+    <section className={`relative flex min-h-[760px] w-full items-center justify-center overflow-hidden md:min-h-[860px] ${className}`}>
       
       {/* Background Image Container mapped directly to the passive scroll ref */}
       <div 
@@ -69,7 +127,7 @@ export const ParallaxHero = ({
       <div className="absolute inset-0 bg-black/40 -z-10" />
 
       {/* Hero Interactive Geometry */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center text-center mt-12 md:mt-0">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-6 pt-28 text-center md:px-12 md:pt-24">
         
         {/* Mobile Header Direct Dial (Above the fold dynamic rendering) */}
         <div className="md:hidden mb-10 border border-white/20 bg-navy-deep/40 px-6 py-2.5 rounded-full backdrop-blur-sm shadow-xl">
@@ -89,8 +147,69 @@ export const ParallaxHero = ({
           {h2Text}
         </h2>
 
-        {/* Central TrustBadge Integration */}
-        <TrustBadge className="mb-12 scale-90 md:scale-100 opacity-95" />
+        <form
+          onSubmit={handleQuickQuoteSubmit}
+          className="mb-8 w-full max-w-6xl rounded-sm border border-white/25 bg-white/95 p-4 text-left shadow-[0_18px_50px_rgba(10,24,38,0.28)] backdrop-blur-sm md:p-6"
+        >
+          <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
+          <div className="grid gap-4 lg:grid-cols-[220px_minmax(0,1fr)] lg:items-center">
+            <div className="px-2 text-center lg:text-left">
+              <p className="text-[11px] font-extrabold uppercase tracking-[0.28em] text-accent-red">
+                Free Consultation
+              </p>
+              <h3 className="mt-2 font-serif text-3xl font-bold text-[#1A1A1A]">
+                Start your quote.
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-[#3D3D3D]">
+                Name, number, email, and a few project details.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-[1fr_1fr_1fr_1.25fr_auto]">
+                <input
+                  required
+                  type="text"
+                  name="fullName"
+                  placeholder="Name"
+                  className="h-12 min-w-0 rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-sm text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red"
+                />
+                <input
+                  required
+                  type="tel"
+                  name="phone"
+                  placeholder="Number"
+                  className="h-12 min-w-0 rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-sm text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red"
+                />
+                <input
+                  required
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  className="h-12 min-w-0 rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-sm text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red"
+                />
+                <input
+                  required
+                  type="text"
+                  name="message"
+                  placeholder="Project details"
+                  className="h-12 min-w-0 rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-sm text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red"
+                />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="h-12 min-w-[170px] rounded-sm bg-accent-red px-6 text-sm font-extrabold uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#990000] disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isSubmitting ? 'Sending...' : 'Get Estimate'}
+                </button>
+              </div>
+
+              <p className={`text-xs uppercase tracking-[0.18em] ${errorMsg ? 'text-accent-red' : 'text-[#6B7280]'}`}>
+                {errorMsg || 'Licensed general contractor. Los Angeles based. Fast callback.'}
+              </p>
+            </div>
+          </div>
+        </form>
 
         <Link href={ctaHref} className="bg-accent-red hover:bg-[#990000] transition-all text-white font-extrabold tracking-widest uppercase px-12 py-5 rounded-sm shadow-2xl hover:shadow-[0_0_20px_rgba(179,18,23,0.4)] hover:-translate-y-1 duration-300 border border-accent-red/50">
           {ctaText}

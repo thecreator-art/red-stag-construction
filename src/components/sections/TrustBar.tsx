@@ -1,137 +1,22 @@
-'use client';
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-
 export const TrustBar = () => {
-  const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setErrorMsg('');
-
-    const formData = new FormData(e.currentTarget);
-
-    if (formData.get('_honey')) {
-      setIsSubmitting(false);
-      return;
-    }
-
-    const payload = {
-      fullName: formData.get('fullName'),
-      phone: formData.get('phone'),
-      email: formData.get('email'),
-      message: formData.get('message'),
-      source: 'inline_trust_bar',
-    };
-
-    try {
-      const webhookUrl = process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL || '';
-      if (!webhookUrl) {
-        throw new Error('Missing webhook configuration');
-      }
-
-      const response = await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error('Lead submission failed');
-      }
-
-      const gtag = typeof window !== 'undefined'
-        ? (window as Window & { gtag?: (...args: unknown[]) => void }).gtag
-        : undefined;
-
-      if (gtag) {
-        gtag('event', 'contact_form_submitted', {
-          service_type: 'Quick Quote',
-          city: 'Los Angeles',
-          page_location: window.location.href,
-        });
-      }
-
-      router.push('/thank-you');
-    } catch {
-      setErrorMsg('There was an error submitting your request. Please call (626) 652-2303.');
-      setIsSubmitting(false);
-    }
-  };
+  const items = [
+    { text: 'License 964664', icon: <svg className="w-5 h-5 mr-2 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> },
+    { text: 'Est. 2011', icon: <svg className="w-5 h-5 mr-2 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> },
+    { text: 'Los Angeles Based', icon: <svg className="w-5 h-5 mr-2 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg> },
+    { text: '100+ Projects', icon: <svg className="w-5 h-5 mr-2 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg> },
+    { text: '5-Star Rated · 47+ Reviews', icon: <svg className="w-5 h-5 mr-2 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg> },
+  ];
 
   return (
-    <section className="relative z-20 w-full border-y border-[#e6decf] bg-[#F5F0E8] py-4 shadow-sm">
-      <div className="mx-auto max-w-7xl px-4">
-        <div className="overflow-hidden rounded-sm border border-[#e3ddd2] bg-white shadow-[0_12px_40px_rgba(21,45,69,0.12)]">
-          <div className="grid gap-4 px-4 py-4 md:px-6 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-center">
-            <div className="text-center lg:text-left">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.28em] text-accent-red">
-                Free Consultation
-              </p>
-              <h2 className="mt-2 font-serif text-2xl font-bold text-[#1A1A1A]">
-                Start your quote.
-              </h2>
-              <p className="mt-1 text-sm text-[#3D3D3D]">
-                Name, number, email, and a few project details.
-              </p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-3">
-              <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
-
-              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-[1fr_1fr_1fr_1.4fr_auto]">
-                <input
-                  required
-                  type="text"
-                  name="fullName"
-                  placeholder="Name"
-                  className="h-12 rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-sm text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red"
-                />
-                <input
-                  required
-                  type="tel"
-                  name="phone"
-                  placeholder="Number"
-                  className="h-12 rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-sm text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red"
-                />
-                <input
-                  required
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  className="h-12 rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-sm text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red"
-                />
-                <input
-                  required
-                  type="text"
-                  name="message"
-                  placeholder="Project details"
-                  className="h-12 rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-sm text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red"
-                />
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="h-12 min-w-[170px] rounded-sm bg-accent-red px-6 text-sm font-extrabold uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#990000] disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {isSubmitting ? 'Sending...' : 'Get Estimate'}
-                </button>
-              </div>
-
-              {errorMsg ? (
-                <p className="text-sm font-medium text-accent-red">{errorMsg}</p>
-              ) : (
-                <p className="text-xs uppercase tracking-[0.18em] text-[#6B7280]">
-                  Licensed general contractor. Los Angeles based. Fast callback.
-                </p>
-              )}
-            </form>
+    <div className="relative z-20 w-full border-y border-[#e6decf] bg-[#F5F0E8] py-5 shadow-sm">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-6 px-4 text-[#2A2A2A] md:justify-between">
+        {items.map((item, i) => (
+          <div key={i} className="flex items-center whitespace-nowrap text-[10px] font-extrabold uppercase tracking-widest opacity-90 md:text-sm">
+            {item.icon}
+            {item.text}
           </div>
-        </div>
+        ))}
       </div>
-    </section>
+    </div>
   );
 };
