@@ -1,0 +1,106 @@
+[
+  {
+    "slug": "beverly-hills-estate-renovation",
+    "title": "Beverly Hills Estate Renovation",
+    "city": "Beverly Hills",
+    "serviceType": "Custom Home Build",
+    "squareFootage": "4,200 sq ft",
+    "timeline": "8 months",
+    "budgetRange": "$850,000-$1,200,000",
+    "challenge": "The homeowner needed a complete exterior renovation including a new pool deck, custom hardscaping, and full window replacement on a Trousdale Estates property in Beverly Hills. The site sat inside the independent Beverly Hills review environment, which meant the approval path had nothing to do with a standard LADBS timeline. Design review comments, premium finish expectations, and the logistics of protecting an occupied estate all had to be solved before construction could move at the right pace. The existing structure also had aging waterproofing, drainage transitions that were not handling runoff well, and dated exterior details that made the property feel flat against newer neighboring homes. The owner wanted a cleaner California estate look, but the work had to respect both hillside conditions and the level of scrutiny that comes with building on a high-visibility Beverly Hills parcel.",
+    "approach": "Red Stag managed the project as a full design-build assignment from drawings through final punch. We coordinated architectural revisions, structural engineering, permit submissions, and consultant input so the owner was not juggling separate teams while the city review cycle was active. Because the Beverly Hills Building Department required design review approval before permit release, we built the approval delay into the master schedule and used that time to lock long-lead materials, verify window packages, and sequence the site plan around access and finish protection. Once approvals moved, the field team rebuilt the exterior envelope in phases so premium hardscape, glazing, drainage, and pool deck details could be installed without overlapping trades in a way that would damage finished work. The job demanded tight supervision because the site had very little room for casual decision-making. Stone alignment, window rough openings, waterproofing transitions, and the relationship between landscape and hardscape all had to be coordinated at the detail level. That level of control is what allowed the design to come through cleanly instead of looking like a collection of separate subcontractor scopes.",
+    "result": "The property was transformed from a dated 1970s exterior into a contemporary California estate with a rebuilt pool deck, upgraded hardscape, and floor-to-ceiling window package that changed both the curb appeal and the way the backyard connected to the house.",
+    "testimonial": "Red Stag handled the project with control from start to finish. The design review process was heavy, but they kept the work moving and the finished details landed exactly where they needed to.",
+    "testimonialFrom": "M. Peterson",
+    "beforeAfter": [
+      {
+        "beforeImage": "/images/projects/trousdale-before.jpg",
+        "afterImage": "/images/projects/trousdale-after.jpg",
+        "altText": "Beverly Hills estate exterior before and after"
+      },
+      {
+        "beforeImage": "/images/projects/belair-before.jpg",
+        "afterImage": "/images/projects/belair-after.jpg",
+        "altText": "Pool deck and hardscape renovation before and after"
+      }
+    ]
+  },
+  {
+    "slug": "pacific-palisades-adu-build",
+    "title": "Pacific Palisades ADU Build",
+    "city": "Pacific Palisades",
+    "serviceType": "ADU Construction",
+    "squareFootage": "780 sq ft",
+    "timeline": "7 months",
+    "budgetRange": "$285,000-$360,000",
+    "challenge": "The homeowner wanted a detached ADU behind the main house to create guest space and long-term flexibility for family use. The lot sat in Pacific Palisades, where geology, fire-zone overlap, and premium neighborhood expectations all affect how a detached structure should be designed and built. The site needed careful drainage planning, the design had to sit comfortably with the main residence, and the approval path required tighter coordination than a flat, low-scrutiny parcel elsewhere in Los Angeles. Access to the rear yard was limited, which increased the importance of sequencing excavation, utility trenching, framing deliveries, and inspections without turning the entire property into a construction bottleneck.",
+    "approach": "Red Stag handled the ADU as an integrated design-build project with permitting, engineering, and field execution under one contract. We mapped the grading and utility path early, confirmed how the detached unit would tie into existing services, and coordinated the review process around the site conditions that were most likely to slow approval. In Pacific Palisades, geology and fire-driven material decisions are not optional side notes, so we built those requirements into the drawings and procurement schedule instead of reacting after comments came back. In the field, the project was sequenced to protect the occupied main house while still moving quickly enough to keep subcontractor momentum. Concrete, framing, plumbing, and finish coordination were all managed through one superintendent so the owner had a single source of accountability. That mattered because the site did not forgive sloppy trade overlap. The rear-yard access was tight, neighbors were close, and the job had to feel organized every day for the schedule to hold.",
+    "result": "The finished ADU gave the owner a fully detached guest residence with strong privacy, a clean exterior match to the main home, and a utility layout that will be easy to maintain long term.",
+    "testimonial": "They understood the Palisades site conditions immediately. The approvals, access planning, and field execution all felt under control from the first week.",
+    "testimonialFrom": "R. Hoffman",
+    "beforeAfter": [
+      {
+        "beforeImage": "/images/projects/canyon-before.jpg",
+        "afterImage": "/images/projects/canyon-after.jpg",
+        "altText": "Pacific Palisades rear yard before and after ADU build"
+      },
+      {
+        "beforeImage": "/images/projects/hillside-before.png",
+        "afterImage": "/images/projects/hillside-after.jpg",
+        "altText": "Detached ADU site improvement before and after"
+      }
+    ]
+  },
+  {
+    "slug": "calabasas-home-addition",
+    "title": "Calabasas Family Room Addition",
+    "city": "Calabasas",
+    "serviceType": "Home Addition",
+    "squareFootage": "1,050 sq ft",
+    "timeline": "6 months",
+    "budgetRange": "$310,000-$460,000",
+    "challenge": "The owners needed more functional family space without leaving their Calabasas neighborhood, but the house sat inside a tightly managed HOA where design review and access protocols could easily stall construction if the package was not assembled correctly. The addition also had to connect cleanly to the existing structure instead of reading like an obvious bolt-on. That meant careful roofline work, structural tie-in planning, and finish matching. The family was staying in the home during construction, so site protection and daily scheduling mattered almost as much as the finished square footage.",
+    "approach": "Red Stag organized the project around HOA review, municipal approvals, and occupied-home logistics from the start. We assembled the design package with the association requirements in mind, clarified how the new family room and primary-suite extension would tie into the existing house, and built the approval timeline into the production plan instead of pretending the HOA would move on demand. Once work started, the site was phased so the family could keep living in the house while structure, mechanical work, drywall, and finish phases moved through the addition. Because the roofline and exterior needed to feel original to the home, the field team spent time on framing alignment, exterior trim transitions, and finish matching rather than treating them like cosmetic punch items. That level of control kept the project from feeling like separate scopes stitched together at the end.",
+    "result": "The addition gave the family a larger daily living space, stronger indoor-outdoor connection, and a cleaner floor plan that reads as if it always belonged to the house.",
+    "testimonial": "Our HOA review could have become a mess, but Red Stag managed the process and kept the build moving without losing the design along the way.",
+    "testimonialFrom": "T. Morrison",
+    "beforeAfter": [
+      {
+        "beforeImage": "/images/projects/studio-before.png",
+        "afterImage": "/images/projects/studio-after.jpg",
+        "altText": "Family room addition before and after"
+      },
+      {
+        "beforeImage": "/images/projects/silverlake-before.jpg",
+        "afterImage": "/images/projects/silverlake-after.png",
+        "altText": "Interior expansion before and after"
+      }
+    ]
+  },
+  {
+    "slug": "studio-city-kitchen-rebuild",
+    "title": "Studio City Kitchen Rebuild",
+    "city": "Studio City",
+    "serviceType": "Kitchen Remodel",
+    "squareFootage": "310 sq ft",
+    "timeline": "14 weeks",
+    "budgetRange": "$125,000-$185,000",
+    "challenge": "This Studio City home had a dated kitchen, poor circulation, and hidden utility problems behind finished walls. The owners wanted to open the space toward the backyard, improve storage, and create a room that felt current without stripping all the character out of the house. Because the property sat in an older neighborhood south of Ventura, the likelihood of electrical and plumbing surprises was high from day one. The structural work also had to be coordinated carefully so the open layout felt clean and intentional once the beam work was complete.",
+    "approach": "Red Stag approached the rebuild as a design-build kitchen project with structural, utility, and finish coordination under one team. We evaluated the wall removal scope early, confirmed what would be required for the beam and revised load path, and brought plumbing and electrical planning into the design conversation before final pricing. The permit track ran through LADBS, so the structural package and inspection milestones were built into the construction sequence from the beginning. During construction we managed cabinet lead times, appliance coordination, stone templating, and finish protection closely because kitchen schedules fall apart when those items are treated casually. By self-performing the framing, concrete touch-up, plumbing, and drywall portions that controlled the pace, we kept the job moving instead of handing core schedule risk to outside trades with no shared accountability.",
+    "result": "The rebuilt kitchen now opens cleanly to the living spaces, carries a stronger appliance and storage package, and feels like a real upgrade instead of a surface-level cosmetic refresh.",
+    "testimonial": "They caught the structural and utility issues early, then rebuilt the room without letting the finish quality slip. The final kitchen feels calm and well resolved.",
+    "testimonialFrom": "J. Larson",
+    "beforeAfter": [
+      {
+        "beforeImage": "/images/projects/studio-before.png",
+        "afterImage": "/images/projects/studio-after.jpg",
+        "altText": "Studio City kitchen before and after"
+      },
+      {
+        "beforeImage": "/images/projects/trousdale-before.jpg",
+        "afterImage": "/images/projects/trousdale-after.jpg",
+        "altText": "Open kitchen transformation before and after"
+      }
+    ]
+  }
+]
