@@ -23,13 +23,23 @@ export const BeforeAfterSlider = ({
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleMove = useCallback((clientX: number) => {
-    if (!containerRef.current || !isDragging) return;
+  const updateSliderPosition = useCallback((clientX: number) => {
+    if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
     const percentage = (x / rect.width) * 100;
     setSliderPosition(percentage);
-  }, [isDragging]);
+  }, []);
+
+  const handleMove = useCallback((clientX: number) => {
+    if (!isDragging) return;
+    updateSliderPosition(clientX);
+  }, [isDragging, updateSliderPosition]);
+
+  const handleDragStart = (clientX: number) => {
+    setIsDragging(true);
+    updateSliderPosition(clientX);
+  };
 
   useEffect(() => {
     const handleMouseUp = () => setIsDragging(false);
@@ -58,9 +68,9 @@ export const BeforeAfterSlider = ({
   return (
     <div 
       ref={containerRef}
-      className={`relative w-full aspect-[3/2] overflow-hidden select-none cursor-ew-resize bg-navy-deep ${className}`}
-      onMouseDown={() => setIsDragging(true)}
-      onTouchStart={() => setIsDragging(true)}
+      className={`relative w-full aspect-[3/2] overflow-hidden select-none touch-none cursor-ew-resize bg-navy-deep ${className}`}
+      onMouseDown={(event) => handleDragStart(event.clientX)}
+      onTouchStart={(event) => handleDragStart(event.touches[0].clientX)}
     >
       {/* After Image (Background) */}
       <Image 
