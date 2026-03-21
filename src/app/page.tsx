@@ -70,7 +70,7 @@ export default function HomePage() {
     url: 'https://redstagcc.com',
     telephone: '(626) 652-2303',
     email: 'support@redstagcc.com',
-    slogan: 'One team. One contract. Zero excuses.',
+    slogan: 'Designed here. Built right. Delivered on time.',
     foundingDate: '2011',
     sameAs: [
       'https://www.yelp.com/biz/red-stag-construction-los-angeles',
