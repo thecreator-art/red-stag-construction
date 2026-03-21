@@ -83,15 +83,31 @@ export const Navbar = () => {
   const [mobileAreasOpen, setMobileAreasOpen] = useState(false);
   const [activeDesktopMenu, setActiveDesktopMenu] = useState<DesktopMenu>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isUserScrolling, setIsUserScrolling] = useState(false);
 
   useEffect(() => {
+    let scrollTimeout: number | undefined;
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 24);
+      setIsUserScrolling(true);
+      setActiveDesktopMenu(null);
+      if (scrollTimeout !== undefined) {
+        window.clearTimeout(scrollTimeout);
+      }
+      scrollTimeout = window.setTimeout(() => {
+        setIsUserScrolling(false);
+      }, 160);
     };
 
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      if (scrollTimeout !== undefined) {
+        window.clearTimeout(scrollTimeout);
+      }
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -105,6 +121,14 @@ export const Navbar = () => {
     setIsOpen(false);
     setMobileServicesOpen(false);
     setMobileAreasOpen(false);
+  };
+
+  const openDesktopMenu = (menu: DesktopMenu) => {
+    if (isUserScrolling) {
+      return;
+    }
+
+    setActiveDesktopMenu(menu);
   };
 
   return (
@@ -133,7 +157,7 @@ export const Navbar = () => {
 
           <div
             className="relative"
-            onMouseEnter={() => setActiveDesktopMenu('services')}
+            onMouseEnter={() => openDesktopMenu('services')}
             onMouseLeave={() => setActiveDesktopMenu((current) => (current === 'services' ? null : current))}
           >
             <button className="flex items-center gap-2 hover:text-accent-red transition-colors">
@@ -189,7 +213,7 @@ export const Navbar = () => {
 
           <div
             className="relative"
-            onMouseEnter={() => setActiveDesktopMenu('areas')}
+            onMouseEnter={() => openDesktopMenu('areas')}
             onMouseLeave={() => setActiveDesktopMenu((current) => (current === 'areas' ? null : current))}
           >
             <Link href="/areas-we-serve" className="flex items-center gap-2 hover:text-accent-red transition-colors">

@@ -38,7 +38,28 @@ export default function HomePage() {
     { id: '5', name: 'A. Davies', platform: 'Yelp', rating: 5, text: 'Professional, clean job site, and no surprise invoices. Red Stag stuck perfectly to their original estimate.' }
   ];
 
-  const cities = ["Beverly Hills", "Bel Air", "Hidden Hills", "Pacific Palisades", "Malibu", "Brentwood", "Manhattan Beach", "Santa Monica", "West Hollywood", "Silver Lake", "Studio City", "Sherman Oaks", "Encino", "Calabasas", "Tarzana", "Woodland Hills", "Burbank", "Granada Hills", "Northridge", "San Fernando"];
+  const cities = [
+    { name: 'Beverly Hills', slug: '/general-contractor-beverly-hills' },
+    { name: 'Bel Air', slug: '/general-contractor-bel-air' },
+    { name: 'Hidden Hills', slug: '/general-contractor-hidden-hills' },
+    { name: 'Pacific Palisades', slug: '/general-contractor-pacific-palisades' },
+    { name: 'Malibu', slug: '/general-contractor-malibu' },
+    { name: 'Brentwood', slug: '/general-contractor-brentwood-la' },
+    { name: 'Manhattan Beach', slug: '/general-contractor-manhattan-beach' },
+    { name: 'Santa Monica', slug: '/general-contractor-santa-monica' },
+    { name: 'West Hollywood', slug: '/general-contractor-west-hollywood' },
+    { name: 'Silver Lake', slug: '/general-contractor-silver-lake' },
+    { name: 'Studio City', slug: '/general-contractor-studio-city' },
+    { name: 'Sherman Oaks', slug: '/general-contractor-sherman-oaks' },
+    { name: 'Encino', slug: '/general-contractor-encino' },
+    { name: 'Calabasas', slug: '/general-contractor-calabasas' },
+    { name: 'Tarzana', slug: '/general-contractor-tarzana' },
+    { name: 'Woodland Hills', slug: '/general-contractor-woodland-hills' },
+    { name: 'Burbank', slug: '/general-contractor-burbank' },
+    { name: 'Granada Hills', slug: '/general-contractor-granada-hills' },
+    { name: 'Northridge', slug: '/general-contractor-northridge' },
+    { name: 'San Fernando', slug: '/general-contractor-san-fernando' }
+  ];
   const half = Math.ceil(cities.length / 2);
   const leftCities = cities.slice(0, half);
   const rightCities = cities.slice(half);
@@ -126,16 +147,22 @@ export default function HomePage() {
             
             <div className="grid grid-cols-2 gap-x-8 gap-y-4">
               <ul className="space-y-3">
-                {leftCities.map(c => (
-                  <li key={c} className="text-gray-600 font-bold uppercase tracking-wider text-[10px] sm:text-xs">
-                    <span className="text-accent-red mr-2 font-black">•</span> {c}
+                {leftCities.map((city) => (
+                  <li key={city.slug} className="text-gray-600 font-bold uppercase tracking-wider text-[10px] sm:text-xs">
+                    <span className="text-accent-red mr-2 font-black">•</span>
+                    <a href={city.slug} className="transition-colors hover:text-accent-red">
+                      {city.name}
+                    </a>
                   </li>
                 ))}
               </ul>
               <ul className="space-y-3">
-                {rightCities.map(c => (
-                  <li key={c} className="text-gray-600 font-bold uppercase tracking-wider text-[10px] sm:text-xs">
-                    <span className="text-accent-red mr-2 font-black">•</span> {c}
+                {rightCities.map((city) => (
+                  <li key={city.slug} className="text-gray-600 font-bold uppercase tracking-wider text-[10px] sm:text-xs">
+                    <span className="text-accent-red mr-2 font-black">•</span>
+                    <a href={city.slug} className="transition-colors hover:text-accent-red">
+                      {city.name}
+                    </a>
                   </li>
                 ))}
               </ul>
