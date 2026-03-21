@@ -10,7 +10,7 @@ export const ProcessSection = () => {
   ];
 
   return (
-    <section className="w-full bg-warm-grey py-24 md:py-32 px-6 md:px-12 border-b border-gray-200">
+    <section className="w-full bg-warm-grey py-20 md:py-32 px-6 md:px-12 border-b border-gray-200">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20 md:mb-32">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-[#111] leading-tight mb-8">Our Process</h2>
@@ -30,8 +30,8 @@ export const ProcessSection = () => {
               transition={{ duration: 0.7, delay: i * 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
               className="relative z-10 flex flex-col items-center md:items-start lg:items-center text-center md:text-left lg:text-center group"
             >
-              <div className="w-32 h-32 bg-white border-4 border-gray-100 rounded-full flex items-center justify-center mb-8 shadow-2xl group-hover:border-accent-red group-hover:text-text-dark group-hover:bg-accent-red transition-all duration-500 overflow-hidden relative">
-                <span className="text-4xl font-serif font-extrabold text-accent-red group-hover:text-text-dark transition-colors relative z-10">{step.num}</span>
+              <div className="mb-6 inline-block border-b-2 border-accent-red pb-2 leading-none">
+                <span className="block text-6xl md:text-7xl font-serif font-extrabold text-accent-red leading-none">{step.num}</span>
               </div>
               <h3 className="text-2xl font-bold uppercase tracking-widest text-[#111] mb-5">{step.title}</h3>
               <p className="text-gray-600 leading-relaxed max-w-sm font-serif">{step.desc}</p>
