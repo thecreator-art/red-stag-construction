@@ -11,6 +11,12 @@ import { ReviewCarousel, Review } from '@/components/sections/ReviewCarousel';
 import { ServiceAreaMap } from '@/components/maps/ServiceAreaMap';
 import { ContactForm } from '@/components/forms/ContactForm';
 
+export const metadata = {
+  title: 'General Contractor in Los Angeles, CA | Red Stag Construction',
+  description:
+    'Licensed GC in Los Angeles since 2011. Custom homes, ADUs, remodels, additions, hardscape, and fencing across Beverly Hills, Bel Air, and Malibu.',
+};
+
 export default function HomePage() {
   const services = [
     { slug: 'kitchen-remodel-los-angeles', title: 'Kitchen Remodel', imageSrc: '/images/services/kitchen.jpg' },
