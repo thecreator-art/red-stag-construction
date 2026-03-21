@@ -38,7 +38,7 @@ export const ServiceAreaMap = ({ className = '' }: { className?: string }) => {
   const getY = (lat: number) => ((maxLat - lat) / (maxLat - minLat)) * h;
 
   return (
-    <div className={`relative w-full h-full bg-[#111111] overflow-hidden ${className}`}>
+    <div className={`relative w-full h-full bg-navy-deep overflow-hidden ${className}`}>
       <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-full text-gray-800" preserveAspectRatio="xMidYMid slice">
         {/* LA Coastline Stylized Geometry */}
         <path d="M 0,600 L 800,600 L 800,450 Q 600,420 500,440 T 100,520 L 0,550 Z" fill="#0a0a0a" />
@@ -81,7 +81,7 @@ export const ServiceAreaMap = ({ className = '' }: { className?: string }) => {
       </svg>
       
       {/* Legend Map Overlay */}
-      <div className="absolute bottom-6 right-6 bg-[#1A1A1A]/95 p-4 border-l-4 border-accent-red shadow-2xl backdrop-blur-sm pointer-events-none">
+      <div className="absolute bottom-6 right-6 bg-navy-deep p-4 border-l-4 border-accent-red shadow-2xl backdrop-blur-sm pointer-events-none">
         <h4 className="text-text-dark font-bold tracking-widest uppercase text-sm mb-1">Service Area</h4>
         <p className="text-gray-400 text-xs font-mono">Greater Los Angeles</p>
       </div>
