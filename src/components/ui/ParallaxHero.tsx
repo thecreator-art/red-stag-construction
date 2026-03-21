@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export interface ParallaxHeroProps {
@@ -149,23 +148,17 @@ export const ParallaxHero = ({
 
         <form
           onSubmit={handleQuickQuoteSubmit}
-          className="mb-8 w-full max-w-6xl rounded-sm border border-white/25 bg-white/95 p-4 text-left shadow-[0_18px_50px_rgba(10,24,38,0.28)] backdrop-blur-sm md:p-6"
+          className="mb-8 w-full max-w-6xl rounded-sm border border-white/25 bg-white/95 px-4 py-3 text-left shadow-[0_18px_50px_rgba(10,24,38,0.28)] backdrop-blur-sm md:px-5 md:py-4"
         >
           <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
-          <div className="grid gap-4 lg:grid-cols-[220px_minmax(0,1fr)] lg:items-center">
-            <div className="px-2 text-center lg:text-left">
-              <p className="text-[11px] font-extrabold uppercase tracking-[0.28em] text-accent-red">
-                Free Consultation
-              </p>
-              <h3 className="mt-2 font-serif text-3xl font-bold text-[#1A1A1A]">
+          <div className="grid gap-3 lg:grid-cols-[220px_minmax(0,1fr)] lg:items-center">
+            <div className="flex items-center px-2 text-center lg:text-left">
+              <h3 className="font-serif text-3xl font-bold text-[#1A1A1A]">
                 Start your quote.
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-[#3D3D3D]">
-                Name, number, email, and a few project details.
-              </p>
             </div>
 
-            <div className="space-y-3">
+            <div>
               <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-[1fr_1fr_1fr_1.25fr_auto]">
                 <input
                   required
@@ -203,17 +196,12 @@ export const ParallaxHero = ({
                   {isSubmitting ? 'Sending...' : 'Get Estimate'}
                 </button>
               </div>
-
-              <p className={`text-xs uppercase tracking-[0.18em] ${errorMsg ? 'text-accent-red' : 'text-[#6B7280]'}`}>
-                {errorMsg || 'Licensed general contractor. Los Angeles based. Fast callback.'}
-              </p>
             </div>
           </div>
+          {errorMsg ? (
+            <p className="mt-3 text-sm font-medium text-accent-red">{errorMsg}</p>
+          ) : null}
         </form>
-
-        <Link href={ctaHref} className="bg-accent-red hover:bg-[#990000] transition-all text-white font-extrabold tracking-widest uppercase px-12 py-5 rounded-sm shadow-2xl hover:shadow-[0_0_20px_rgba(179,18,23,0.4)] hover:-translate-y-1 duration-300 border border-accent-red/50">
-          {ctaText}
-        </Link>
       </div>
       
     </section>

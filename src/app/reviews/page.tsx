@@ -55,7 +55,7 @@ export default function Reviews() {
                   <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{r.site}</span>
                 </div>
                 <div className="text-accent-red mb-4 text-xl tracking-widest">★★★★★</div>
-                <p className="text-gray-300 flex-grow italic mb-4">"{r.text}"</p>
+                <p className="text-gray-300 flex-grow italic mb-4">&ldquo;{r.text}&rdquo;</p>
                 <div className="pt-4 border-t border-gray-100 text-xs font-bold text-accent-red uppercase">
                   Service: {r.service}
                 </div>

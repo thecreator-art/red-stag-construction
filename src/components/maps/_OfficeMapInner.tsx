@@ -18,7 +18,10 @@ export default function OfficeMapInner({ className = '' }: { className?: string 
 
   useEffect(() => {
     // Leaflet requires window execution, deleting default prototype paths to prevent standard Next.js build errors.
-    delete (L.Icon.Default.prototype as any)._getIconUrl;
+    const iconDefaultPrototype = L.Icon.Default.prototype as typeof L.Icon.Default.prototype & {
+      _getIconUrl?: string;
+    };
+    delete iconDefaultPrototype._getIconUrl;
     L.Icon.Default.mergeOptions({
       iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon-2x.png',
       iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png',

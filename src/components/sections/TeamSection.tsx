@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export const TeamSection = () => {
   const team = [
     { name: 'Israel', title: 'Founder, CEO & Prime Contractor', bio: 'Israel manages the physical execution of every Red Stag job site. He oversees all structural work, framing, and on-site crews to guarantee the build meets local codes and our standard of quality.', photo: '/images/team/israel.jpg' },
@@ -30,9 +32,9 @@ export const TeamSection = () => {
         </div>
 
         <div className="mt-20 text-center">
-          <a href="/contact" className="inline-block bg-accent-red text-white text-sm md:text-base font-bold tracking-[0.2em] uppercase px-12 py-5 hover:bg-[#B31217] hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+          <Link href="/contact" className="inline-block bg-accent-red text-white text-sm md:text-base font-bold tracking-[0.2em] uppercase px-12 py-5 hover:bg-[#B31217] hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
             Schedule a Consultation
-          </a>
+          </Link>
         </div>
       </div>
     </section>

@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "auditCopy.js",
+    "auditImages.js",
+    "auditMeta.js",
+    "extract_tags.js",
+    "src/data/**/*.js",
   ]),
 ]);
 

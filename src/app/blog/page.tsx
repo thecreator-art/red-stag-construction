@@ -1,12 +1,21 @@
 import Link from 'next/link';
 import blogsData from '@/data/blogs.json';
 
+interface BlogCard {
+  slug: string;
+  title: string;
+  keyword?: string;
+  locationSlug?: string;
+}
+
 export const metadata = {
   title: 'Construction Insights & Updates | Red Stag Construction',
   description: 'Expert advice, timelines, and guides on custom homes, ADUs, and high-end remodeling across Los Angeles.',
 };
 
 export default function BlogIndex() {
+  const blogs = blogsData as BlogCard[];
+
   return (
     <div className="bg-warm-white py-24 min-h-screen">
       <div className="container mx-auto px-4 max-w-7xl">
@@ -17,7 +26,7 @@ export default function BlogIndex() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {blogsData.map((blog: any) => (
+          {blogs.map((blog) => (
             <Link key={blog.slug} href={`/${blog.slug}`} className="bg-white p-8 rounded-sm shadow-xl border border-gray-100 hover:-translate-y-2 hover:shadow-2xl hover:border-accent-red transition-all duration-300 flex flex-col h-full group">
               <h2 className="text-2xl font-serif font-bold text-[#111] group-hover:text-accent-red transition-colors line-clamp-3 mb-6 leading-snug">{blog.title}</h2>
               <div className="flex flex-wrap gap-2 mb-8 mt-auto">

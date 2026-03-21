@@ -254,7 +254,7 @@ export default function HomePage() {
           </div>
           
           <div className="flex flex-col justify-center text-white lg:pl-10">
-            <h2 className="text-4xl md:text-6xl font-serif font-bold mb-10 leading-tight">Let's Discuss Your Blueprint.</h2>
+            <h2 className="text-4xl md:text-6xl font-serif font-bold mb-10 leading-tight">Let&apos;s Discuss Your Blueprint.</h2>
             
             <div className="space-y-10 text-gray-300 text-lg font-serif">
               <p className="border-l-4 border-accent-red pl-6 py-2 italic text-xl">Red Stag Construction operates across Greater Los Angeles specializing in high-end design-build frameworks.</p>

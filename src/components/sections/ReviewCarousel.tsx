@@ -116,7 +116,7 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
                     {getPlatformIcon(review.platform)}
                   </div>
                 </div>
-                <p className="text-gray-300 italic mb-10 leading-relaxed font-serif">"{review.text}"</p>
+                <p className="text-gray-300 italic mb-10 leading-relaxed font-serif">&ldquo;{review.text}&rdquo;</p>
               </div>
               <div className="text-white font-extrabold tracking-widest text-xs uppercase opacity-80">{review.name}</div>
             </div>
