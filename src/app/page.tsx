@@ -13,10 +13,10 @@ import { ContactForm } from '@/components/forms/ContactForm';
 
 export default function HomePage() {
   const services = [
-    { slug: 'kitchen-remodel-los-angeles', title: 'Kitchen Remodel', imageSrc: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=800' },
-    { slug: 'bathroom-remodel-los-angeles', title: 'Bathroom Remodel', imageSrc: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?q=80&w=800' },
-    { slug: 'adu-contractor-los-angeles', title: 'ADU Construction', imageSrc: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800' },
-    { slug: 'custom-home-builder-los-angeles', title: 'Custom Home Build', imageSrc: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800' },
+    { slug: 'kitchen-remodel-los-angeles', title: 'Kitchen Remodel', imageSrc: '/images/services/kitchen.jpg' },
+    { slug: 'bathroom-remodel-los-angeles', title: 'Bathroom Remodel', imageSrc: '/images/services/bathroom.jpg' },
+    { slug: 'adu-contractor-los-angeles', title: 'ADU Construction', imageSrc: '/images/services/adu.jpg' },
+    { slug: 'custom-home-builder-los-angeles', title: 'Custom Home Build', imageSrc: '/images/services/custom.jpg' },
     { slug: 'home-addition-contractor-los-angeles', title: 'Home Addition', imageSrc: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=800' },
     { slug: 'general-contractor-los-angeles', title: 'General Contracting', imageSrc: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800' },
     { slug: 'hardscape-contractor-los-angeles', title: 'Hardscaping', imageSrc: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800' },
@@ -41,7 +41,7 @@ export default function HomePage() {
     <div className="w-full relative">
       {/* SECTION 1 */}
       <ParallaxHero 
-        imageSrc="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000"
+        imageSrc="/images/hero/hero-main.jpg"
         imageAlt="Modern custom home construction project in Los Angeles"
         h1Text="General Contractor in Los Angeles, CA"
         h2Text="Design-Build Specialists — Custom Homes, ADUs, Kitchen and Bathroom Remodels, and High-End Construction Across Greater Los Angeles"
