@@ -102,7 +102,7 @@ export default function HomePage() {
       />
       {/* SECTION 1 */}
       <ParallaxHero 
-        imageSrc="/images/hero/hero-main.jpg"
+        imageSrc="/images/projects/trousdale-after.jpg"
         imageAlt="Modern custom home construction project in Los Angeles"
         h1Text="General Contractor in Los Angeles, CA"
         h2Text="Design-Build Specialists — Custom Homes, ADUs, Kitchen and Bathroom Remodels, and High-End Construction Across Greater Los Angeles"
