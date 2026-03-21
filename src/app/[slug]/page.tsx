@@ -9,9 +9,29 @@ import Link from 'next/link';
 
 import { ParallaxHero } from '@/components/ui/ParallaxHero';
 import { BeforeAfterSlider } from '@/components/ui/BeforeAfterSlider';
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { TrustBadge } from '@/components/ui/TrustBadge';
 import { ContactForm } from '@/components/forms/ContactForm';
 import { Button } from '@/components/ui/Button';
+
+const serviceCrumbMap: Record<string, { label: string; href: string }> = {
+  'kitchen-remodel-los-angeles': { label: 'Kitchen Remodel', href: '/kitchen-remodel-los-angeles' },
+  'bathroom-remodel-los-angeles': { label: 'Bathroom Remodel', href: '/bathroom-remodel-los-angeles' },
+  'adu-contractor-los-angeles': { label: 'ADU Construction', href: '/adu-contractor-los-angeles' },
+  'custom-home-builder-los-angeles': { label: 'Custom Home Build', href: '/custom-home-builder-los-angeles' },
+  'home-addition-contractor-los-angeles': { label: 'Home Addition', href: '/home-addition-contractor-los-angeles' },
+  'general-contractor-los-angeles': { label: 'General Contracting', href: '/general-contractor-los-angeles' },
+  'hardscape-contractor-los-angeles': { label: 'Hardscaping', href: '/hardscape-contractor-los-angeles' },
+  'fence-company-los-angeles': { label: 'Fencing and Gates', href: '/fence-company-los-angeles' },
+  'window-replacement-los-angeles': { label: 'Window Replacement', href: '/window-replacement-los-angeles' },
+};
+
+const getServiceCrumb = (slug: string) => serviceCrumbMap[slug] || { label: 'Service', href: `/${slug}` };
+
+const getMatrixServiceCrumb = (serviceName: string) => {
+  const match = Object.values(serviceCrumbMap).find((service) => service.label === serviceName);
+  return match || { label: serviceName, href: '/' };
+};
 
 // 1. Static Paths for Build Time
 export async function generateStaticParams() {
@@ -110,8 +130,19 @@ export default async function DynamicSlugPage({ params }: PageProps) {
 
   // --- SERVICE PAGE TEMPLATE ---
   if (service) {
+    const serviceCrumbs = [
+      { label: 'Home', href: '/' },
+      { label: 'Services', href: '/' },
+      { label: getServiceCrumb(service.slug).label, href: `/${service.slug}` },
+    ];
+
     return (
       <>
+        <section className="border-b border-gray-200 bg-warm-white py-4">
+          <div className="container mx-auto px-4">
+            <Breadcrumbs crumbs={serviceCrumbs} />
+          </div>
+        </section>
         <ParallaxHero 
           imageSrc={`/images/services/${(service.slug || '').split('-')[0]}.jpg`} // Fallback image logic based on slug
           imageAlt={service.h1 || 'Construction Service'}
@@ -147,8 +178,19 @@ export default async function DynamicSlugPage({ params }: PageProps) {
 
   // --- LOCATION PAGE TEMPLATE ---
   if (location) {
+    const locationCrumbs = [
+      { label: 'Home', href: '/' },
+      { label: 'Areas We Serve', href: '/areas-we-serve' },
+      { label: location.city || 'Los Angeles', href: `/${location.slug}` },
+    ];
+
     return (
       <>
+        <section className="border-b border-gray-200 bg-warm-white py-4">
+          <div className="container mx-auto px-4">
+            <Breadcrumbs crumbs={locationCrumbs} />
+          </div>
+        </section>
         <ParallaxHero 
           imageSrc={`/images/locations/city-overview.jpg`} // Fallback image logic
           imageAlt={`General Contractor ${location.city || 'Los Angeles'}`}
@@ -188,8 +230,21 @@ export default async function DynamicSlugPage({ params }: PageProps) {
 
   // --- MATRIX PAGE TEMPLATE ---
   if (matrix) {
+    const matrixService = getMatrixServiceCrumb(matrix.service || 'Service');
+    const matrixCrumbs = [
+      { label: 'Home', href: '/' },
+      { label: 'Services', href: '/' },
+      { label: matrixService.label, href: matrixService.href },
+      { label: matrix.city || 'Los Angeles', href: `/${matrix.slug}` },
+    ];
+
     return (
       <>
+        <section className="border-b border-gray-200 bg-warm-white py-4">
+          <div className="container mx-auto px-4">
+            <Breadcrumbs crumbs={matrixCrumbs} />
+          </div>
+        </section>
         <ParallaxHero 
           imageSrc={`/images/services/${(matrix.service || 'general').toLowerCase().split(' ')[0]}.jpg`} // Fallback
           imageAlt={`${matrix.service || 'Service'} in ${matrix.city || 'Los Angeles'}`}
