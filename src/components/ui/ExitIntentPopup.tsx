@@ -92,8 +92,8 @@ export const ExitIntentPopup = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <div className="bg-[#111] border-t-4 border-primary-red w-full max-w-lg p-8 rounded-sm shadow-2xl relative animate-in zoom-in-95 duration-300">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-navy-deep/80 backdrop-blur-sm p-4">
+      <div className="bg-[#111] border-t-4 border-accent-red w-full max-w-lg p-8 rounded-sm shadow-2xl relative animate-in zoom-in-95 duration-300">
         
         <button 
           onClick={() => setIsVisible(false)}
@@ -114,7 +114,7 @@ export const ExitIntentPopup = () => {
         
         {/* Persistent Error State Dropdown */}
         {errorMsg && (
-          <div className="mb-6 p-4 bg-red-900/40 border-l-4 border-primary-red text-white text-sm text-center">
+          <div className="mb-6 p-4 bg-red-900/40 border-l-4 border-accent-red text-white text-sm text-center">
             {errorMsg}
           </div>
         )}
@@ -124,13 +124,13 @@ export const ExitIntentPopup = () => {
           <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
 
           <div>
-            <input required type="text" name="fullName" placeholder="Full Name" className="w-full bg-black border border-gray-800 text-white rounded-sm px-4 py-3 focus:outline-none focus:border-primary-red transition-colors" />
+            <input required type="text" name="fullName" placeholder="Full Name" className="w-full bg-navy-deep border border-gray-800 text-white rounded-sm px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
           </div>
           <div>
-            <input required type="tel" name="phone" placeholder="Phone Number" className="w-full bg-black border border-gray-800 text-white rounded-sm px-4 py-3 focus:outline-none focus:border-primary-red transition-colors" />
+            <input required type="tel" name="phone" placeholder="Phone Number" className="w-full bg-navy-deep border border-gray-800 text-white rounded-sm px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
           </div>
           
-          <button disabled={isSubmitting} type="submit" className="w-full bg-primary-red hover:bg-[#8e0e12] transition-colors text-white font-extrabold uppercase tracking-widest py-4 mt-2 shadow-[0_0_15px_rgba(179,18,23,0.3)] disabled:opacity-50 flex justify-center items-center">
+          <button disabled={isSubmitting} type="submit" className="w-full bg-accent-red hover:bg-[#990000] transition-colors text-white font-extrabold uppercase tracking-widest py-4 mt-2 shadow-[0_0_15px_rgba(179,18,23,0.3)] disabled:opacity-50 flex justify-center items-center">
             {isSubmitting ? (
               <span className="flex items-center">
                 <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>

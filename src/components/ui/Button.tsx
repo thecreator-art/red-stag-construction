@@ -17,9 +17,9 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   const baseStyles = "inline-flex items-center justify-center px-6 py-3 font-bold uppercase transition-all duration-300 tracking-wider text-sm";
   const variants = {
-    primary: "bg-primary-red text-white hover:bg-red-800",
-    secondary: "bg-primary-dark text-white hover:bg-black",
-    outline: "border-2 border-primary-dark text-primary-dark hover:bg-primary-dark hover:text-white"
+    primary: "bg-accent-red text-white hover:bg-red-800",
+    secondary: "bg-navy-deep text-white hover:bg-navy-deep",
+    outline: "border-2 border-primary-dark text-text-dark hover:bg-navy-deep hover:text-white"
   };
   
   const widthClass = fullWidth ? "w-full" : "w-auto";

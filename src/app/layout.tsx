@@ -25,7 +25,7 @@ export default function RootLayout({
       lang="en"
       className="h-full antialiased"
     >
-      <body className="font-sans text-body-grey bg-cream min-h-full flex flex-col items-stretch justify-start pt-16 md:pt-0">
+      <body className="font-sans text-text-body bg-warm-white min-h-full flex flex-col items-stretch justify-start pt-16 md:pt-0">
         <Analytics />
         <ExitIntentPopup />
         <StickyMobileHeader />

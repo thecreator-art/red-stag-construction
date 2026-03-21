@@ -32,7 +32,7 @@ export default function OurProcess() {
       
       <section className="py-24 bg-white relative">
         <div className="container mx-auto px-4 max-w-4xl">
-          <div className="prose prose-lg max-w-none text-body-grey mb-16 border-l-4 border-gold pl-8">
+          <div className="prose prose-lg max-w-none text-text-body mb-16 border-l-4 border-accent-red pl-8">
             <p className="mb-4">At Red Stag Construction, we believe that predictability is the ultimate luxury in residential construction. The traditional model of hiring a separate architect, bidding out to multiple contractors, and managing endless change orders is fundamentally broken. It leads to ballooning budgets and adversarial relationships.</p>
             <p>Our 5-phase design-build methodology vertically integrates the entire process. By aligning the architectural vision with the structural reality from day one, we guarantee a smoother, faster, and more transparent build. This process has been refined over a decade of operating in the highly regulated Los Angeles jurisdiction, ensuring that your custom home, kitchen remodel, or <strong><Link href="/general-contractor-los-angeles">general contracting project</Link></strong> is executed flawlessly.</p>
           </div>
@@ -40,21 +40,21 @@ export default function OurProcess() {
           <div className="relative border-l-2 border-gray-200 ml-3 md:ml-6 mt-16 space-y-20">
             {phases.map((phase, i) => (
               <div key={i} className="relative pl-10 md:pl-16">
-                <div className="absolute w-8 h-8 bg-primary-dark rounded-full -left-[17px] border-4 border-white flex items-center justify-center text-white font-bold text-xs top-1 shadow-md">
+                <div className="absolute w-8 h-8 bg-navy-deep rounded-full -left-[17px] border-4 border-white flex items-center justify-center text-white font-bold text-xs top-1 shadow-md">
                   {i + 1}
                 </div>
-                <h3 className="text-3xl font-serif font-bold text-primary-dark mb-4">{phase.title}</h3>
-                <p className="text-lg leading-relaxed text-body-grey">{phase.text}</p>
+                <h3 className="text-3xl font-serif font-bold text-text-dark mb-4">{phase.title}</h3>
+                <p className="text-lg leading-relaxed text-text-body">{phase.text}</p>
                 <div className="mt-6 flex gap-4">
-                   <div className="h-1 w-12 bg-primary-red"></div>
+                   <div className="h-1 w-12 bg-accent-red"></div>
                 </div>
               </div>
             ))}
           </div>
           
           <div className="mt-24 text-center">
-             <p className="text-xl font-bold text-primary-dark mb-6">Experience the difference of a true design-build firm.</p>
-             <Link href="/contact" className="bg-primary-red text-white px-8 py-4 rounded shadow-md hover:bg-[#8e0e12] font-bold transition-colors inline-block">Schedule a Site Visit</Link>
+             <p className="text-xl font-bold text-text-dark mb-6">Experience the difference of a true design-build firm.</p>
+             <Link href="/contact" className="bg-accent-red text-white px-8 py-4 rounded shadow-md hover:bg-[#990000] font-bold transition-colors inline-block">Schedule a Site Visit</Link>
           </div>
         </div>
       </section>

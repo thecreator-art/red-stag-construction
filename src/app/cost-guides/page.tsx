@@ -29,14 +29,14 @@ export default function CostGuidesIndex() {
       />
       <TrustBadge />
       
-      <section className="py-24 bg-cream">
+      <section className="py-24 bg-warm-white">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {guides.map((g, i) => (
-              <div key={i} className="bg-white p-8 shadow-sm border-t-4 border-primary-red flex flex-col rounded hover:shadow-md transition-shadow">
-                <h2 className="text-2xl font-serif font-bold text-primary-dark mb-4">{g.title}</h2>
-                <p className="text-body-grey mb-8 flex-grow leading-relaxed">{g.desc}</p>
-                <Link href={`/cost-guides/${g.slug}`} className="text-primary-red font-bold uppercase tracking-widest text-xs hover:text-[#8e0e12] transition-colors border-b-2 border-primary-red inline-block self-start pb-1">
+              <div key={i} className="bg-white p-8 shadow-sm border-t-4 border-accent-red flex flex-col rounded hover:shadow-md transition-shadow">
+                <h2 className="text-2xl font-serif font-bold text-text-dark mb-4">{g.title}</h2>
+                <p className="text-text-body mb-8 flex-grow leading-relaxed">{g.desc}</p>
+                <Link href={`/cost-guides/${g.slug}`} className="text-accent-red font-bold uppercase tracking-widest text-xs hover:text-[#990000] transition-colors border-b-2 border-accent-red inline-block self-start pb-1">
                   Read the Full Guide
                 </Link>
               </div>

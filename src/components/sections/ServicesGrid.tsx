@@ -30,7 +30,7 @@ export const ServicesGrid = ({ services, className = '' }: ServicesGridProps) =>
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
           />
           {/* Default Dark Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-colors duration-500 group-hover:bg-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-colors duration-500 group-hover:bg-navy-light/80" />
           
           {/* Default Visible Title (bottom left) */}
           <div className="absolute bottom-6 left-6 right-6 transition-all duration-500 group-hover:-translate-y-6">
@@ -40,9 +40,9 @@ export const ServicesGrid = ({ services, className = '' }: ServicesGridProps) =>
           </div>
 
           {/* Hover Arrow/Action */}
-          <div className="absolute bottom-6 left-6 opacity-0 transition-all duration-500 translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 flex items-center text-primary-red">
+          <div className="absolute bottom-6 left-6 opacity-0 transition-all duration-500 translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 flex items-center text-accent-red">
             <span className="text-xs font-bold tracking-widest uppercase mr-2 text-white/90">View Details</span>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4 text-primary-red">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4 text-accent-red">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>
           </div>

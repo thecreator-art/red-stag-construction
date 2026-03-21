@@ -10,7 +10,7 @@ export const metadata = {
 export default function FAQ() {
   const faqs = Array.from({ length: 30 }).map((_, i) => ({
     question: `Common Construction Question ${i + 1}`,
-    answer: `This is a comprehensive answer covering permits, timelines, and costs. Check out our <a href="/general-contractor" class="text-primary-red font-bold hover:underline">General Contracting Services</a> to learn more about how we handle this specific phase of construction.`
+    answer: `This is a comprehensive answer covering permits, timelines, and costs. Check out our <a href="/general-contractor" class="text-accent-red font-bold hover:underline">General Contracting Services</a> to learn more about how we handle this specific phase of construction.`
   }));
 
   const schema = {
@@ -39,18 +39,18 @@ export default function FAQ() {
       />
       <TrustBadge />
       
-      <section className="py-24 bg-cream">
+      <section className="py-24 bg-warm-white">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="space-y-6">
             {faqs.map((faq, i) => (
               <details key={i} className="group bg-white border border-gray-200 p-6 shadow-sm rounded-sm">
-                <summary className="flex justify-between items-center font-bold font-serif text-xl cursor-pointer list-none text-primary-dark">
+                <summary className="flex justify-between items-center font-bold font-serif text-xl cursor-pointer list-none text-text-dark">
                   <span>{faq.question}</span>
                   <span className="transition group-open:rotate-180">
                     <svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" className="w-6 h-6"><polyline points="6 9 12 15 18 9"></polyline></svg>
                   </span>
                 </summary>
-                <div className="text-body-grey mt-4 leading-relaxed" dangerouslySetInnerHTML={{ __html: faq.answer }}></div>
+                <div className="text-text-body mt-4 leading-relaxed" dangerouslySetInnerHTML={{ __html: faq.answer }}></div>
               </details>
             ))}
           </div>

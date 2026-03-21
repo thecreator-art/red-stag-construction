@@ -41,7 +41,7 @@ export const PortfolioFilter = ({ projects, className = '' }: PortfolioFilterPro
           <div className="flex flex-wrap gap-2">
             <button 
               onClick={() => setActiveService(null)}
-              className={`px-5 py-2 text-xs font-bold tracking-wider uppercase border transition-all duration-300 ${!activeService ? 'bg-primary-red border-primary-red text-white' : 'border-gray-700 text-gray-400 hover:border-white hover:text-white bg-black/50'}`}
+              className={`px-5 py-2 text-xs font-bold tracking-wider uppercase border transition-all duration-300 ${!activeService ? 'bg-accent-red border-accent-red text-white' : 'border-gray-700 text-gray-400 hover:border-white hover:text-white bg-navy-deep/50'}`}
             >
               All Services
             </button>
@@ -49,7 +49,7 @@ export const PortfolioFilter = ({ projects, className = '' }: PortfolioFilterPro
               <button 
                 key={service}
                 onClick={() => setActiveService(service)}
-                className={`px-5 py-2 text-xs font-bold tracking-wider uppercase border transition-all duration-300 ${activeService === service ? 'bg-primary-red border-primary-red text-white' : 'border-gray-700 text-gray-400 hover:border-white hover:text-white bg-black/50'}`}
+                className={`px-5 py-2 text-xs font-bold tracking-wider uppercase border transition-all duration-300 ${activeService === service ? 'bg-accent-red border-accent-red text-white' : 'border-gray-700 text-gray-400 hover:border-white hover:text-white bg-navy-deep/50'}`}
               >
                 {service}
               </button>
@@ -62,7 +62,7 @@ export const PortfolioFilter = ({ projects, className = '' }: PortfolioFilterPro
           <div className="flex flex-wrap gap-2">
             <button 
               onClick={() => setActiveCity(null)}
-              className={`px-5 py-2 text-xs font-bold tracking-wider uppercase border transition-all duration-300 ${!activeCity ? 'bg-white border-white text-black' : 'border-gray-700 text-gray-400 hover:border-white hover:text-white bg-black/50'}`}
+              className={`px-5 py-2 text-xs font-bold tracking-wider uppercase border transition-all duration-300 ${!activeCity ? 'bg-white border-white text-black' : 'border-gray-700 text-gray-400 hover:border-white hover:text-white bg-navy-deep/50'}`}
             >
               All Areas
             </button>
@@ -70,7 +70,7 @@ export const PortfolioFilter = ({ projects, className = '' }: PortfolioFilterPro
               <button 
                 key={city}
                 onClick={() => setActiveCity(city)}
-                className={`px-5 py-2 text-xs font-bold tracking-wider uppercase border transition-all duration-300 ${activeCity === city ? 'bg-white border-white text-black' : 'border-gray-700 text-gray-400 hover:border-white hover:text-white bg-black/50'}`}
+                className={`px-5 py-2 text-xs font-bold tracking-wider uppercase border transition-all duration-300 ${activeCity === city ? 'bg-white border-white text-black' : 'border-gray-700 text-gray-400 hover:border-white hover:text-white bg-navy-deep/50'}`}
               >
                 {city}
               </button>
@@ -103,7 +103,7 @@ export const PortfolioFilter = ({ projects, className = '' }: PortfolioFilterPro
                 <div>
                   <div className="flex justify-between items-start mb-4">
                     <h3 className="text-2xl md:text-3xl font-serif text-white leading-tight">{project.title}</h3>
-                    <span className="text-primary-red font-bold text-xs tracking-widest uppercase border border-primary-red/30 px-3 py-1.5 bg-primary-red/10 whitespace-nowrap ml-4 rounded-sm">{project.city}</span>
+                    <span className="text-accent-red font-bold text-xs tracking-widest uppercase border border-accent-red/30 px-3 py-1.5 bg-accent-red/10 whitespace-nowrap ml-4 rounded-sm">{project.city}</span>
                   </div>
                   <p className="text-gray-400 text-sm md:text-base mb-6 border-b border-gray-800 pb-6">{project.serviceType}</p>
                 </div>

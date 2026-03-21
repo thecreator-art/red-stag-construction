@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-dark: #0F0F0F;
-  --color-primary-red: #8B1A1A;
-  --color-gold: #B8963E;
-  --color-cream: #F5F0E8;
-  --color-body-grey: #3A3A3A;
-  --color-mid-grey: #D6D0C8;
-  --color-navy: #1A2533;
+  --color-navy-deep: #152D45;
+  --color-navy-light: #1E3A52;
+  --color-warm-white: #F0EDE8;
+  --color-warm-grey: #E8E4DE;
+  --color-accent-red: #CC0000;
+  
+  --color-text-dark: #1A1A1A;
+  --color-text-body: #3D3D3D;
   --color-white: #FFFFFF;
 
   --font-sans: var(--font-inter), Arial, sans-serif;
@@ -16,22 +17,22 @@
 
 @layer base {
   body {
-    background-color: var(--color-cream);
-    color: var(--color-body-grey);
+    background-color: var(--color-warm-white);
+    color: var(--color-text-body);
     font-family: var(--font-sans);
   }
   
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-serif);
-    color: var(--color-primary-dark);
+    color: var(--color-text-dark);
     font-weight: 700;
   }
   
   h2 {
-    color: var(--color-navy);
+    color: var(--color-navy-deep);
   }
   
   h3 {
-    color: var(--color-primary-red);
+    color: var(--color-accent-red);
   }
 }

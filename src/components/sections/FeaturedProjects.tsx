@@ -22,7 +22,7 @@ export const FeaturedProjects = () => {
             <p className="text-gray-400 mt-4 max-w-xl text-lg">Move the sliders below to see the dramatic transformations achieved by our integrated design-build teams across Los Angeles.</p>
           </div>
           <div className="mt-8 md:mt-0">
-            <Link href="/our-work" className="inline-flex items-center text-primary-red font-bold uppercase tracking-widest text-sm hover:text-white transition-colors">
+            <Link href="/our-work" className="inline-flex items-center text-accent-red font-bold uppercase tracking-widest text-sm hover:text-white transition-colors">
               View All Work
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4 ml-2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -43,7 +43,7 @@ export const FeaturedProjects = () => {
                 <div>
                   <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center mb-6 gap-4">
                     <h3 className="text-2xl md:text-3xl font-serif text-white leading-tight">{project.title}</h3>
-                    <span className="text-primary-red font-bold text-[10px] md:text-xs tracking-widest uppercase border border-primary-red/30 px-3 py-1.5 bg-primary-red/10 whitespace-nowrap rounded-sm">{project.city}</span>
+                    <span className="text-accent-red font-bold text-[10px] md:text-xs tracking-widest uppercase border border-accent-red/30 px-3 py-1.5 bg-accent-red/10 whitespace-nowrap rounded-sm">{project.city}</span>
                   </div>
                   <p className="text-gray-400 text-sm md:text-base">{project.serviceType}</p>
                 </div>
@@ -53,7 +53,7 @@ export const FeaturedProjects = () => {
         </div>
 
         <div className="text-center">
-          <Link href="/our-work" className="inline-block bg-[#1A1A1A] hover:bg-primary-red border border-gray-700 hover:border-primary-red transition-all text-white font-extrabold tracking-widest uppercase px-12 py-5 rounded-sm shadow-xl hover:-translate-y-1 duration-300">
+          <Link href="/our-work" className="inline-block bg-[#1A1A1A] hover:bg-accent-red border border-gray-700 hover:border-accent-red transition-all text-white font-extrabold tracking-widest uppercase px-12 py-5 rounded-sm shadow-xl hover:-translate-y-1 duration-300">
             Explore Portfolio
           </Link>
         </div>

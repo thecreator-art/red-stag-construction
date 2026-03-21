@@ -6,7 +6,7 @@ export const StickyMobileHeader = () => {
     <div className="fixed top-0 left-0 right-0 z-50 bg-[#111] border-b border-gray-800 text-white h-16 flex items-center justify-between px-4 md:hidden shadow-xl">
       
       {/* Left: Standard Branding */}
-      <Link href="/" className="flex items-center text-primary-red font-serif font-bold text-lg leading-none">
+      <Link href="/" className="flex items-center text-accent-red font-serif font-bold text-lg leading-none">
         Red Stag
       </Link>
 
@@ -16,7 +16,7 @@ export const StickyMobileHeader = () => {
       </a>
 
       {/* Right: Pathing CTA Block */}
-      <Link href="/contact" className="bg-primary-red text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-2 rounded-sm whitespace-nowrap truncate">
+      <Link href="/contact" className="bg-accent-red text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-2 rounded-sm whitespace-nowrap truncate">
         Get Estimate
       </Link>
       

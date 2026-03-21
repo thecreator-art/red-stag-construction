@@ -57,7 +57,7 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
       
       {/* Inline Persistent Error Delivery Mechanics */}
       {errorMsg && (
-        <div className="p-4 mb-6 bg-red-900/40 border-l-4 border-primary-red text-white text-sm">
+        <div className="p-4 mb-6 bg-red-900/40 border-l-4 border-accent-red text-white text-sm">
           {errorMsg}
         </div>
       )}
@@ -69,19 +69,19 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
-          <label htmlFor="fullName" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-primary-red pl-2">Full Name</label>
-          <input required type="text" id="fullName" name="fullName" className="w-full bg-[#111] border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-primary-red transition-colors" />
+          <label htmlFor="fullName" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-accent-red pl-2">Full Name</label>
+          <input required type="text" id="fullName" name="fullName" className="w-full bg-[#111] border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
         </div>
         <div>
-          <label htmlFor="phone" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-primary-red pl-2">Phone Number</label>
-          <input required type="tel" id="phone" name="phone" className="w-full bg-[#111] border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-primary-red transition-colors" />
+          <label htmlFor="phone" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-accent-red pl-2">Phone Number</label>
+          <input required type="tel" id="phone" name="phone" className="w-full bg-[#111] border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
-          <label htmlFor="projectType" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-primary-red pl-2">Project Type</label>
-          <select required id="projectType" name="projectType" className="w-full bg-[#111] border border-gray-700 text-gray-200 px-4 py-3 focus:outline-none focus:border-primary-red transition-colors appearance-none">
+          <label htmlFor="projectType" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-accent-red pl-2">Project Type</label>
+          <select required id="projectType" name="projectType" className="w-full bg-[#111] border border-gray-700 text-gray-200 px-4 py-3 focus:outline-none focus:border-accent-red transition-colors appearance-none">
             <option value="">Select Project Type</option>
             <option value="Bathroom Remodel">Bathroom Remodel</option>
             <option value="Kitchen Remodel">Kitchen Remodel</option>
@@ -93,17 +93,17 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
           </select>
         </div>
         <div>
-          <label htmlFor="city" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-primary-red pl-2">City</label>
-          <input required type="text" id="city" name="city" placeholder="e.g. Sherman Oaks" className="w-full bg-[#111] border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-primary-red transition-colors" />
+          <label htmlFor="city" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-accent-red pl-2">City</label>
+          <input required type="text" id="city" name="city" placeholder="e.g. Sherman Oaks" className="w-full bg-[#111] border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
         </div>
       </div>
 
       <div className="mb-8">
-        <label htmlFor="message" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-primary-red pl-2">Tell Us About Your Project</label>
-        <textarea required id="message" name="message" rows={5} placeholder="Briefly describe your scope regarding budget, timing, or architectural desires..." className="w-full bg-[#111] border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-primary-red transition-colors resize-y" />
+        <label htmlFor="message" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-accent-red pl-2">Tell Us About Your Project</label>
+        <textarea required id="message" name="message" rows={5} placeholder="Briefly describe your scope regarding budget, timing, or architectural desires..." className="w-full bg-[#111] border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors resize-y" />
       </div>
 
-      <button disabled={isSubmitting} type="submit" className="w-full bg-primary-red hover:bg-[#8e0e12] transition-all duration-300 text-white font-extrabold uppercase tracking-widest py-5 shadow-[0_0_15px_rgba(179,18,23,0.3)] disabled:opacity-50 disabled:shadow-none flex justify-center items-center group relative overflow-hidden">
+      <button disabled={isSubmitting} type="submit" className="w-full bg-accent-red hover:bg-[#990000] transition-all duration-300 text-white font-extrabold uppercase tracking-widest py-5 shadow-[0_0_15px_rgba(179,18,23,0.3)] disabled:opacity-50 disabled:shadow-none flex justify-center items-center group relative overflow-hidden">
         {isSubmitting ? (
           <span className="flex items-center">
             <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>

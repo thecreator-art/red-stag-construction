@@ -64,10 +64,10 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
         <div className="flex justify-between items-end mb-10 border-b border-gray-800 pb-6">
           <h2 className="text-3xl md:text-4xl font-serif text-white font-bold leading-tight">Client Reviews</h2>
           <div className="flex space-x-3">
-            <button onClick={prevSlide} className="p-3 bg-[#222] hover:bg-primary-red transition-colors text-white shadow-xl">
+            <button onClick={prevSlide} className="p-3 bg-[#222] hover:bg-accent-red transition-colors text-white shadow-xl">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
             </button>
-            <button onClick={nextSlide} className="p-3 bg-[#222] hover:bg-primary-red transition-colors text-white shadow-xl">
+            <button onClick={nextSlide} className="p-3 bg-[#222] hover:bg-accent-red transition-colors text-white shadow-xl">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
             </button>
           </div>
@@ -78,7 +78,7 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
           {visibleReviews.map((review, i) => (
             <div 
               key={`${review.id}-${i}`} 
-              className={`bg-[#111] border-t-4 border-primary-red p-8 shadow-2xl flex flex-col justify-between h-full ${i > 0 ? 'hidden md:flex' : 'flex'}`}
+              className={`bg-[#111] border-t-4 border-accent-red p-8 shadow-2xl flex flex-col justify-between h-full ${i > 0 ? 'hidden md:flex' : 'flex'}`}
             >
               <div>
                 <div className="flex justify-between items-start mb-6">
@@ -88,7 +88,7 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
                       <svg key={idx} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd" /></svg>
                     ))}
                   </div>
-                  <div className="flex items-center justify-center w-8 h-8 bg-black rounded-full text-xs shadow-md">
+                  <div className="flex items-center justify-center w-8 h-8 bg-navy-deep rounded-full text-xs shadow-md">
                     {getPlatformIcon(review.platform)}
                   </div>
                 </div>

@@ -13,7 +13,7 @@ export const SplitBreakCTA = () => {
       </div>
       
       {/* Opacity Mask */}
-      <div className="absolute inset-0 bg-black/80 -z-10" />
+      <div className="absolute inset-0 bg-navy-deep/80 -z-10" />
 
       {/* Conversion Hierarchy */}
       <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center">
@@ -24,11 +24,11 @@ export const SplitBreakCTA = () => {
           Our schedule fills 6-8 weeks out. The sooner we talk, the sooner we build.
         </p>
         
-        <a href="tel:6266522303" className="text-5xl md:text-7xl font-extrabold tracking-wider text-white hover:text-primary-red transition-colors mb-16 block drop-shadow-lg">
+        <a href="tel:6266522303" className="text-5xl md:text-7xl font-extrabold tracking-wider text-white hover:text-accent-red transition-colors mb-16 block drop-shadow-lg">
           (626) 652-2303
         </a>
 
-        <Link href="/contact" className="bg-primary-red hover:bg-[#8e0e12] transition-colors text-white font-extrabold tracking-widest uppercase px-16 py-6 rounded-sm shadow-2xl hover:-translate-y-1 transform duration-300 border border-primary-red/50 hover:shadow-[0_0_25px_rgba(179,18,23,0.5)]">
+        <Link href="/contact" className="bg-accent-red hover:bg-[#990000] transition-colors text-white font-extrabold tracking-widest uppercase px-16 py-6 rounded-sm shadow-2xl hover:-translate-y-1 transform duration-300 border border-accent-red/50 hover:shadow-[0_0_25px_rgba(179,18,23,0.5)]">
           Get a Free Estimate
         </Link>
       </div>

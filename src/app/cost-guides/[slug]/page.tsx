@@ -136,34 +136,34 @@ export default async function CostGuidePage({ params }: PageProps) {
       <section className="bg-white py-24">
         <div className="container mx-auto px-4 max-w-4xl">
           
-          <div className="prose prose-lg max-w-none text-body-grey mb-16">
+          <div className="prose prose-lg max-w-none text-text-body mb-16">
             {repeatedContent.split('\\n\\n').map((para, i) => (
               <p key={i} className="mb-6 leading-relaxed">{para}</p>
             ))}
           </div>
 
-          <h2 className="text-3xl font-serif font-bold text-primary-dark mb-8 border-b-2 border-gold pb-4 inline-block">Cost Breakdown by Scope Level</h2>
+          <h2 className="text-3xl font-serif font-bold text-text-dark mb-8 border-b-2 border-accent-red pb-4 inline-block">Cost Breakdown by Scope Level</h2>
           
           <div className="overflow-x-auto mb-16 shadow-sm border border-gray-200 rounded">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-primary-dark text-white">
+                <tr className="bg-navy-deep text-white">
                   <th className="p-6 font-bold uppercase tracking-widest text-sm w-1/3">Scope Level</th>
                   <th className="p-6 font-bold uppercase tracking-widest text-sm w-2/3">Estimated 2026 Investment</th>
                 </tr>
               </thead>
-              <tbody className="text-body-grey">
+              <tbody className="text-text-body">
                 <tr className="border-b border-gray-100 bg-white">
-                  <td className="p-6 font-bold text-primary-dark">Basic / Cosmetic Update</td>
-                  <td className="p-6 text-xl font-bold text-primary-red">{guide.basic}</td>
+                  <td className="p-6 font-bold text-text-dark">Basic / Cosmetic Update</td>
+                  <td className="p-6 text-xl font-bold text-accent-red">{guide.basic}</td>
                 </tr>
-                <tr className="border-b border-gray-100 bg-cream">
-                  <td className="p-6 font-bold text-primary-dark">Mid-Tier / Standard Custom</td>
-                  <td className="p-6 text-xl font-bold text-primary-red">{guide.mid}</td>
+                <tr className="border-b border-gray-100 bg-warm-white">
+                  <td className="p-6 font-bold text-text-dark">Mid-Tier / Standard Custom</td>
+                  <td className="p-6 text-xl font-bold text-accent-red">{guide.mid}</td>
                 </tr>
                 <tr className="bg-white">
-                  <td className="p-6 font-bold text-primary-dark">Premium / High-End Luxury</td>
-                  <td className="p-6 text-xl font-bold text-primary-red">{guide.premium}</td>
+                  <td className="p-6 font-bold text-text-dark">Premium / High-End Luxury</td>
+                  <td className="p-6 text-xl font-bold text-accent-red">{guide.premium}</td>
                 </tr>
               </tbody>
             </table>
@@ -171,44 +171,44 @@ export default async function CostGuidePage({ params }: PageProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
             <div>
-              <h3 className="text-2xl font-serif font-bold text-primary-dark mb-6">What Affects the Final Cost?</h3>
+              <h3 className="text-2xl font-serif font-bold text-text-dark mb-6">What Affects the Final Cost?</h3>
               <ul className="space-y-4">
-                <li className="flex items-start"><span className="text-primary-red font-bold mr-3 mt-1">✓</span><span className="text-body-grey"><strong>Structural Changes:</strong> Removing load-bearing walls or vaulting ceilings requires engineering and heavy framing.</span></li>
-                <li className="flex items-start"><span className="text-primary-red font-bold mr-3 mt-1">✓</span><span className="text-body-grey"><strong>Material Selection:</strong> The variance between standard quartz and imported Italian marble drastically impacts the materials budget.</span></li>
-                <li className="flex items-start"><span className="text-primary-red font-bold mr-3 mt-1">✓</span><span className="text-body-grey"><strong>Plumbing/Electrical:</strong> Relocating primary systems involves trenching concrete or extensive rewiring.</span></li>
-                <li className="flex items-start"><span className="text-primary-red font-bold mr-3 mt-1">✓</span><span className="text-body-grey"><strong>Permitting Fees:</strong> LADBS and plan-check fees escalate depending on the square footage scope.</span></li>
+                <li className="flex items-start"><span className="text-accent-red font-bold mr-3 mt-1">✓</span><span className="text-text-body"><strong>Structural Changes:</strong> Removing load-bearing walls or vaulting ceilings requires engineering and heavy framing.</span></li>
+                <li className="flex items-start"><span className="text-accent-red font-bold mr-3 mt-1">✓</span><span className="text-text-body"><strong>Material Selection:</strong> The variance between standard quartz and imported Italian marble drastically impacts the materials budget.</span></li>
+                <li className="flex items-start"><span className="text-accent-red font-bold mr-3 mt-1">✓</span><span className="text-text-body"><strong>Plumbing/Electrical:</strong> Relocating primary systems involves trenching concrete or extensive rewiring.</span></li>
+                <li className="flex items-start"><span className="text-accent-red font-bold mr-3 mt-1">✓</span><span className="text-text-body"><strong>Permitting Fees:</strong> LADBS and plan-check fees escalate depending on the square footage scope.</span></li>
               </ul>
             </div>
-            <div className="bg-primary-dark text-white p-8 rounded shadow-xl border-t-4 border-gold">
+            <div className="bg-navy-deep text-white p-8 rounded shadow-xl border-t-4 border-accent-red">
               <h3 className="text-2xl font-serif font-bold mb-6">What Red Stag Includes</h3>
               <p className="text-gray-300 mb-6">Unlike low-bidding contractors who hit you with change orders, our estimates are intensely comprehensive.</p>
               <ul className="space-y-3 text-sm text-gray-300">
-                <li className="flex items-center"><span className="text-gold mr-3">■</span> Full Architectural Design & 3D Renderings</li>
-                <li className="flex items-center"><span className="text-gold mr-3">■</span> Structural Engineering & Title 24</li>
-                <li className="flex items-center"><span className="text-gold mr-3">■</span> Dedicated On-Site Project Manager</li>
-                <li className="flex items-center"><span className="text-gold mr-3">■</span> Complete Permit Expediting</li>
-                <li className="flex items-center"><span className="text-gold mr-3">■</span> Premium Custom Finishes & Installation</li>
-                <li className="flex items-center"><span className="text-gold mr-3">■</span> 2-Year Comprehensive Workmanship Warranty</li>
+                <li className="flex items-center"><span className="text-accent-red mr-3">■</span> Full Architectural Design & 3D Renderings</li>
+                <li className="flex items-center"><span className="text-accent-red mr-3">■</span> Structural Engineering & Title 24</li>
+                <li className="flex items-center"><span className="text-accent-red mr-3">■</span> Dedicated On-Site Project Manager</li>
+                <li className="flex items-center"><span className="text-accent-red mr-3">■</span> Complete Permit Expediting</li>
+                <li className="flex items-center"><span className="text-accent-red mr-3">■</span> Premium Custom Finishes & Installation</li>
+                <li className="flex items-center"><span className="text-accent-red mr-3">■</span> 2-Year Comprehensive Workmanship Warranty</li>
               </ul>
             </div>
           </div>
 
           <div className="border-t border-gray-200 pt-16">
-            <h2 className="text-3xl font-serif font-bold text-primary-dark mb-8">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-serif font-bold text-text-dark mb-8">Frequently Asked Questions</h2>
             <div className="space-y-6 mb-16">
               {guide.faqs.map((faq, i) => (
-                <div key={i} className="bg-cream p-6 rounded border border-gray-200">
-                  <h4 className="font-bold text-lg text-primary-dark mb-3">{faq.q}</h4>
-                  <p className="text-body-grey leading-relaxed">{faq.a}</p>
+                <div key={i} className="bg-warm-white p-6 rounded border border-gray-200">
+                  <h4 className="font-bold text-lg text-text-dark mb-3">{faq.q}</h4>
+                  <p className="text-text-body leading-relaxed">{faq.a}</p>
                 </div>
               ))}
             </div>
           </div>
 
           <div className="text-center bg-gray-50 border border-gray-200 p-12 rounded">
-             <h3 className="text-3xl font-serif font-bold text-primary-dark mb-4">Ready for an Exact Quote?</h3>
-             <p className="text-lg text-body-grey mb-8">Stop guessing based on online averages. Contact our design-build team for a detailed site evaluation and a firm proposal.</p>
-             <Link href="/contact" className="bg-primary-red text-white px-10 py-4 rounded hover:bg-[#8e0e12] font-bold shadow-lg transition-colors inline-block text-lg">Schedule Your Free Estimate</Link>
+             <h3 className="text-3xl font-serif font-bold text-text-dark mb-4">Ready for an Exact Quote?</h3>
+             <p className="text-lg text-text-body mb-8">Stop guessing based on online averages. Contact our design-build team for a detailed site evaluation and a firm proposal.</p>
+             <Link href="/contact" className="bg-accent-red text-white px-10 py-4 rounded hover:bg-[#990000] font-bold shadow-lg transition-colors inline-block text-lg">Schedule Your Free Estimate</Link>
           </div>
 
         </div>

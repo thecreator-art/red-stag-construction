@@ -4,7 +4,7 @@ import { Button } from '../ui/Button';
 
 export const Footer = () => {
   return (
-    <footer className="bg-primary-dark text-white pt-20 pb-10 mt-auto border-t-4 border-primary-red">
+    <footer className="bg-navy-deep text-white pt-20 pb-10 mt-auto border-t-4 border-accent-red">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand Info */}
@@ -23,15 +23,15 @@ export const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h3 className="text-gold text-lg mb-6 font-bold uppercase tracking-wider">Contact Us</h3>
+            <h3 className="text-accent-red text-lg mb-6 font-bold uppercase tracking-wider">Contact Us</h3>
             <div className="space-y-4 text-sm font-semibold">
               <p className="flex flex-col">
                 <span className="text-gray-500 mb-1">Phone</span>
-                <a href="tel:6266522303" className="text-white hover:text-gold text-lg transition-colors">(626) 652-2303</a>
+                <a href="tel:6266522303" className="text-white hover:text-accent-red text-lg transition-colors">(626) 652-2303</a>
               </p>
               <p className="flex flex-col">
                 <span className="text-gray-500 mb-1">Email</span>
-                <a href="mailto:support@redstagcc.com" className="hover:text-gold transition-colors">support@redstagcc.com</a>
+                <a href="mailto:support@redstagcc.com" className="hover:text-accent-red transition-colors">support@redstagcc.com</a>
               </p>
               <p className="flex flex-col">
                 <span className="text-gray-500 mb-1">Address</span>
@@ -43,7 +43,7 @@ export const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-gold text-lg mb-6 font-bold uppercase tracking-wider">Company</h3>
+            <h3 className="text-accent-red text-lg mb-6 font-bold uppercase tracking-wider">Company</h3>
             <ul className="space-y-3 text-sm font-semibold">
               <li><Link href="/about" className="hover:text-white text-gray-400 transition-colors">About Red Stag</Link></li>
               <li><Link href="/our-work" className="hover:text-white text-gray-400 transition-colors">Our Portfolio</Link></li>
@@ -56,7 +56,7 @@ export const Footer = () => {
 
           {/* Partners */}
           <div>
-            <h3 className="text-gold text-lg mb-6 font-bold uppercase tracking-wider">Partners</h3>
+            <h3 className="text-accent-red text-lg mb-6 font-bold uppercase tracking-wider">Partners</h3>
             <ul className="space-y-3 text-sm font-semibold">
               <li><Link href="/for-architects" className="hover:text-white text-gray-400 transition-colors">For Architects</Link></li>
               <li><Link href="/for-designers" className="hover:text-white text-gray-400 transition-colors">For Interior Designers</Link></li>

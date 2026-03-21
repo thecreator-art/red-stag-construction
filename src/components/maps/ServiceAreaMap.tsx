@@ -81,8 +81,8 @@ export const ServiceAreaMap = ({ className = '' }: { className?: string }) => {
       </svg>
       
       {/* Legend Map Overlay */}
-      <div className="absolute bottom-6 right-6 bg-[#1A1A1A]/95 p-4 border-l-4 border-primary-red shadow-2xl backdrop-blur-sm pointer-events-none">
-        <h4 className="text-white font-bold tracking-widest uppercase text-sm mb-1">Service Area</h4>
+      <div className="absolute bottom-6 right-6 bg-[#1A1A1A]/95 p-4 border-l-4 border-accent-red shadow-2xl backdrop-blur-sm pointer-events-none">
+        <h4 className="text-text-dark font-bold tracking-widest uppercase text-sm mb-1">Service Area</h4>
         <p className="text-gray-400 text-xs font-mono">Greater Los Angeles</p>
       </div>
     </div>

@@ -81,8 +81,8 @@ export default async function DynamicSlugPage({ params }: PageProps) {
     try { fileContent = fs.readFileSync(filePath, 'utf8'); } catch (e) {}
     
     let contentBody = fileContent.replace(/---[\s\S]*?---/, '').trim();
-    contentBody = contentBody.replace(/^#\s+(.*$)/gim, '<h1 class="text-4xl md:text-5xl font-serif font-bold text-primary-dark mb-8">$1</h1>');
-    contentBody = contentBody.replace(/^##\s+(.*$)/gim, '<h2 class="text-3xl font-serif font-bold text-primary-dark mt-12 mb-6">$1</h2>');
+    contentBody = contentBody.replace(/^#\s+(.*$)/gim, '<h1 class="text-4xl md:text-5xl font-serif font-bold text-text-dark mb-8">$1</h1>');
+    contentBody = contentBody.replace(/^##\s+(.*$)/gim, '<h2 class="text-3xl font-serif font-bold text-text-dark mt-12 mb-6">$1</h2>');
     contentBody = contentBody.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     
     const parts = contentBody.split('\n\n');
@@ -94,13 +94,13 @@ export default async function DynamicSlugPage({ params }: PageProps) {
     return (
       <div className="bg-white py-24 min-h-screen">
         <div className="container mx-auto px-4 max-w-3xl">
-          <div className="prose prose-lg max-w-none text-body-grey" dangerouslySetInnerHTML={{ __html: htmlContent }} />
+          <div className="prose prose-lg max-w-none text-text-body" dangerouslySetInnerHTML={{ __html: htmlContent }} />
           
           <div className="border-t border-gray-200 pt-10 mt-16 pb-8">
-            <h3 className="text-2xl font-serif font-bold text-primary-dark mb-6">Explore Related Services</h3>
+            <h3 className="text-2xl font-serif font-bold text-text-dark mb-6">Explore Related Services</h3>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href={`/${blog.serviceSlug || ''}`} className="bg-cream text-primary-dark border border-gray-200 px-8 py-4 rounded hover:bg-gold hover:text-white transition-colors font-bold text-center">Service: <span className="capitalize">{(blog.serviceSlug || '').replace(/-/g, ' ')}</span></Link>
-              <Link href={`/${blog.locationSlug || ''}`} className="bg-primary-red text-white px-8 py-4 rounded shadow-md hover:bg-[#8e0e12] transition-colors font-bold text-center">Location: <span className="capitalize">{(blog.locationSlug || '').replace('general-contractor-', '').replace(/-/g, ' ')}</span></Link>
+              <Link href={`/${blog.serviceSlug || ''}`} className="bg-warm-white text-text-dark border border-gray-200 px-8 py-4 rounded hover:bg-accent-red hover:text-white transition-colors font-bold text-center">Service: <span className="capitalize">{(blog.serviceSlug || '').replace(/-/g, ' ')}</span></Link>
+              <Link href={`/${blog.locationSlug || ''}`} className="bg-accent-red text-white px-8 py-4 rounded shadow-md hover:bg-[#990000] transition-colors font-bold text-center">Location: <span className="capitalize">{(blog.locationSlug || '').replace('general-contractor-', '').replace(/-/g, ' ')}</span></Link>
             </div>
           </div>
         </div>
@@ -122,17 +122,17 @@ export default async function DynamicSlugPage({ params }: PageProps) {
           phoneNumber="(626) 652-2303"
         />
         <TrustBadge />
-        <section className="bg-cream py-24">
+        <section className="bg-warm-white py-24">
           <div className="container mx-auto px-4 max-w-4xl">
-            <h2 className="text-3xl font-serif font-bold text-primary-dark mb-8">What We Do</h2>
-            <div className="text-lg text-body-grey leading-relaxed whitespace-pre-wrap mb-16">
+            <h2 className="text-3xl font-serif font-bold text-text-dark mb-8">What We Do</h2>
+            <div className="text-lg text-text-body leading-relaxed whitespace-pre-wrap mb-16">
               {service.intro || ''}
             </div>
           </div>
         </section>
         
         {/* Universal Contact Block for Service pages */}
-        <section className="bg-primary-dark py-24 border-t border-gray-800">
+        <section className="bg-navy-deep py-24 border-t border-gray-800">
            <div className="container mx-auto px-4 max-w-4xl text-center">
              <h2 className="text-4xl font-serif font-bold text-white mb-6">Ready to Start Your {(service.title || 'Construction').split(' ')[0]} Project?</h2>
              <p className="text-xl text-gray-300 mb-12">Contact Red Stag Construction for a free initial consultation and site visit.</p>
@@ -161,8 +161,8 @@ export default async function DynamicSlugPage({ params }: PageProps) {
         <TrustBadge />
         <section className="bg-white py-24">
           <div className="container mx-auto px-4 max-w-4xl">
-             <h2 className="text-3xl font-serif font-bold text-primary-dark mb-8">Building in {location.city || 'Los Angeles'}</h2>
-             <p className="text-lg text-body-grey leading-relaxed mb-12">
+             <h2 className="text-3xl font-serif font-bold text-text-dark mb-8">Building in {location.city || 'Los Angeles'}</h2>
+             <p className="text-lg text-text-body leading-relaxed mb-12">
                {location.intro || ''}
              </p>
              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center pt-8 border-t border-gray-200">
@@ -174,7 +174,7 @@ export default async function DynamicSlugPage({ params }: PageProps) {
           </div>
         </section>
         
-        <section className="bg-primary-dark py-24 border-t border-gray-800">
+        <section className="bg-navy-deep py-24 border-t border-gray-800">
            <div className="container mx-auto px-4 max-w-4xl text-center">
              <h2 className="text-4xl font-serif font-bold text-white mb-6">Start Your {location.city || 'Los Angeles'} Project</h2>
              <div className="bg-white p-8 md:p-12 text-left rounded-sm shadow-xl mt-12">
@@ -200,21 +200,21 @@ export default async function DynamicSlugPage({ params }: PageProps) {
           phoneNumber="(626) 652-2303"
         />
         <TrustBadge />
-        <section className="bg-cream py-24">
+        <section className="bg-warm-white py-24">
           <div className="container mx-auto px-4 max-w-4xl">
             <div className="flex items-center space-x-4 mb-8">
-              <span className="w-12 h-1 bg-primary-red"></span>
-              <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary-dark">Serving {matrix.city || 'Los Angeles'} and Surrounding Areas</h2>
+              <span className="w-12 h-1 bg-accent-red"></span>
+              <h2 className="text-2xl md:text-3xl font-serif font-bold text-text-dark">Serving {matrix.city || 'Los Angeles'} and Surrounding Areas</h2>
             </div>
-            <p className="text-lg text-body-grey leading-relaxed">
+            <p className="text-lg text-text-body leading-relaxed">
               {matrix.intro || ''}
             </p>
           </div>
         </section>
         <section className="bg-white py-24 border-t border-gray-200">
            <div className="container mx-auto px-4 max-w-4xl text-center">
-             <h2 className="text-4xl font-serif font-bold text-primary-dark mb-6">Expert {matrix.service || 'Construction'} Installation</h2>
-             <p className="text-xl text-body-grey mb-12">Red Stag Construction handles all permits and engineering requirements natively. Contact us today.</p>
+             <h2 className="text-4xl font-serif font-bold text-text-dark mb-6">Expert {matrix.service || 'Construction'} Installation</h2>
+             <p className="text-xl text-text-body mb-12">Red Stag Construction handles all permits and engineering requirements natively. Contact us today.</p>
              <div className="bg-gray-50 p-8 md:p-12 text-left border border-gray-200">
                <ContactForm />
              </div>
