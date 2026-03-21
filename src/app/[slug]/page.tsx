@@ -22,6 +22,7 @@ const CONTACT_EMAIL = 'support@redstagcc.com';
 const BASE_URL = 'https://redstagcc.com';
 
 type ServiceEntry = (typeof servicesData)[number];
+type LocationEntry = (typeof locationsData)[number];
 type MatrixEntry = (typeof matrixData)[number];
 
 interface CostTier {
@@ -58,6 +59,35 @@ interface ServiceTemplateConfig {
     mid: CostTier;
     premium: CostTier;
   };
+}
+
+interface TierPricing {
+  title: string;
+  summary: string;
+  kitchen: string;
+  bathroom: string;
+  adu: string;
+  customHome: string;
+}
+
+interface LocationTemplateConfig {
+  tier: 1 | 2 | 3 | 4 | 5;
+  heroImage: string;
+  heroSubline: string;
+  serviceLinkSlug: string;
+  serviceLinkLabel: string;
+  introStart: string;
+  introEnd: string;
+  marketContext: string;
+  processContext: string;
+  redStagContext: string;
+  permitFocus: string;
+  siteFocus: string;
+  prepFocus: string;
+  projectFocus: string;
+  logisticsFocus: string;
+  differentiatorFocus: string;
+  relatedCities: string[];
 }
 
 const serviceCrumbMap: Record<string, { label: string; href: string }> = {
@@ -670,6 +700,767 @@ const getRelatedServices = (serviceSlugs: string[]) => {
     .filter((service): service is ServiceEntry => Boolean(service));
 };
 
+const locationServiceDescriptions: Record<string, string> = {
+  'Kitchen Remodel': 'Layout changes, cabinets, stone, lighting, and permit-managed kitchen rebuilds.',
+  'Bathroom Remodel': 'Waterproofed bathroom renovations with plumbing, tile, glass, and finish coordination.',
+  'ADU Contractor': 'Detached ADUs, attached units, and garage conversions planned around zoning and utilities.',
+  'Custom Home Builder': 'Ground-up custom homes with design-build coordination, engineering, and field execution.',
+  'Home Addition': 'Room additions and second-story work that tie new square footage into the existing house.',
+  'General Contracting': 'Full-project management across permits, scheduling, trade coordination, and delivery.',
+  'Hardscape & Concrete': 'Driveways, retaining walls, patios, drainage work, and outdoor living construction.',
+  'Fence Company': 'Privacy fences, gates, and access systems installed to fit grade, frontage, and security needs.',
+  'Window Replacement': 'Title 24-aware window replacement with flashing, weatherproofing, and finish repair.',
+};
+
+const serviceTileOrder = [
+  'Kitchen Remodel',
+  'Bathroom Remodel',
+  'ADU Contractor',
+  'Custom Home Builder',
+  'Home Addition',
+  'General Contracting',
+  'Hardscape & Concrete',
+  'Fence Company',
+  'Window Replacement',
+];
+
+const tierPricingMap: Record<1 | 2 | 3 | 4 | 5, TierPricing> = {
+  1: {
+    title: 'Tier 1 premium market pricing',
+    summary: 'Estate neighborhoods, hillside complexity, tighter reviews, and premium finish expectations push these cities to the top of the Los Angeles pricing curve.',
+    kitchen: '$120K-$250K+',
+    bathroom: '$70K-$150K+',
+    adu: '$275K-$500K+',
+    customHome: '$1.5M+',
+  },
+  2: {
+    title: 'Tier 2 high-end market pricing',
+    summary: 'These cities still carry premium labor, finish, and review costs, but the work usually lands a step below the estate-tier pricing of the most expensive enclaves.',
+    kitchen: '$95K-$180K+',
+    bathroom: '$60K-$120K+',
+    adu: '$225K-$375K+',
+    customHome: '$1M-$2M+',
+  },
+  3: {
+    title: 'Tier 3 established-family market pricing',
+    summary: 'These neighborhoods see steady remodel, ADU, and addition demand, with budgets shaped by older housing stock, permitting, and finish level more than trophy-property premiums.',
+    kitchen: '$85K-$150K',
+    bathroom: '$50K-$90K',
+    adu: '$200K-$325K',
+    customHome: '$800K-$1.5M',
+  },
+  4: {
+    title: 'Tier 4 active-remodel market pricing',
+    summary: 'These locations support strong renovation activity, but pricing is usually driven by site conditions, code upgrades, and scope discipline rather than ultra-premium finishes.',
+    kitchen: '$68K-$125K',
+    bathroom: '$45K-$85K',
+    adu: '$180K-$300K',
+    customHome: '$700K-$1.2M',
+  },
+  5: {
+    title: 'Tier 5 value-focused market pricing',
+    summary: 'These cities still require licensed work and real permits, but owners are often balancing practical scope, tighter budgets, and efficient production.',
+    kitchen: '$59K-$108K',
+    bathroom: '$40K-$75K',
+    adu: '$160K-$260K',
+    customHome: '$600K-$1M',
+  },
+};
+
+const locationTemplateConfig: Record<string, LocationTemplateConfig> = {
+  'Beverly Hills': {
+    tier: 1,
+    heroImage: '/images/services/custom.jpg',
+    heroSubline: 'Custom homes, estate remodels, and design-build work planned for Beverly Hills review standards and premium finish expectations.',
+    serviceLinkSlug: '/custom-home-builder-los-angeles',
+    serviceLinkLabel: 'custom home build',
+    introStart:
+      'Building in Beverly Hills means stepping into an approval environment that behaves nothing like a standard LADBS job. This city runs through the independent City of Beverly Hills Building Department, not LADBS, and the difference shows up immediately in plan review pace, fee structure, and finish expectations.',
+    introEnd:
+      'Trousdale Estates and Benedict Canyon add hillside complexity, structural review, and access planning that can change design decisions before excavation ever starts. Permit fees are significantly higher than LADBS, design review requirements are more demanding, and homeowners here expect Sub-Zero, Wolf, and bookmatched stone to be baseline conversation items rather than luxury add-ons.',
+    marketContext:
+      'The Beverly Hills market rewards precision. Owners are often balancing resale expectations, architectural identity, and neighborhood standards that leave very little room for amateur execution. A kitchen, addition, or whole-house renovation here is judged not only by how it looks on completion day, but by whether every reveal line, slab seam, cabinet detail, and exterior transition feels appropriate for a property in a zip code where buyers expect top-tier work as a given.',
+    processContext:
+      'Preconstruction in Beverly Hills has to be handled with discipline. We review survey information, grade, drainage, hillside conditions, consultant requirements, and city comments early because redesign later is expensive. On estate properties, staging and protection are also part of the plan from day one. Deliveries, neighbor sensitivity, gate coordination, and the timing of loud work all need to be solved before crews mobilize.',
+    redStagContext:
+      'Red Stag fits Beverly Hills because we are used to permit-heavy, finish-sensitive work where clients need one team handling design-build coordination instead of juggling disconnected architects, consultants, and field crews. We speak directly about allowances, lead times, inspection strategy, and detail execution because this market punishes vague planning. When owners are investing at Beverly Hills levels, the job has to be administratively sharp and physically well built.',
+    permitFocus:
+      'The independent City of Beverly Hills Building Department controls the process here, and that changes plan review, permit fees, and correction cycles compared with LADBS.',
+    siteFocus:
+      'Trousdale Estates, Benedict Canyon adjacency, and other hillside parcels create structural, retaining, drainage, and access issues that can delay work if they are not studied up front.',
+    prepFocus:
+      'Owners should be ready with surveys, design intent, finish expectations, and consultant coordination because Beverly Hills reviewers expect a cleaner package and a more complete answer set than many standard city submittals.',
+    projectFocus:
+      'Most Beverly Hills work leans toward custom homes, large remodels, major kitchen projects, additions, and finish-sensitive estate upgrades.',
+    logisticsFocus:
+      'Schedule control in Beverly Hills depends on review management, premium procurement, protected staging, and crews that can execute without damaging high-value finishes already in the home.',
+    differentiatorFocus:
+      'Homeowners here call Red Stag early because they want a contractor who can protect both the budget and the design intent in a market where mistakes are expensive and visible.',
+    relatedCities: ['Bel Air', 'Brentwood', 'West Hollywood'],
+  },
+  'Bel Air': {
+    tier: 1,
+    heroImage: '/images/services/custom.jpg',
+    heroSubline: 'Custom homes, hillside remodels, and estate construction managed around canyon access, private roads, and high-value neighboring properties.',
+    serviceLinkSlug: '/custom-home-builder-los-angeles',
+    serviceLinkLabel: 'custom home build',
+    introStart:
+      'Bel Air is a logistics and structural market before it is a finish market. The homes are high value, the lots are often steep or irregular, and gated community access coordination can affect everything from site walks to material deliveries.',
+    introEnd:
+      'Private road maintenance issues, HOA restrictions, and occasional HPOZ historic preservation considerations create a review environment where assumptions get expensive fast. When neighboring properties sit in the $5M-$50M range, every detail matters, from noise planning to retaining design to how long a crane or concrete pump occupies the road.',
+    marketContext:
+      'A Bel Air project is rarely just a cosmetic renovation. Owners are often evaluating whether to remodel, add on, or rebuild while protecting the value of a property that is already surrounded by highly scrutinized homes. Canyon lot structural complexity means soils, retaining, slope drainage, and utility routing are usually central cost drivers. That makes early feasibility work more important here than in flatter neighborhoods where the site is more forgiving.',
+    processContext:
+      'The preconstruction sequence in Bel Air has to account for access, consultant alignment, and sequencing with the site itself. We look at turn radii for trucks, staging options, retaining implications, private road rules, and whether neighbors or HOAs have protocol requirements before the first phase of work starts. The wrong contractor learns those lessons late. We would rather solve them before pricing is locked.',
+    redStagContext:
+      'Red Stag works well in Bel Air because we treat the job as both a site-control problem and a construction problem. Clients here need direct communication, strong supervision, and a contractor who understands that the physical build, neighborhood protocol, and design expectations all move together. That is especially true on hillside properties where one missed assumption on drainage or access can stall everything behind it.',
+    permitFocus:
+      'Bel Air work usually routes through LADBS and related review agencies, but gated communities, historic considerations, and hillside triggers can complicate what looks simple on paper.',
+    siteFocus:
+      'Canyon lots, private roads, retaining needs, and access limits are the main reasons permits and schedules stretch in Bel Air.',
+    prepFocus:
+      'Owners should gather surveys, soils information when applicable, HOA requirements, and access details early so the project team is not redesigning around site realities after permit comments arrive.',
+    projectFocus:
+      'Bel Air owners most often call for custom homes, high-end additions, estate remodels, and large kitchen or primary-suite transformations tied to structural work.',
+    logisticsFocus:
+      'We manage Bel Air projects by coordinating gates, neighbors, delivery windows, parking, and heavy-access days before they become field problems.',
+    differentiatorFocus:
+      'Clients in Bel Air call Red Stag because they need a team that can protect schedule and detail quality on a site where both the house and the surrounding context are high stakes.',
+    relatedCities: ['Beverly Hills', 'Brentwood', 'Pacific Palisades'],
+  },
+  'Brentwood': {
+    tier: 2,
+    heroImage: '/images/services/general.jpg',
+    heroSubline: 'High-end remodels, additions, and design-build work for Brentwood homes from the flats below San Vicente to the hills above Sunset.',
+    serviceLinkSlug: '/general-contractor-los-angeles',
+    serviceLinkLabel: 'general contracting project',
+    introStart:
+      'Brentwood is one of the few Westside markets where the site conditions can change dramatically from one block to the next. The flatter residential pockets below San Vicente do not behave like the hillside properties climbing above Sunset, and a contractor who treats them the same is usually missing cost and schedule risk.',
+    introEnd:
+      'That difference matters on everything from foundations and drainage to staging and neighbor impact. Owners here still expect premium finish quality, but the smarter approach is to solve the site and permit realities first so the design vision has a real path to construction.',
+    marketContext:
+      'Brentwood clients are typically improving already valuable homes, so the conversation is less about whether to build and more about how to build without creating avoidable friction. Large lots in some areas support additions and ADUs more comfortably than denser neighborhoods do. Nearby commercial corridors and UCLA-adjacent traffic patterns can also affect scheduling, deliveries, and how a job interacts with the street. That combination makes Brentwood a planning-heavy market even when the visible scope looks straightforward.',
+    processContext:
+      'We approach Brentwood by separating the flat-lot assumptions from the hillside assumptions early. That means checking drainage, access, structural triggers, and any neighborhood review concerns before scope is finalized. On the design side, owners here usually want the house to feel refined but not generic, which means the detailing, material lead times, and coordination between design and build have to stay tight throughout production.',
+    redStagContext:
+      'Red Stag is a good fit for Brentwood because we can run either a straightforward high-end remodel or a more complex hillside project without changing systems halfway through. Clients here need a team that can price honestly, communicate clearly, and keep both quality and neighborhood sensitivity under control. That is exactly where design-build coordination has value.',
+    permitFocus:
+      'Brentwood work usually runs through LADBS, but hillside triggers, grading, and street logistics can change how the permit and engineering path unfolds.',
+    siteFocus:
+      'The biggest delays come from treating hillside parcels like flat lots, underestimating drainage and retaining, or ignoring the influence of traffic and adjacency around busier corridors.',
+    prepFocus:
+      'Homeowners should bring clear scope priorities, surveys when available, and a realistic finish target so pricing reflects the actual Brentwood market instead of a generic Los Angeles average.',
+    projectFocus:
+      'Typical Brentwood scopes include major remodels, kitchen-centered upgrades, additions, ADUs on larger lots, and whole-home reworks that need tighter finish control.',
+    logisticsFocus:
+      'We manage Brentwood jobs by planning deliveries, street impact, hillside access when applicable, and the transition between old and new work before the field team is mobilized.',
+    differentiatorFocus:
+      'Brentwood owners call Red Stag because they want one contractor who can handle both the administrative side of the job and the finish-sensitive side without handing problems off midstream.',
+    relatedCities: ['Beverly Hills', 'Bel Air', 'Santa Monica'],
+  },
+  'Malibu': {
+    tier: 1,
+    heroImage: '/images/services/custom.jpg',
+    heroSubline: 'Custom homes and coastal construction managed around Coastal Commission review, fire-zone requirements, and long permit timelines.',
+    serviceLinkSlug: '/custom-home-builder-los-angeles',
+    serviceLinkLabel: 'custom home build',
+    introStart:
+      'Malibu projects are defined by approvals before they are defined by finishes. California Coastal Commission approval is required for most projects in Malibu, and LUP Local Use Plan compliance shapes everything from site coverage to exterior changes to how a project is documented before it can move toward construction.',
+    introEnd:
+      'Fire zone requirements, fire-hardened materials, well and septic systems, and geological reports for hillside work all push Malibu into a different category than most Los Angeles jobs. Permit timelines often run 6 to 12 months for coastal projects, so the only workable strategy is to plan early, document clearly, and price the real approval path instead of pretending this market moves on a standard city schedule.',
+    marketContext:
+      'Owners in Malibu are usually balancing ocean exposure, slope conditions, insurance pressure, and long-term durability at the same time. A beautiful project that is not designed around coastal air, wildfire risk, or water and wastewater realities is not actually a well-planned project. Material selection has to account for corrosion, maintenance, and code. Site planning has to account for topography, erosion, and access. That is why Malibu is a market where the preconstruction team matters as much as the field crew.',
+    processContext:
+      'Our Malibu process starts with entitlement and technical review: survey, geology when required, utility strategy, septic or well implications, fire hardening, and coastal path. Only after that do we finalize pricing and build sequence, because those inputs determine whether the design is truly buildable. Once approvals are moving, we treat procurement, delivery routes, and weather exposure as part of the schedule, not side notes.',
+    redStagContext:
+      'Red Stag works well in Malibu because we are comfortable running a job where consultant coordination, approval tracking, and field execution all have to stay synchronized for months. Homeowners here need a contractor that respects the pace of coastal review while still protecting momentum once construction begins. That is exactly what design-build discipline is for.',
+    permitFocus:
+      'Malibu approvals usually involve the City of Malibu process plus California Coastal Commission review and LUP Local Use Plan compliance, which is why permit timelines stretch far beyond a typical LADBS schedule.',
+    siteFocus:
+      'Hillside geology, fire zone overlap, septic and well conditions, and coastal-material performance are the issues that most often slow Malibu jobs.',
+    prepFocus:
+      'Owners should expect early consultant work, technical reports, and a longer approval runway before final pricing or construction dates can be treated as firm.',
+    projectFocus:
+      'Malibu clients most often pursue custom homes, fire-rebuild work, whole-home remodels, premium additions, and major exterior reconstruction shaped by coastal constraints.',
+    logisticsFocus:
+      'We manage Malibu work by coordinating long-lead approvals, coastal deliveries, protected staging, and materials that can tolerate salt air and wildfire-driven code requirements.',
+    differentiatorFocus:
+      'Homeowners call Red Stag in Malibu because they need a builder who understands that coastal review, geology, and field execution are one continuous process, not separate departments.',
+    relatedCities: ['Pacific Palisades', 'Calabasas', 'Santa Monica'],
+  },
+  'Pacific Palisades': {
+    tier: 1,
+    heroImage: '/images/services/custom.jpg',
+    heroSubline: 'High-end homes and major rebuilds shaped by geology, coastal influence, and premium finish expectations in Pacific Palisades.',
+    serviceLinkSlug: '/general-contractor-los-angeles',
+    serviceLinkLabel: 'general contracting project',
+    introStart:
+      'Pacific Palisades sits at the intersection of premium residential expectations and highly specific site risk. Landslide zone geological reports are a real part of the conversation on many properties, and the coastal influence on materials changes what should be specified even when the project is not directly on the bluff.',
+    introEnd:
+      'Fire zone overlap is another practical issue, especially when owners are rebuilding or substantially upgrading exterior systems. The Palisades Village area also affects aesthetics and expectations, because homes near those active pockets are judged closely for curb appeal, materials, and overall fit with the neighborhood.',
+    marketContext:
+      'This is a high-income market where homeowners expect thoughtful design and durable construction, not quick cosmetic work. A project here often has to meet two tests at once: it needs to feel elevated enough for Pacific Palisades, and it needs to be technically sound enough to deal with geology, exposure, and fire considerations. That balance affects everything from framing and retaining to exterior cladding and window packages. It also changes the budget conversation, because the cheapest path is rarely the path that protects the house long term.',
+    processContext:
+      'We approach Pacific Palisades by reviewing slope, geology, drainage, exposure, and neighborhood context early. That allows us to line up the right engineering and design decisions before pricing is finalized. On homes with major exterior scope, material compatibility and long-term maintenance are part of the preconstruction discussion, not a late substitution after approvals are already in motion.',
+    redStagContext:
+      'Red Stag fits Pacific Palisades because we can handle premium remodeling, additions, and rebuild work without losing sight of the site itself. Clients here need a contractor who can move between consultant coordination, permit strategy, and finish execution without letting one side of the project outrun the other. That balance is what keeps quality high and surprises lower.',
+    permitFocus:
+      'Pacific Palisades projects often route through LADBS, but landslide zone reporting, slope review, and fire-zone conditions can add significant consultant and approval requirements.',
+    siteFocus:
+      'Geology, retaining, drainage, and material performance near the coast are the main issues that delay or reshape projects in the Palisades.',
+    prepFocus:
+      'Homeowners should prepare for geotechnical input when needed, realistic finish budgets, and design choices that respond to both the site and the premium neighborhood standard.',
+    projectFocus:
+      'Most calls in Pacific Palisades center on whole-home remodels, large additions, rebuilds, and high-end kitchens or exteriors that need strong detailing.',
+    logisticsFocus:
+      'We manage Palisades work by front-loading reports, coordinating consultant timing, and protecting the schedule from geology or material issues that could have been identified earlier.',
+    differentiatorFocus:
+      'Owners here call Red Stag because they need a contractor who can keep a premium project grounded in real site conditions instead of selling an idealized schedule that does not survive review.',
+    relatedCities: ['Malibu', 'Brentwood', 'Santa Monica'],
+  },
+  'Manhattan Beach': {
+    tier: 2,
+    heroImage: '/images/services/general.jpg',
+    heroSubline: 'High-end coastal remodels and new construction that account for beach-city permitting, setbacks, and salt-air performance.',
+    serviceLinkSlug: '/general-contractor-los-angeles',
+    serviceLinkLabel: 'general contracting project',
+    introStart:
+      'Manhattan Beach is really two construction markets in one. The Sand Section and the Hill Section have completely different structural and planning demands, and a contractor who prices them the same is ignoring the thing that most directly controls risk.',
+    introEnd:
+      'Coastal setbacks, beach-city permit office requirements, and salt air corrosion considerations all affect how materials, details, and schedules should be handled. On tighter lots near the beach, small mistakes in staging or sequencing can cost real time because there is so little room to recover in the field.',
+    marketContext:
+      'Owners in Manhattan Beach are usually investing in either compact high-value coastal homes or larger hillside residences with strong design expectations. In both cases, the margin for sloppy planning is small. Material choices need to perform in marine air. Exterior details need to resist weather. Structural and foundation assumptions need to match the exact lot condition rather than a generic coastal average. That is why this city rewards contractors who can think through logistics and durability at the same time.',
+    processContext:
+      'We review section-specific realities up front. In the Sand Section, lot constraints, access, setbacks, and sequencing lead the conversation. In the Hill Section, grade, views, and structure tend to carry more weight. From there we align pricing, permit strategy, and procurement around the actual property so the field team is not improvising once work begins.',
+    redStagContext:
+      'Red Stag is a strong fit for Manhattan Beach because our process does not rely on broad assumptions. We break the job down by site type, review path, and finish goal, then build the schedule from those realities. That is what clients here need when the work is high value and the lot itself is part of the challenge.',
+    permitFocus:
+      'Manhattan Beach runs through its own beach-city permit office, so timelines, comments, and coastal considerations do not mirror a standard LADBS project.',
+    siteFocus:
+      'The split between the Sand Section and the Hill Section, combined with setbacks and marine exposure, is what delays or reshapes projects here most often.',
+    prepFocus:
+      'Owners should prepare for tight lot logistics, corrosion-aware material selections, and a clear understanding of whether the property behaves more like a compact coastal parcel or a hillside home.',
+    projectFocus:
+      'Common Manhattan Beach scopes include full-home remodels, coastal additions, premium kitchens, exterior envelope upgrades, and ground-up replacement homes.',
+    logisticsFocus:
+      'We manage Manhattan Beach projects by matching the staging plan, delivery sequence, and material selections to the specific section and exposure of the property.',
+    differentiatorFocus:
+      'Clients here call Red Stag because they need a builder who can make precise decisions on expensive lots without wasting time learning the city mid-project.',
+    relatedCities: ['Santa Monica', 'Malibu', 'West Hollywood'],
+  },
+  'Santa Monica': {
+    tier: 2,
+    heroImage: '/images/services/general.jpg',
+    heroSubline: 'High-end remodels and additions planned for Santa Monica green-building review, older structures, and dense urban sites.',
+    serviceLinkSlug: '/general-contractor-los-angeles',
+    serviceLinkLabel: 'general contracting project',
+    introStart:
+      'Santa Monica is one of the clearest examples of why a contractor has to know the local department, not just general code. The independent City of Santa Monica Building Department runs its own process, and progressive green building requirements shape design and scope decisions much earlier than many owners expect.',
+    introEnd:
+      'High density, older structures, and rent control ordinances that affect ADU strategy add another layer. A project that would move in a straightforward way through LADBS can slow down here if the team is not prepared for local review culture, sustainability requirements, and the realities of working on tighter lots with older building stock.',
+    marketContext:
+      'Santa Monica owners are often improving homes or multi-unit properties that have good underlying value but need sharper planning than the visible finishes suggest. Older framing, outdated systems, tight side yards, and neighborhood sensitivity all influence cost. Green-building compliance can also affect selections and documentation. That means a Santa Monica project succeeds when the contractor understands both field conditions and the citys expectations for how the work is documented and inspected.',
+    processContext:
+      'We approach Santa Monica by reviewing permit path, energy and green-building implications, existing building condition, and how the job will function on a tighter urban site. If ADU strategy or unit configuration is part of the conversation, we also evaluate how local ordinances affect what actually pencils out. That keeps clients from spending early design money in the wrong direction.',
+    redStagContext:
+      'Red Stag fits Santa Monica because we are comfortable combining city-specific review management with hands-on production planning. Clients here need clean drawings, realistic scheduling, and a contractor who will not get surprised by sustainability requirements or the challenges of older dense properties. That combination is what keeps the work moving.',
+    permitFocus:
+      'The independent City of Santa Monica Building Department and its progressive green building requirements are the first things we account for on any serious project here.',
+    siteFocus:
+      'Dense lots, older structures, tenant or unit considerations, and urban staging are the main issues that slow Santa Monica work.',
+    prepFocus:
+      'Owners should prepare for a more documentation-heavy review path, realistic urban-site logistics, and careful assessment of older framing, mechanical, and utility conditions.',
+    projectFocus:
+      'Santa Monica work often includes remodels, additions, ADU strategy tied to local rules, and high-detail upgrades to aging but valuable homes.',
+    logisticsFocus:
+      'We manage Santa Monica jobs by coordinating permit review, neighborhood impact, deliveries, and field protection around the tighter physical conditions of the city.',
+    differentiatorFocus:
+      'Homeowners call Red Stag in Santa Monica because they want a contractor that can speak both to the city and to the field, rather than discovering each requirement one correction at a time.',
+    relatedCities: ['Brentwood', 'Pacific Palisades', 'Manhattan Beach'],
+  },
+  'Studio City': {
+    tier: 3,
+    heroImage: '/images/services/kitchen.jpg',
+    heroSubline: 'Kitchen-led remodels, additions, and whole-home upgrades for Studio City ranch homes, hill properties, and active neighborhood review.',
+    serviceLinkSlug: '/kitchen-remodel-los-angeles',
+    serviceLinkLabel: 'kitchen remodel',
+    introStart:
+      'Studio City sits squarely in LADBS jurisdiction, but that does not make it a simple market. The Ventura Blvd corridor creates commercial adjacency issues on some properties, while the residential streets south of the boulevard are full of 1940s-1960s ranch homes that often hide old systems behind updated finishes.',
+    introEnd:
+      'In the hills, mid-century modern architecture is common and the design expectations are different again. Neighborhood councils here are active and vocal, so clean sites, predictable scheduling, and respectful field management matter more than contractors sometimes realize.',
+    marketContext:
+      'Studio City owners usually want houses that feel more open, more efficient, and more current without losing the identity that made them buy in the neighborhood in the first place. That often points to kitchens, additions, whole-home remodels, and ADUs on lots that have real value but also carry aging plumbing, electrical, and framing. The opportunity is strong, but so is the need for disciplined preconstruction because the hidden conditions are real.',
+    processContext:
+      'We start by evaluating the age and type of the house. A south-of-Ventura ranch home, a hillside mid-century, and a lot near more active commercial corridors all behave differently. Then we align permit scope, budget, and design to that specific property. On Studio City work, that usually means solving systems, circulation, and sequencing before anyone gets distracted by finish boards.',
+    redStagContext:
+      'Red Stag fits Studio City because we are comfortable modernizing older housing stock while keeping the process organized and the site professional. Homeowners here want direct advice, realistic timelines, and a contractor who understands that neighborhood reputation matters. That is how we run the work.',
+    permitFocus:
+      'Studio City runs through LADBS, but the actual difficulty depends on whether the project touches structure, hillside review, or utilities hidden in older homes.',
+    siteFocus:
+      'The biggest delays come from older house systems, hillside conditions in the hills, and adjacency issues near Ventura Blvd where access and planning have to be tighter.',
+    prepFocus:
+      'Owners should be ready for honest investigation into electrical, plumbing, and structural conditions before final numbers are treated as fixed.',
+    projectFocus:
+      'Studio City demand centers on kitchen remodels, ADUs, additions, and whole-home updates that improve daily use while protecting neighborhood value.',
+    logisticsFocus:
+      'We manage Studio City work with tight field coordination, neighbor-aware scheduling, and direct communication about what older houses are likely to reveal once demolition starts.',
+    differentiatorFocus:
+      'Studio City homeowners call Red Stag early because they want a contractor who has seen this housing stock before and will not pretend the hidden work is optional.',
+    relatedCities: ['Sherman Oaks', 'Encino', 'Burbank'],
+  },
+  'Sherman Oaks': {
+    tier: 3,
+    heroImage: '/images/services/kitchen.jpg',
+    heroSubline: 'Kitchen remodels, ADUs, and additions planned around Sherman Oaks housing stock, lot size, and LADBS review.',
+    serviceLinkSlug: '/kitchen-remodel-los-angeles',
+    serviceLinkLabel: 'kitchen remodel',
+    introStart:
+      'Sherman Oaks is one of the strongest remodel markets in the Valley because the lot sizes are good and the houses often have room to improve, but the existing conditions are rarely as clean as they look. The area sits in LADBS jurisdiction, and homes built from the 1950s through the 1970s regularly reveal knob-and-tube electrical remnants, cast iron plumbing, undersized panels, or framing changes from prior work.',
+    introEnd:
+      'Those realities matter because they affect how additions, kitchens, ADUs, and whole-home upgrades should be priced from the start. Homes near Ventura Blvd also require commercial adjacency planning, so access, parking, and site behavior need to be managed with more care than on a quiet interior block.',
+    marketContext:
+      'Sherman Oaks owners usually want more usable square footage, better family flow, and a house that feels current without leaving the neighborhood. The generous lots create a strong ADU market, and many clients are deciding between a kitchen-led remodel, a room addition, or a larger reconfiguration that solves several issues at once. The opportunity is real, but so is the need to account for aging systems before a cosmetic scope turns into a structural and utility job halfway through.',
+    processContext:
+      'We begin with the age of the house, lot potential, and system condition. If the property is a candidate for an ADU or major addition, we review setbacks, utilities, and access right away. If it is a kitchen-driven remodel, we still pressure-test electrical and plumbing assumptions because Sherman Oaks houses often hide costly surprises behind finished walls. That due diligence protects the schedule later.',
+    redStagContext:
+      'Red Stag works well in Sherman Oaks because we know how to modernize older Valley homes without losing control of the scope when the hidden conditions appear. Clients here need honest budgeting, practical sequencing, and a team that can handle both family-friendly remodeling and permit-heavy additions. That combination is exactly where we operate best.',
+    permitFocus:
+      'Sherman Oaks projects run through LADBS, but permit scope expands quickly when older electrical, plumbing, or framing issues are uncovered.',
+    siteFocus:
+      'The biggest issues are aging systems, larger-lot development potential, and commercial adjacency planning near Ventura Blvd.',
+    prepFocus:
+      'Owners should prepare for real investigation into utilities and prior work so the estimate reflects the actual house rather than the finished surfaces alone.',
+    projectFocus:
+      'Sherman Oaks demand is strongest for kitchens, ADUs, family-oriented additions, and whole-home updates that make older houses function better.',
+    logisticsFocus:
+      'We manage Sherman Oaks jobs by treating old-house discoveries as likely, not exceptional, and by planning staging and access carefully on busier corridors.',
+    differentiatorFocus:
+      'Homeowners call Red Stag in Sherman Oaks because they want a builder who can handle scope growth intelligently instead of acting surprised by what these houses usually contain.',
+    relatedCities: ['Studio City', 'Encino', 'Tarzana'],
+  },
+  'Encino': {
+    tier: 3,
+    heroImage: '/images/services/kitchen.jpg',
+    heroSubline: 'Kitchen remodels, additions, and estate-scale modernization for Encino ranch homes and hillside properties.',
+    serviceLinkSlug: '/kitchen-remodel-los-angeles',
+    serviceLinkLabel: 'kitchen remodel',
+    introStart:
+      'Encino is a classic modernization market. The neighborhood is full of sprawling mid-century ranch homes that are structurally worth improving but often function like houses built for a different era. Larger lot sizes typical to the SFV create room for additions, ADUs, and significant exterior work, while the affluent demographic pushes finish expectations much higher than a generic Valley price sheet would suggest.',
+    introEnd:
+      'Projects north of Ventura require hillside structural expertise, so the city can shift quickly from flat-lot remodeling into retaining, drainage, and access coordination. That split is one reason Encino projects need better planning than homeowners often expect on the first site visit.',
+    marketContext:
+      'Most Encino clients are not trying to make small cosmetic moves. They want broader modernization: a kitchen that works for entertaining, a primary suite that feels current, an addition that makes the floor plan function, or a full-house refresh that brings an older ranch into line with the neighborhood standard. Because the homes are often large, small estimating errors multiply fast. The right contractor has to understand both scale and restraint so the house improves without turning into a patchwork of disconnected upgrades.',
+    processContext:
+      'We approach Encino by first sorting out whether the property behaves like a flat ranch remodel, a large-lot expansion, or a hillside-influenced project north of Ventura. That determines engineering needs, permit timing, and how aggressively we can sequence the work. From there we align scope, allowances, and finish selections so the project fits both the house and the market it sits in.',
+    redStagContext:
+      'Red Stag fits Encino because we are comfortable with high-finish residential work that still needs disciplined pricing and construction management. Homeowners here want a contractor who can handle size, detail, and old-house realities at the same time. That is exactly the kind of project control our design-build process is built for.',
+    permitFocus:
+      'Encino work usually routes through LADBS, but hillside conditions north of Ventura can add structural and grading review that materially affects the timeline.',
+    siteFocus:
+      'The main delay points are hillside structural demands, large-scope modernization, and the temptation to underprice older systems in big mid-century homes.',
+    prepFocus:
+      'Owners should prepare for honest conversations about finish level, structural scope, and whether the property is better served by a focused remodel or a wider reconfiguration.',
+    projectFocus:
+      'Encino demand is strongest for kitchens, additions, whole-home modernization, and high-end residential updates on larger lots.',
+    logisticsFocus:
+      'We manage Encino projects by matching the schedule and trade stack to the actual scale of the house, not just to the headline scope on the estimate.',
+    differentiatorFocus:
+      'Encino homeowners call Red Stag because they want a contractor who can modernize a large, expensive house without letting the process get loose.',
+    relatedCities: ['Sherman Oaks', 'Tarzana', 'Calabasas'],
+  },
+  'Calabasas': {
+    tier: 3,
+    heroImage: '/images/services/general.jpg',
+    heroSubline: 'High-finish remodels and additions managed around strict HOA review, gated access, and premium suburban expectations in Calabasas.',
+    serviceLinkSlug: '/general-contractor-los-angeles',
+    serviceLinkLabel: 'general contracting project',
+    introStart:
+      'Calabasas is a market where administration matters as much as field work. HOA restrictions are some of the strictest in Los Angeles County, and gated community access coordination through multiple guard gates can control when crews, deliveries, and inspections actually happen.',
+    introEnd:
+      'Las Virgenes Municipal Water District requirements and a premium finish market add more layers. That means a contractor who looks fine on a typical Valley remodel can lose control quickly here if the paperwork, scheduling, and access planning are not airtight from the start.',
+    marketContext:
+      'Calabasas homeowners expect organized, discreet, high-quality work. The houses are often large, the communities are managed closely, and owners do not have patience for messy sites or vague communication. Projects usually involve meaningful finish upgrades, additions, kitchens, exterior work, or whole-home remodeling rather than minor patch jobs. Because community standards are strong, the project has to satisfy both the owner and the review environment surrounding the property.',
+    processContext:
+      'We front-load Calabasas projects with HOA review strategy, access planning, utility awareness, and a realistic procurement schedule. The goal is to remove preventable friction before the work starts. Once the job is active, we keep logistics tight because the daily operation of the site matters almost as much as the end result in many of these communities.',
+    redStagContext:
+      'Red Stag fits Calabasas because we can manage premium residential work without treating the administrative side as an afterthought. Clients here need a team that can talk to HOAs, manage guard-gate logistics, and still deliver a strong field product. That combination is where disciplined design-build work pays off.',
+    permitFocus:
+      'Calabasas projects can involve city review plus strict HOA layers, and Las Virgenes Municipal Water District requirements may also affect planning and utility assumptions.',
+    siteFocus:
+      'The main slowdowns are HOA approval cycles, gated access, premium procurement, and the operational limits imposed by closely managed communities.',
+    prepFocus:
+      'Owners should prepare HOA documents, understand access protocols, and align finish expectations early so the schedule is not broken by review-board surprises.',
+    projectFocus:
+      'Calabasas demand centers on high-end remodels, kitchen and bath modernization, additions, and family-oriented upgrades on large suburban homes.',
+    logisticsFocus:
+      'We manage Calabasas jobs by sequencing around guard gates, review windows, neighborhood rules, and the higher level of site presentation clients expect.',
+    differentiatorFocus:
+      'Homeowners here call Red Stag because they want a contractor who can manage the community, the paperwork, and the construction at the same time.',
+    relatedCities: ['Hidden Hills', 'Encino', 'Woodland Hills'],
+  },
+  'Hidden Hills': {
+    tier: 1,
+    heroImage: '/images/services/custom.jpg',
+    heroSubline: 'Ultra-premium estate work planned around equestrian zoning, strict access protocols, private roads, and privacy-first project management.',
+    serviceLinkSlug: '/general-contractor-los-angeles',
+    serviceLinkLabel: 'general contracting project',
+    introStart:
+      'Hidden Hills is one of the most specialized residential markets in the region because the community expectations extend far beyond the house itself. Equestrian zoning and horse property considerations shape how many sites function, large lot minimums change how projects are planned, and private road maintenance plus strict access protocols affect how crews move through the community.',
+    introEnd:
+      'It is also an extremely private neighborhood, which means site behavior, security, and discretion are not optional. This is an ultra-premium market where the administrative and interpersonal side of the build carries real weight alongside the construction scope.',
+    marketContext:
+      'Owners in Hidden Hills are usually not looking for generic remodeling. They are planning estate-level updates, guest structures, large kitchens, major additions, or full-scale transformations on properties that need careful handling. The lots are large enough to support meaningful scope, but that only helps if the contractor understands how privacy, access, and community protocol affect the schedule. The work has to feel controlled and quiet from the outside, even when the scope behind the gate is substantial.',
+    processContext:
+      'We plan Hidden Hills projects with access, privacy, and operational discipline first. That means confirming route rules, delivery timing, site protection, and any equestrian or property-management considerations before final field sequencing is locked. Once the work starts, the site needs to stay organized, discreet, and tightly supervised because that is part of the standard owners expect here.',
+    redStagContext:
+      'Red Stag fits Hidden Hills because we know how to run a premium job without making the neighborhood itself a problem. Clients here need a contractor who can coordinate people, deliveries, and details with discipline while still delivering high-end build quality. That is a project-management problem as much as a construction problem, and it is one we are equipped to handle.',
+    permitFocus:
+      'Hidden Hills work often involves city review layered with community expectations, and equestrian or estate-property conditions can affect how drawings and scope should be framed.',
+    siteFocus:
+      'Large lot minimums, private roads, horse-property considerations, and strict privacy protocols are the main factors that reshape Hidden Hills projects.',
+    prepFocus:
+      'Owners should clarify access rules, property management expectations, site constraints, and finish level early so the team can build an accurate operating plan.',
+    projectFocus:
+      'Most Hidden Hills calls involve estate remodels, large additions, kitchens, guest structures, and premium property upgrades that require quiet, controlled execution.',
+    logisticsFocus:
+      'We manage Hidden Hills work through tight scheduling, protected staging, discreet communication, and site conduct that respects the privacy of both the client and the community.',
+    differentiatorFocus:
+      'Hidden Hills homeowners call Red Stag because they need a contractor who can deliver premium work without turning the construction process into a neighborhood issue.',
+    relatedCities: ['Calabasas', 'Woodland Hills', 'Encino'],
+  },
+  'West Hollywood': {
+    tier: 4,
+    heroImage: '/images/services/general.jpg',
+    heroSubline: 'Design-forward remodels for dense urban lots, hillside review areas, and strict WeHo planning standards.',
+    serviceLinkSlug: '/general-contractor-los-angeles',
+    serviceLinkLabel: 'general contracting project',
+    introStart:
+      'West Hollywood is one of the most design-sensitive urban markets in the region. WeHo Planning Commission design standards and hillside design review affect projects that many homeowners initially think of as straightforward, and the dense lot pattern leaves much less room for sloppy sequencing or oversized assumptions.',
+    introEnd:
+      'Entertainment-industry clientele is also common here, which means clients often care just as much about site presentation, discretion, and schedule reliability as they do about the finished surfaces. On tight urban lots, the contractor has to be organized from day one.',
+    marketContext:
+      'The housing stock in West Hollywood ranges from older character properties to modern infill, and both come with constraints. Some owners are protecting architecture. Others are trying to maximize function on a compact site. In both cases, the project succeeds when the design, approvals, and field plan stay aligned. Because the lots are dense, mistakes in access, debris handling, or neighborhood impact are felt immediately. That makes preconstruction discipline more valuable here than in lower-density suburban areas.',
+    processContext:
+      'We start West Hollywood jobs by clarifying the review path, lot constraints, neighbor exposure, and level of finish control the owner expects. Once those are clear, we build a production plan that respects tight staging and urban sequencing. That is what allows the work to stay clean instead of constantly reacting to conditions that should have been anticipated.',
+    redStagContext:
+      'Red Stag fits West Hollywood because we can run a design-forward project without losing track of the practical realities of the site. Clients here need direct communication, controlled field operations, and a contractor who knows how to protect momentum on a compact lot. That is a management problem first, and we handle it that way.',
+    permitFocus:
+      'West Hollywood projects often involve WeHo planning review, and hillside design review can add another layer when the site or scope triggers it.',
+    siteFocus:
+      'Dense urban lots, close neighbors, limited staging, and design-review expectations are the issues that most often stretch schedules in West Hollywood.',
+    prepFocus:
+      'Owners should prepare for more conversation around design compatibility, site logistics, and how the work will actually function on a tight property.',
+    projectFocus:
+      'West Hollywood work usually centers on design-forward remodels, kitchens, additions on compact lots, and selective whole-home upgrades with strong visual expectations.',
+    logisticsFocus:
+      'We manage West Hollywood jobs by controlling site behavior, debris flow, delivery timing, and the relationship between design intent and practical urban construction.',
+    differentiatorFocus:
+      'Owners here call Red Stag because they want a contractor who can respect design standards without turning the build into a slow-motion coordination problem.',
+    relatedCities: ['Beverly Hills', 'Silver Lake', 'Santa Monica'],
+  },
+  'Silver Lake': {
+    tier: 4,
+    heroImage: '/images/services/general.jpg',
+    heroSubline: 'Design-sensitive remodels for hillside lots, character homes, and high-ROI renovation work in Silver Lake.',
+    serviceLinkSlug: '/general-contractor-los-angeles',
+    serviceLinkLabel: 'general contracting project',
+    introStart:
+      'Silver Lake is a renovation market where design taste and site difficulty often show up in the same project. Hillside lots are common, and the older Craftsman and Spanish Colonial housing stock means the work has to respect character while still solving real structural, utility, and circulation problems.',
+    introEnd:
+      'The design review board is active, and the neighborhood continues to reward well-executed renovation with strong ROI. That combination makes Silver Lake less forgiving to generic remodeling than the price point might suggest from the outside.',
+    marketContext:
+      'Homeowners in Silver Lake are usually trying to balance authenticity with function. They want better kitchens, stronger indoor-outdoor connection, improved structure, or more usable square footage, but they do not want the house to lose the reason it was desirable in the first place. On hillside parcels, retaining, drainage, and access become part of that conversation immediately. On flatter character lots, older construction details and prior piecemeal updates can still complicate the path. Either way, the project needs more thought than a generic city-swap remodel.',
+    processContext:
+      'We handle Silver Lake by studying both the architecture and the lot. If the property is on a slope, we prioritize drainage, retaining, and access. If the value is in preserving character, we coordinate scope so the updates feel integrated rather than tacked on. That keeps the design honest and the budget grounded in the real conditions of the house.',
+    redStagContext:
+      'Red Stag fits Silver Lake because we can execute design-sensitive work without ignoring the field realities underneath it. Clients here need a contractor who understands that good taste is not enough if the drainage, structure, or permitting path is wrong. We build from both sides of that equation.',
+    permitFocus:
+      'Silver Lake projects often run through LADBS with additional design sensitivity layered in through neighborhood expectations and active review processes.',
+    siteFocus:
+      'Hillside lots, drainage, retaining, and the quirks of older Craftsman and Spanish Colonial homes are the main sources of delay and scope growth.',
+    prepFocus:
+      'Owners should prepare for a careful study of the lot, the age of the house, and the distinction between preserving character and preserving avoidable problems.',
+    projectFocus:
+      'Typical Silver Lake work includes kitchens, additions, character-home remodels, hillside stabilization-related upgrades, and high-ROI modernization.',
+    logisticsFocus:
+      'We manage Silver Lake work by respecting neighborhood context, protecting old-house details worth saving, and solving slope logistics before they hit the field crew.',
+    differentiatorFocus:
+      'Homeowners here call Red Stag because they want a builder who can protect design character without pretending the site and structure are simple.',
+    relatedCities: ['West Hollywood', 'Burbank', 'Studio City'],
+  },
+  'Burbank': {
+    tier: 4,
+    heroImage: '/images/services/general.jpg',
+    heroSubline: 'Family-focused remodels and additions for older Burbank homes near studio corridors and active neighborhood blocks.',
+    serviceLinkSlug: '/general-contractor-los-angeles',
+    serviceLinkLabel: 'general contracting project',
+    introStart:
+      'Burbank is driven by older housing stock and the rhythm of the entertainment industry. Some properties interact with LADBS jurisdiction overlap or neighboring agency expectations, but the bigger day-to-day reality is that clients often work non-traditional schedules and want a contractor who can communicate clearly without wasting time.',
+    introEnd:
+      'That matters because many Burbank homes still need system updates, layout work, and code corrections even when the project starts as a simple remodel. Older houses and active family use make preconstruction honesty especially valuable here.',
+    marketContext:
+      'The Burbank market rewards practical improvement. Homeowners want better kitchens, added bathrooms, family room expansions, and updated houses that work harder without losing the stability of an established neighborhood. The studio economy also creates clients with unusual availability, tighter production windows, or periods where schedule reliability matters even more than average. A contractor who communicates loosely or changes direction constantly is not a good fit for that environment.',
+    processContext:
+      'We approach Burbank by looking at the age of the house, likely system corrections, and how the owner actually uses the property. If the job touches structure or utilities, we treat that openly from the start. If the challenge is more about sequencing around an unusual client schedule, we solve that in the field plan early. Either way, the project works best when the scope is grounded in what these houses typically need.',
+    redStagContext:
+      'Red Stag fits Burbank because we combine practical construction management with direct communication. Clients here usually want a contractor who can respect time, protect the house while it is occupied, and keep the work moving without drama. That is exactly how we operate.',
+    permitFocus:
+      'Burbank work can involve local-review nuances and older-house permit triggers, so we confirm jurisdiction and scope early instead of assuming it behaves like any other Valley job.',
+    siteFocus:
+      'Older homes, utility upgrades, occupied-family conditions, and constrained client schedules are the main issues that shape Burbank projects.',
+    prepFocus:
+      'Owners should be ready for realistic discussion about system age, production timing, and the actual disruption level of the work.',
+    projectFocus:
+      'Burbank demand centers on family remodels, kitchens, baths, additions, and code-correct upgrades to aging houses.',
+    logisticsFocus:
+      'We manage Burbank jobs by building the schedule around both the house and the client, especially when work hours and communication windows need more structure.',
+    differentiatorFocus:
+      'Burbank homeowners call Red Stag because they want a contractor who can modernize an older home without turning the project into a constant scheduling scramble.',
+    relatedCities: ['Studio City', 'Silver Lake', 'Northridge'],
+  },
+  'Granada Hills': {
+    tier: 5,
+    heroImage: '/images/services/general.jpg',
+    heroSubline: 'Practical remodels, additions, and code-aware upgrades for larger suburban lots in Granada Hills.',
+    serviceLinkSlug: '/general-contractor-los-angeles',
+    serviceLinkLabel: 'general contracting project',
+    introStart:
+      'Granada Hills is a suburban Valley market where space is often available but the houses need smart updating. Larger lot sizes create flexibility for additions, outdoor work, and ADU conversations, while older housing stock still brings the usual California questions about systems, prior remodel quality, and structural reliability.',
+    introEnd:
+      'Post-Northridge earthquake retrofit awareness is still part of the local mindset, and homeowners are usually practical about wanting durable work that improves the house without overspending on the wrong scope.',
+    marketContext:
+      'This is a strong market for families who want to stay in place and improve what they already own. Kitchens, baths, additions, ADUs, and whole-home cleanups all make sense here when they are priced honestly. Because the lots are often more forgiving than Westside or dense urban neighborhoods, owners can get meaningful functional improvement. The tradeoff is that older houses still hide deferred maintenance, old systems, and inconsistent prior work that needs to be accounted for before the budget is treated as real.',
+    processContext:
+      'We approach Granada Hills by first understanding whether the project is mostly about function, code correction, or added square footage. Then we check the structure and utilities to see what the house will actually support. That keeps the estimate tied to the real building and not just to the owners wish list, which is exactly what protects value in this kind of market.',
+    redStagContext:
+      'Red Stag works well in Granada Hills because we are comfortable with pragmatic, permit-correct residential work. Homeowners here want direct advice, a realistic budget, and a contractor who can improve the house efficiently without cutting corners on the parts that matter. That is a straightforward fit for our process.',
+    permitFocus:
+      'Granada Hills projects usually run through LADBS, but structural upgrades, retrofits, and added square footage can expand the permit path quickly.',
+    siteFocus:
+      'Older housing stock and retrofit awareness are the big factors, more than extreme site constraints or luxury-review layers.',
+    prepFocus:
+      'Owners should prepare for honest evaluation of structure, utilities, and whether the best value comes from a focused remodel or a broader rework.',
+    projectFocus:
+      'Granada Hills demand is strongest for family remodels, additions, ADUs, and practical upgrades that add daily function.',
+    logisticsFocus:
+      'We manage Granada Hills work by keeping the scope disciplined, the permits clean, and the schedule tied to what the house actually needs.',
+    differentiatorFocus:
+      'Homeowners call Red Stag in Granada Hills because they want real construction guidance instead of a vague promise that everything can be done cheaply and fast.',
+    relatedCities: ['Northridge', 'San Fernando', 'Woodland Hills'],
+  },
+  'Northridge': {
+    tier: 5,
+    heroImage: '/images/services/general.jpg',
+    heroSubline: 'Family remodels, additions, and retrofit-aware upgrades for Northridge homes near CSUN and the post-earthquake housing stock.',
+    serviceLinkSlug: '/general-contractor-los-angeles',
+    serviceLinkLabel: 'general contracting project',
+    introStart:
+      'Northridge still carries the legacy of the 1994 Northridge earthquake in the way homeowners think about construction. Post-1994 retrofit requirements and awareness are still relevant, especially on older housing stock where structural assumptions cannot be taken at face value.',
+    introEnd:
+      'The neighborhood also functions as a practical SFV suburban market with California State University Northridge adjacency, which affects rental strategy, family use, and the kinds of scope owners are willing to pursue. That creates demand for smart, code-aware work rather than flashy overbuilding.',
+    marketContext:
+      'Many Northridge owners want more utility from houses that are solid but dated. Kitchens, additions, ADUs, garage conversions, and whole-home updates all show up regularly, especially where families want to stay put or where owners see rental potential tied to CSUN. The challenge is that older systems and structural questions still have to be dealt with honestly. A contractor who treats the house like a cosmetic shell usually creates problems later.',
+    processContext:
+      'We handle Northridge by looking at retrofit implications, existing systems, and whether the owners goal is family use, multigenerational living, or rental support. Then we sequence the work around the actual code and permit path instead of selling a simplified version of the job. That is what keeps the project grounded and buildable.',
+    redStagContext:
+      'Red Stag is a good fit for Northridge because we know how to combine practical improvements with serious construction discipline. Homeowners here want the job done correctly, not theatrically. They need a contractor who will talk clearly about retrofit risk, budget, and what the property can support. That is the kind of conversation we have every day.',
+    permitFocus:
+      'Northridge work generally runs through LADBS, but retrofit-related structural scope and old-house systems can expand review and inspection requirements quickly.',
+    siteFocus:
+      'The key issues are post-earthquake structural awareness, older housing stock, and project scopes tied to family use or CSUN-driven rental demand.',
+    prepFocus:
+      'Owners should be ready for structural and utility review before they assume a remodel is purely cosmetic or a conversion is automatically simple.',
+    projectFocus:
+      'Northridge clients most often pursue practical remodels, additions, ADUs, and house-wide updates that improve function without overcomplicating the property.',
+    logisticsFocus:
+      'We manage Northridge jobs by keeping scope realistic, permits complete, and construction focused on durable improvements instead of short-term patchwork.',
+    differentiatorFocus:
+      'Homeowners call Red Stag in Northridge because they want a contractor who will treat structural and code issues as part of the project, not as surprises to be hidden until later.',
+    relatedCities: ['Granada Hills', 'San Fernando', 'Woodland Hills'],
+  },
+  'San Fernando': {
+    tier: 5,
+    heroImage: '/images/services/adu.jpg',
+    heroSubline: 'ADUs, family remodels, and code-correct upgrades built around the City of San Fernando permit office and compact urban lots.',
+    serviceLinkSlug: '/adu-contractor-los-angeles',
+    serviceLinkLabel: 'ADU construction',
+    introStart:
+      'San Fernando is a compact city with its own permit path. The City of San Fernando permit office, not LADBS, controls the process, and that matters because local expectations, turnaround, and communication all feel more direct than they do in larger jurisdictions.',
+    introEnd:
+      'Smaller lot sizes mean every square foot has to work harder, and the significant Spanish-speaking community means bilingual communication is a real differentiator on site. It is also a tight-knit community where referrals travel fast, so site behavior and follow-through matter in a very practical way.',
+    marketContext:
+      'Most San Fernando homeowners are looking for function, not theater. That often means ADUs, practical additions, kitchens, baths, and code-correct improvements that support multigenerational living or make a compact property more useful. Because the lots are tighter, smart layout and realistic scope are essential. Owners do not benefit from generic luxury language. They benefit from a contractor who can explain what fits, what permits, and what produces the best long-term value on a smaller urban parcel.',
+    processContext:
+      'We approach San Fernando by studying the lot and the family goal first. If the job is ADU-driven, setbacks, utilities, and site access control the conversation. If it is a remodel, we look at the age of the home and whether code upgrades are likely to become part of the scope. Then we build a direct plan around the city review path and the practical needs of the household.',
+    redStagContext:
+      'Red Stag fits San Fernando because we keep communication clear and field management disciplined. Bilingual communication matters here, and so does showing up consistently and doing what we say we will do. In a referral-driven community, that is not branding. It is how work gets trusted. We take that seriously.',
+    permitFocus:
+      'The City of San Fernando permit office controls the review path, so plan comments, scheduling, and communication should be handled with that local process in mind rather than assumed LADBS habits.',
+    siteFocus:
+      'Smaller lots, tighter access, and the need to maximize every bit of usable space are the biggest factors shaping San Fernando projects.',
+    prepFocus:
+      'Owners should prepare with clear family-use goals, lot information, and an honest sense of whether the project needs an ADU strategy, a focused remodel, or both.',
+    projectFocus:
+      'San Fernando demand is strongest for ADUs, practical additions, kitchens, baths, and efficient upgrades that support family living and rental potential.',
+    logisticsFocus:
+      'We manage San Fernando jobs by communicating clearly, keeping the site respectful, and sequencing work tightly on smaller urban parcels where wasted motion costs real time.',
+    differentiatorFocus:
+      'Homeowners in San Fernando call Red Stag because they want a contractor who can communicate directly, respect the neighborhood, and build useful space without overselling the process.',
+    relatedCities: ['Granada Hills', 'Northridge', 'Burbank'],
+  },
+  'Tarzana': {
+    tier: 4,
+    heroImage: '/images/services/general.jpg',
+    heroSubline: 'Suburban remodels and additions for ranch homes, mid-century properties, and mixed flat-to-hillside lots in Tarzana.',
+    serviceLinkSlug: '/general-contractor-los-angeles',
+    serviceLinkLabel: 'general contracting project',
+    introStart:
+      'Tarzana sits in the practical center of the Valley remodel market. Ranch homes and mid-century architecture are common, Ventura Blvd proximity shapes access and value in many areas, and the neighborhood mixes flatter properties with hillside-influenced lots that need very different planning.',
+    introEnd:
+      'That means the same headline scope can behave very differently from one Tarzana block to the next. Some jobs are about efficient modernization. Others need deeper structural and drainage thinking before the design can move forward responsibly.',
+    marketContext:
+      'Tarzana homeowners usually want better function without unnecessary complication. They are updating older houses, reworking kitchens, adding square footage, or planning family-oriented improvements that make the property perform better over the long term. Because the market is not driven purely by trophy-home premiums, the best value comes from disciplined scope and clear prioritization. That is exactly where honest preconstruction pays off.',
+    processContext:
+      'We look first at whether the property is flat, sloped, or split in a way that changes structure or access. Then we align the scope to the actual house and the owners goals. On Tarzana projects, that often means deciding whether a focused remodel will solve the problem or whether the house really needs an addition, utility upgrade, or broader layout change. Those are decisions worth making before the budget is locked.',
+    redStagContext:
+      'Red Stag fits Tarzana because we are comfortable with practical residential work that still demands strong construction discipline. Clients here want a builder who will not overcomplicate the project, but also will not ignore the conditions that can change cost later. That balance is exactly what we provide.',
+    permitFocus:
+      'Tarzana work usually runs through LADBS, and the permit path changes mostly with structural scope, hillside triggers, and how much older infrastructure the project touches.',
+    siteFocus:
+      'The mix of flat and hillside properties, plus the realities of older ranch homes, is what shapes Tarzana schedules more than any design-review layer.',
+    prepFocus:
+      'Owners should be ready to define priorities clearly so the estimate reflects whether the project is a targeted remodel or a bigger rework of the house.',
+    projectFocus:
+      'Tarzana demand is strongest for kitchens, additions, whole-home updates, and practical family upgrades on established suburban lots.',
+    logisticsFocus:
+      'We manage Tarzana jobs by matching the field plan to the specific lot condition and by solving scope creep early instead of after demolition.',
+    differentiatorFocus:
+      'Homeowners call Red Stag in Tarzana because they want a contractor who can keep a practical project organized, permit-correct, and worth the investment.',
+    relatedCities: ['Encino', 'Sherman Oaks', 'Woodland Hills'],
+  },
+  'Woodland Hills': {
+    tier: 4,
+    heroImage: '/images/services/general.jpg',
+    heroSubline: 'Strong remodel, addition, and hillside-aware construction for larger homes around Woodland Hills and the Warner Center edge.',
+    serviceLinkSlug: '/general-contractor-los-angeles',
+    serviceLinkLabel: 'general contracting project',
+    introStart:
+      'Woodland Hills is an active remodel market because the housing stock, lot sizes, and buyer expectations all support meaningful improvement. Warner Center proximity shapes traffic, value, and the feel of some areas, while the northern parts of the neighborhood bring hillside conditions that change structure and drainage planning.',
+    introEnd:
+      'That split makes Woodland Hills a market where you need to understand both suburban scale and site variability. Larger homes can carry larger scope, but that only works if the contractor respects what the lot and the existing structure are actually capable of.',
+    marketContext:
+      'Most Woodland Hills owners are modernizing houses that have good bones and real room to improve. Kitchens, additions, outdoor living, ADUs, and broader whole-home work all make sense here. The suburban setting often allows more ambitious scope than denser parts of the city, but the challenge is keeping the project disciplined so a large house does not turn into a loose collection of expensive decisions. That is especially true when the property sits closer to hillside conditions or has prior updates of uneven quality.',
+    processContext:
+      'We approach Woodland Hills by separating lot-driven risk from finish-driven risk. If the property is on a slope, we study drainage, access, and structure early. If the house is simply large and dated, we focus on sequencing, utilities, and how to prioritize the improvements that create the most value. That gives the client a clearer path and a more useful budget.',
+    redStagContext:
+      'Red Stag works well in Woodland Hills because we can handle both the technical side of bigger residential projects and the practical management needed to keep them on track. Clients here want forward motion, honest numbers, and a contractor who can coordinate a lot of moving parts without losing the thread of the job. That is a core strength for us.',
+    permitFocus:
+      'Woodland Hills work usually runs through LADBS, but hillside triggers in the north and larger-scope residential projects can materially expand review and inspection needs.',
+    siteFocus:
+      'The main issues are larger house scale, mixed flat-to-hillside conditions, and keeping broad remodel scopes under control.',
+    prepFocus:
+      'Owners should prepare for a real discussion about priorities, budget discipline, and whether the propertys lot condition adds structural or drainage costs.',
+    projectFocus:
+      'Woodland Hills demand is strongest for large remodels, additions, kitchens, ADUs, and outdoor living work on established suburban properties.',
+    logisticsFocus:
+      'We manage Woodland Hills work by controlling broad residential scopes carefully and solving hillside or access issues before they disrupt the production schedule.',
+    differentiatorFocus:
+      'Homeowners call Red Stag in Woodland Hills because they want a contractor who can handle a substantial project without letting the scale of the house create confusion.',
+    relatedCities: ['Tarzana', 'Calabasas', 'Hidden Hills'],
+  },
+};
+
+const defaultLocationTemplateConfig = (location: LocationEntry): LocationTemplateConfig => ({
+  tier: 4,
+  heroImage: '/images/services/general.jpg',
+  heroSubline: `Remodels, additions, and design-build work planned around the real permit path and site conditions in ${location.city}.`,
+  serviceLinkSlug: '/general-contractor-los-angeles',
+  serviceLinkLabel: 'general contracting project',
+  introStart: `${location.city} projects require a contractor who understands the local review path, the age of the housing stock, and the difference between a cosmetic scope and a permit-driven build.`,
+  introEnd: 'The right plan starts with the real site conditions and the actual neighborhood standard, not with a generic estimate pulled from another city.',
+  marketContext:
+    `${location.city} homeowners usually call when they need a practical path through remodeling, additions, or broader property upgrades that improve how the house works and protect long-term value.`,
+  processContext:
+    `Our process in ${location.city} starts with existing conditions, permit triggers, design priorities, and the details that will decide whether the scope stays controlled or expands later.`,
+  redStagContext:
+    `Red Stag is a strong fit in ${location.city} because we handle planning, permits, and field execution under one team instead of letting the owner manage the gaps.`,
+  permitFocus: `${location.city} requires a clear understanding of its permit path, structural triggers, and the review items that can grow once drawings are submitted.`,
+  siteFocus: `The biggest risk in ${location.city} is usually assuming the site, utilities, or existing structure are simpler than they actually are.`,
+  prepFocus: `Owners in ${location.city} should prepare with a clear scope, realistic finish expectations, and enough field investigation to support a real estimate.`,
+  projectFocus: `${location.city} owners usually call for remodels, additions, kitchens, and other projects that need a contractor who can connect design intent to actual construction.`,
+  logisticsFocus: `We manage ${location.city} projects by coordinating permits, deliveries, trade sequencing, and site protection early so the schedule stays grounded.`,
+  differentiatorFocus: `Homeowners call Red Stag in ${location.city} because they want direct answers, permit-correct work, and a contractor who can actually run the project.`,
+  relatedCities: [],
+});
+
+const buildLocationIntroParagraphs = (location: LocationEntry, config: LocationTemplateConfig) => {
+  return {
+    firstParagraph: {
+      beforeLink: `${config.introStart} For homeowners planning a `,
+      afterLink: `, that local context changes the way we price, design, and permit the work from day one. ${config.introEnd}`,
+    },
+    remainingParagraphs: [
+      `${config.marketContext} In practical terms, that means we spend time understanding how the owner uses the property, what the surrounding neighborhood expects, and whether the scope should be phased or handled as one coordinated build. We do not pitch generic upgrades. We study the house, the parcel, and the review path so the project is grounded in the actual conditions of ${location.city}. That is the difference between a plan that survives first contact with permits and demolition, and one that falls apart as soon as the real work starts.`,
+      `${config.processContext} We look at structure, utilities, drainage, access, and consultant needs early because those issues decide budget and schedule more than finish boards do. Once the path is clear, we coordinate drawings, procurement, and sequencing so inspections, deliveries, and field decisions stay aligned. Homeowners in ${location.city} usually benefit from that direct approach because it turns the job into a managed process instead of a series of guesses.`,
+      `${config.redStagContext} We have spent 15 years building in this market, and that experience matters most in cities where the site, the permit desk, and the client expectations all apply pressure at the same time. Our role is to solve those variables before they become expensive surprises, then execute the work with the same level of control in the field. That is why clients call us when they want a contractor who can actually carry a project from preconstruction through closeout without handing off accountability halfway through.`,
+    ],
+  };
+};
+
+const buildLocationFaqCategories = (location: LocationEntry, config: LocationTemplateConfig) => {
+  return [
+    {
+      categoryTitle: 'Local Permits and Requirements',
+      questions: [
+        {
+          question: `Which permit office or review path applies to residential work in ${location.city}?`,
+          answer: `${config.permitFocus} That matters because the permit desk shapes more than the timeline. It affects how complete the drawing set needs to be, what supporting documents are expected, how expensive corrections become, and whether owners should line up consultant work before they even ask for final pricing. A contractor who knows the local path can tell you early whether the project is likely to move through a straightforward residential review or whether hillside, design, utility, or agency coordination will extend the process. We build that into the plan from the beginning so clients in ${location.city} are not reacting to review comments as if they came out of nowhere. In a market like this, permit strategy is part of construction strategy, not a separate admin task.`,
+        },
+        {
+          question: `What site or neighborhood issues delay projects most often in ${location.city}?`,
+          answer: `${config.siteFocus} In most cases, delays happen because the contractor priced the visible scope but ignored the context around it. That can mean retaining and drainage on a sloped parcel, system upgrades in an older home, access restrictions, review-board expectations, or even neighbor sensitivity that changes when noisy work can happen. The point is not that every project is difficult. It is that every city has a pattern, and a builder who knows that pattern can identify likely friction before it slows the field crew. We look for those issues during the site walk and early planning phase so the owner is making decisions with real information instead of optimistic assumptions.`,
+        },
+        {
+          question: `What should homeowners have ready before submitting plans in ${location.city}?`,
+          answer: `${config.prepFocus} At minimum, homeowners should know what outcome they actually want, what level of finish they expect, and whether the property has any known site or structural issues that need to be priced honestly. Surveys, consultant reports when required, utility information, HOA documents if applicable, and a realistic allowance strategy all help the process move faster. We also tell owners to decide early whether they are solving a focused problem or opening the door to a broader redesign. In ${location.city}, that distinction matters because review comments, trade coordination, and budget growth all become harder to control once the scope starts drifting after drawings are already in motion.`,
+        },
+      ],
+    },
+    {
+      categoryTitle: `Working with Red Stag in ${location.city}`,
+      questions: [
+        {
+          question: `What kinds of projects does Red Stag handle most often in ${location.city}?`,
+          answer: `${config.projectFocus} We handle the work through a design-build lens, which means the same team that studies the property is responsible for carrying it through permitting, procurement, and field execution. That is valuable in ${location.city} because the right scope often depends on local conditions the owner cannot see on a listing sheet or a Pinterest board. Some clients need a kitchen-first remodel. Others need an ADU strategy, an addition, or a whole-home sequence that corrects several weak points at once. Our job is to tell the difference, price it honestly, and build the right path instead of forcing every property into the same template.`,
+        },
+        {
+          question: `How does Red Stag manage schedule, access, and site behavior in ${location.city}?`,
+          answer: `${config.logisticsFocus} That starts before the first day of construction. We coordinate trade flow, deliveries, inspection timing, and protection plans so the site operates with purpose instead of improvisation. In cities with active neighbors, gated access, tight lots, or more visible site standards, that planning is what keeps the project from becoming disruptive or inefficient. Once the work is live, we keep communication direct so the owner knows what was completed, what is next, and what needs attention. We do not treat site management as a side skill. In ${location.city}, it is one of the main reasons a project either feels controlled or feels chaotic.`,
+        },
+        {
+          question: `Why do homeowners in ${location.city} call Red Stag before they finalize scope?`,
+          answer: `${config.differentiatorFocus} The earlier we are involved, the easier it is to prevent expensive rework in scope, permitting, and procurement. Owners usually save time when they get clear answers on feasibility, likely approval issues, site risk, and finish budget before they commit to a direction that only looked good in theory. In ${location.city}, that matters because local conditions can reshape the job quickly if no one is paying attention. We would rather pressure-test the plan early than sell a simple story and repair it later with change orders and schedule resets. That direct approach is why clients bring us in before the project gets harder than it needs to be.`,
+        },
+      ],
+    },
+  ];
+};
+
+const getLocationConfig = (location: LocationEntry) =>
+  locationTemplateConfig[location.city] || defaultLocationTemplateConfig(location);
+
+const getLocationServiceTiles = (city: string) => {
+  return serviceTileOrder
+    .map((serviceName) => matrixData.find((entry) => entry.city === city && entry.service === serviceName))
+    .filter((entry): entry is MatrixEntry => Boolean(entry));
+};
+
+const getRelatedLocationEntries = (cityNames: string[]) => {
+  return cityNames
+    .map((city) => locationsData.find((entry) => entry.city === city))
+    .filter((entry): entry is LocationEntry => Boolean(entry));
+};
+
 // 1. Static Paths for Build Time
 export async function generateStaticParams() {
   const serviceParams = servicesData.map(s => ({ slug: s.slug }));
@@ -984,6 +1775,16 @@ export default async function DynamicSlugPage({ params }: PageProps) {
 
   // --- LOCATION PAGE TEMPLATE ---
   if (location) {
+    const config = getLocationConfig(location);
+    const introContent = buildLocationIntroParagraphs(location, config);
+    const faqCategories = buildLocationFaqCategories(location, config);
+    const serviceTiles = getLocationServiceTiles(location.city || '');
+    const tierPricing = tierPricingMap[config.tier];
+    const tierCities = locationsData
+      .filter((entry) => getLocationConfig(entry).tier === config.tier)
+      .map((entry) => entry.city)
+      .join(', ');
+    const relatedCities = getRelatedLocationEntries(config.relatedCities);
     const locationCrumbs = [
       { label: 'Home', href: '/' },
       { label: 'Areas We Serve', href: '/areas-we-serve' },
@@ -998,37 +1799,172 @@ export default async function DynamicSlugPage({ params }: PageProps) {
           </div>
         </section>
         <ParallaxHero 
-          imageSrc={`/images/locations/city-overview.jpg`} // Fallback image logic
+          imageSrc={config.heroImage}
           imageAlt={`General Contractor ${location.city || 'Los Angeles'}`}
           h1Text={`General Contractor in ${location.city || 'Los Angeles'}, CA`}
-          h2Text={`Luxury remodels, ADUs, and Custom Homes in ${location.city || 'Los Angeles'}.`}
+          h2Text={config.heroSubline}
           ctaText="Get a Free Estimate"
           ctaHref="/contact"
-          phoneNumber="(626) 652-2303"
+          phoneNumber={PHONE_NUMBER}
         />
-        <TrustBadge />
-        <section className="bg-white py-24">
-          <div className="container mx-auto px-4 max-w-4xl">
-             <h2 className="text-3xl font-serif font-bold text-text-dark mb-8">Building in {location.city || 'Los Angeles'}</h2>
-             <p className="text-lg text-text-body leading-relaxed mb-12">
-               {location.intro || ''}
-             </p>
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center pt-8 border-t border-gray-200">
-                <Button href={`/kitchen-remodel-${(location.slug || '').replace('general-contractor-', '')}`} variant="outline">Kitchen Remodeling in {location.city || 'Los Angeles'}</Button>
-                <Button href={`/bathroom-remodel-${(location.slug || '').replace('general-contractor-', '')}`} variant="outline">Bathroom Remodeling in {location.city || 'Los Angeles'}</Button>
-                <Button href={`/adu-contractor-${(location.slug || '').replace('general-contractor-', '')}`} variant="outline">ADU Contractor in {location.city || 'Los Angeles'}</Button>
-                <Button href={`/custom-home-builder-${(location.slug || '').replace('general-contractor-', '')}`} variant="outline">Custom Homes in {location.city || 'Los Angeles'}</Button>
-             </div>
+        <TrustBar />
+        <section className="bg-white py-20 md:py-24">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="flex items-center gap-4 mb-10">
+              <span className="w-14 h-0.5 bg-accent-red"></span>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-text-dark">
+                Building in {location.city || 'Los Angeles'}
+              </h2>
+            </div>
+            <div className="space-y-8 text-lg leading-8 text-text-body">
+              <p>
+                {introContent.firstParagraph.beforeLink}
+                <Link href={config.serviceLinkSlug} className="font-semibold text-accent-red underline decoration-accent-red underline-offset-4">
+                  {config.serviceLinkLabel}
+                </Link>
+                {introContent.firstParagraph.afterLink}
+              </p>
+              {introContent.remainingParagraphs.map((paragraph, index) => (
+                <p key={`${location.slug}-intro-${index}`}>{paragraph}</p>
+              ))}
+            </div>
           </div>
         </section>
-        
-        <section className="bg-navy-deep py-24 border-t border-gray-800">
-           <div className="container mx-auto px-4 max-w-4xl text-center">
-             <h2 className="text-4xl font-serif font-bold text-white mb-6">Start Your {location.city || 'Los Angeles'} Project</h2>
-             <div className="bg-white p-8 md:p-12 text-left rounded-sm shadow-xl mt-12">
-               <ContactForm />
-             </div>
-           </div>
+
+        <section className="bg-warm-white py-20 md:py-24">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="flex items-center gap-4 mb-10">
+              <span className="w-14 h-0.5 bg-accent-red"></span>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-text-dark">
+                Services we build in {location.city || 'Los Angeles'}
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {serviceTiles.map((entry) => (
+                <Link
+                  key={entry.slug}
+                  href={`/${entry.slug}`}
+                  className="border border-gray-200 bg-white p-7 transition-colors hover:border-accent-red"
+                >
+                  <h3 className="text-2xl font-serif font-bold text-text-dark">{entry.service}</h3>
+                  <p className="mt-3 text-base leading-7 text-text-body">
+                    {locationServiceDescriptions[entry.service]}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-navy-deep py-16 md:py-20">
+          <div className="container mx-auto px-4 max-w-6xl text-center">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-white">
+              Planning a project in {location.city || 'Los Angeles'}?
+            </h2>
+            <a href={PHONE_HREF} className="mt-6 block text-4xl font-bold text-white transition-opacity hover:opacity-90">
+              {PHONE_NUMBER}
+            </a>
+            <Link
+              href="/contact"
+              className="mt-8 inline-flex items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90"
+            >
+              Get a Free Estimate
+            </Link>
+          </div>
+        </section>
+
+        <section className="bg-white py-20 md:py-24">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="flex items-center gap-4 mb-10">
+              <span className="w-14 h-0.5 bg-accent-red"></span>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-text-dark">
+                {tierPricing.title}
+              </h2>
+            </div>
+            <div className="border border-gray-200 bg-warm-white p-8">
+              <p className="text-lg leading-8 text-text-body">
+                {tierPricing.summary} {location.city} sits in this tier alongside {tierCities}. Owners here usually feel the difference in consultant costs, labor rates, finish expectations, and how much site complexity affects the final number.
+              </p>
+              <div className="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <div className="border border-gray-200 bg-white p-6">
+                  <h3 className="text-xl font-serif font-bold text-text-dark">Kitchen Remodel</h3>
+                  <p className="mt-3 text-2xl font-bold text-accent-red">{tierPricing.kitchen}</p>
+                </div>
+                <div className="border border-gray-200 bg-white p-6">
+                  <h3 className="text-xl font-serif font-bold text-text-dark">Bathroom Remodel</h3>
+                  <p className="mt-3 text-2xl font-bold text-accent-red">{tierPricing.bathroom}</p>
+                </div>
+                <div className="border border-gray-200 bg-white p-6">
+                  <h3 className="text-xl font-serif font-bold text-text-dark">ADU Construction</h3>
+                  <p className="mt-3 text-2xl font-bold text-accent-red">{tierPricing.adu}</p>
+                </div>
+                <div className="border border-gray-200 bg-white p-6">
+                  <h3 className="text-xl font-serif font-bold text-text-dark">Custom Home Build</h3>
+                  <p className="mt-3 text-2xl font-bold text-accent-red">{tierPricing.customHome}</p>
+                </div>
+              </div>
+              <p className="mt-8 text-lg leading-8 text-text-body">
+                These tier ranges are not generic internet numbers. They reflect the way labor, consultant requirements, permit fees, access, and finish level behave in this part of the Los Angeles market. We use them as an early planning tool, then tighten the budget once the site, approvals, and exact scope are defined.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-warm-white py-20 md:py-24">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="flex items-center gap-4 mb-10">
+              <span className="w-14 h-0.5 bg-accent-red"></span>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-text-dark">
+                Questions about building in {location.city || 'Los Angeles'}
+              </h2>
+            </div>
+            <FAQAccordion categories={faqCategories} />
+          </div>
+        </section>
+
+        <section className="bg-white py-20 md:py-24">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="flex items-center gap-4 mb-10">
+              <span className="w-14 h-0.5 bg-accent-red"></span>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-text-dark">
+                Nearby areas we serve
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {relatedCities.map((entry) => (
+                <Link
+                  key={entry.slug}
+                  href={`/${entry.slug}`}
+                  className="border border-gray-200 bg-warm-white p-8 transition-colors hover:border-accent-red"
+                >
+                  <h3 className="text-2xl font-serif font-bold text-text-dark">{entry.city}</h3>
+                  <p className="mt-4 text-base leading-7 text-text-body">
+                    Explore how Red Stag approaches residential construction work in {entry.city}.
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-navy-deep py-20 md:py-24">
+          <div className="container mx-auto px-4 max-w-5xl text-center">
+            <h2 className="text-3xl md:text-5xl font-serif font-bold text-white">
+              Start your {location.city || 'Los Angeles'} project with a contractor who knows the local path.
+            </h2>
+            <p className="mt-6 text-lg md:text-xl text-white/80">
+              We handle planning, permits, scheduling, and field execution with one accountable team.
+            </p>
+            <a href={PHONE_HREF} className="mt-8 block text-4xl font-bold text-white transition-opacity hover:opacity-90">
+              {PHONE_NUMBER}
+            </a>
+            <Link
+              href="/contact"
+              className="mt-8 inline-flex items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90"
+            >
+              Get a Free Estimate
+            </Link>
+          </div>
         </section>
       </>
     );
