@@ -12,12 +12,12 @@ export const ProcessSection = () => {
   return (
     <section className="w-full bg-warm-grey py-20 md:py-32 px-6 md:px-12 border-b border-gray-200">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20 md:mb-32">
+        <div className="text-center">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-[#111] leading-tight mb-8">Our Process</h2>
           <div className="w-24 h-1.5 bg-accent-red mx-auto shadow-md"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-8 relative">
+        <div className="relative mt-12 grid grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {/* Internal Connective Tracking Line (Lg Bounds) */}
           <div className="hidden lg:block absolute top-[60px] left-[15%] right-[15%] h-[2px] bg-gray-200 z-0 border-t border-dashed border-gray-300"></div>
 
