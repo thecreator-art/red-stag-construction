@@ -1,7 +1,5 @@
 import { ParallaxHero } from '@/components/ui/ParallaxHero';
-import { TrustBar } from '@/components/sections/TrustBar';
 import { ServicesGrid } from '@/components/sections/ServicesGrid';
-import { SplitBreak } from '@/components/sections/SplitBreak';
 import { WhyRedStag } from '@/components/sections/WhyRedStag';
 import { FeaturedProjects } from '@/components/sections/FeaturedProjects';
 import { SplitBreakCTA } from '@/components/sections/SplitBreakCTA';
@@ -63,6 +61,33 @@ export default function HomePage() {
   const half = Math.ceil(cities.length / 2);
   const leftCities = cities.slice(0, half);
   const rightCities = cities.slice(half);
+  const homepageFaqs = [
+    {
+      question: 'How long does a typical remodel or build take?',
+      answer:
+        'Timelines vary by scope. A kitchen or bathroom remodel typically takes 6–10 weeks. ADUs and home additions range from 3–5 months. Custom home builds run 8–14 months depending on complexity. We provide a detailed project schedule during your consultation.',
+    },
+    {
+      question: 'Do you handle permits and city approvals?',
+      answer:
+        'Yes. We manage the entire permitting process including city plan checks, HOA submissions, and historic preservation board approvals. Our team has permitted over 100 projects across Los Angeles.',
+    },
+    {
+      question: 'Do I need to hire an architect before contacting you?',
+      answer:
+        'No. As a design-build firm, we have licensed architects and structural engineers in-house. We handle design, engineering, and construction under one roof so you do not need to coordinate separate teams.',
+    },
+    {
+      question: 'What does your estimate process look like?',
+      answer:
+        'We start with a free on-site consultation where we walk the property, discuss your vision, and assess structural requirements. Within one week you receive a detailed written estimate with line-item pricing. No vague ranges or hidden fees.',
+    },
+    {
+      question: 'What areas of Los Angeles do you serve?',
+      answer:
+        'We serve all of Greater Los Angeles and the San Fernando Valley including Beverly Hills, Bel Air, Pacific Palisades, Malibu, Brentwood, Studio City, Sherman Oaks, Encino, Calabasas, and surrounding neighborhoods.',
+    },
+  ];
   const localBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': ['LocalBusiness', 'GeneralContractor'],
@@ -112,33 +137,64 @@ export default function HomePage() {
       />
 
       {/* SECTION 2 */}
-      <TrustBar />
-
-      {/* SECTION 3 */}
       <ServicesGrid services={services} className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5" />
 
-      {/* SECTION 4 */}
-      <SplitBreak />
-
-      {/* SECTION 5 */}
+      {/* SECTION 3 */}
       <WhyRedStag />
 
-      {/* SECTION 6 */}
+      {/* SECTION 4 */}
       <FeaturedProjects />
 
-      {/* SECTION 7 */}
-      <SplitBreakCTA />
-
-      {/* SECTION 8 */}
-      <ProcessSection />
-
-      {/* SECTION 9 */}
-      <TeamSection />
-
-      {/* SECTION 10 */}
+      {/* SECTION 5 */}
       <ReviewCarousel reviews={reviews} />
 
-      {/* SECTION 11 */}
+      {/* SECTION 6 */}
+      <SplitBreakCTA />
+
+      {/* SECTION 7 */}
+      <ProcessSection />
+
+      {/* SECTION 8 */}
+      <TeamSection />
+
+      {/* SECTION 9 */}
+      <section className="w-full border-y border-[#e2ddd5] bg-[#F0EDE8] px-6 py-24 md:px-12 md:py-28">
+        <div className="mx-auto max-w-5xl">
+          <div className="text-center">
+            <h2 className="font-serif text-4xl font-bold text-[#1A1A1A] md:text-5xl">
+              Frequently Asked Questions
+            </h2>
+            <div className="mx-auto mt-5 h-1.5 w-24 bg-accent-red shadow-md" />
+          </div>
+
+          <div className="mt-14 space-y-4">
+            {homepageFaqs.map((faq) => (
+              <details
+                key={faq.question}
+                className="group border border-[#ddd6cc] bg-white shadow-sm transition-shadow open:shadow-md"
+              >
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-6 py-5 font-sans text-lg font-semibold text-navy-deep">
+                  <span>{faq.question}</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    className="h-5 w-5 shrink-0 text-accent-red transition-transform duration-300 group-open:rotate-180"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m6 9 6 6 6-6" />
+                  </svg>
+                </summary>
+                <div className="border-l-[3px] border-accent-red px-6 py-4 font-sans text-base leading-7 text-text-body">
+                  {faq.answer}
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 10 */}
       <section className="w-full bg-white py-24 md:py-32 px-6 md:px-12 border-y border-gray-200">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16">
           <div className="lg:w-1/3 flex flex-col justify-center">
@@ -175,7 +231,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 12 */}
+      {/* SECTION 11 */}
       <section className="w-full bg-navy-deep py-24 md:py-32 px-6 md:px-12 select-none relative overflow-hidden">
         {/* Background Ghost Element */}
         <div className="absolute top-1/2 -translate-y-1/2 -right-40 opacity-[0.03] pointer-events-none w-[800px] h-[800px]">

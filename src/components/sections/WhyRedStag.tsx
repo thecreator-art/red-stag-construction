@@ -1,6 +1,6 @@
 export const WhyRedStag = () => {
   return (
-    <section className="w-full bg-[#F5F0E8] px-6 pb-[4.5rem] pt-24 text-[#2A2A2A] md:px-12">
+    <section className="w-full bg-[#F5F0E8] px-6 pb-12 pt-24 text-[#2A2A2A] md:px-12">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
         {/* Left Informational Structural Tree */}
         <div>
