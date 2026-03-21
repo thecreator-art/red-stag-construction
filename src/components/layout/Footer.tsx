@@ -20,8 +20,17 @@ export const Footer = () => {
               Built on Craft. Driven by Accountability.
             </p>
             <div className="space-y-2 text-sm text-gray-400">
-              <p>License #964664</p>
+              <p className="font-semibold text-white">License #964664</p>
               <p>Est. 2011</p>
+              <p>Licensed General Contractor - State of California</p>
+              <a
+                href="https://www.cslb.ca.gov"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex text-gray-400 transition-colors hover:text-white"
+              >
+                CSLB License #964664
+              </a>
             </div>
           </div>
 

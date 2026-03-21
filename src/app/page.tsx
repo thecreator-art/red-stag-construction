@@ -36,9 +36,43 @@ export default function HomePage() {
   const half = Math.ceil(cities.length / 2);
   const leftCities = cities.slice(0, half);
   const rightCities = cities.slice(half);
+  const localBusinessSchema = {
+    '@context': 'https://schema.org',
+    '@type': ['LocalBusiness', 'GeneralContractor'],
+    name: 'Red Stag Construction',
+    url: 'https://redstagcc.com',
+    telephone: '(626) 652-2303',
+    email: 'support@redstagcc.com',
+    slogan: 'One team. One contract. Zero excuses.',
+    foundingDate: '2011',
+    sameAs: [
+      'https://www.yelp.com/biz/red-stag-construction-los-angeles',
+      'https://www.houzz.com/professionals/red-stag-construction',
+      'https://www.facebook.com/Redstagconstructioncompany',
+      'https://www.instagram.com/redstagcc',
+      'https://www.linkedin.com/in/israel-aquino-59333259',
+    ],
+    hasCredential: {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'Contractor License',
+      name: 'CSLB License 964664',
+      awardedBy: {
+        '@type': 'Organization',
+        name: 'California State License Board',
+      },
+    },
+    numberOfEmployees: {
+      '@type': 'QuantitativeValue',
+      value: 10,
+    },
+  };
 
   return (
     <div className="w-full relative">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+      />
       {/* SECTION 1 */}
       <ParallaxHero 
         imageSrc="/images/hero/hero-main.jpg"
