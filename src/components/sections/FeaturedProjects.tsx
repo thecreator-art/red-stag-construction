@@ -6,7 +6,7 @@ export const FeaturedProjects = () => {
   const projects = [
     { id: '1', title: 'Trousdale Estates Renovation', city: 'Beverly Hills', serviceType: 'Custom Home Build', beforeImage: '/images/projects/trousdale-before.jpg', afterImage: '/images/projects/trousdale-after.jpg' },
     { id: '2', title: 'Canyon Modern ADU Addition', city: 'Sherman Oaks', serviceType: 'ADU Construction', beforeImage: '/images/projects/canyon-before.jpg', afterImage: '/images/projects/canyon-after.jpg' },
-    { id: '3', title: 'Bel Air Primary Suite Expansion', city: 'Bel Air', serviceType: 'Bathroom Remodel', beforeImage: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?q=80&w=800', afterImage: '/images/projects/project-3.jpg' },
+    { id: '3', title: 'Bel Air Primary Suite Expansion', city: 'Bel Air', serviceType: 'Bathroom Remodel', beforeImage: '/images/projects/belair-before.jpg', afterImage: '/images/projects/belair-after.jpg' },
     { id: '4', title: 'Chef\'s Kitchen Open Concept', city: 'Studio City', serviceType: 'Kitchen Remodel', beforeImage: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=800', afterImage: '/images/projects/project-4.jpg' },
     { id: '5', title: 'Hillside Structural Reinforcement', city: 'Pacific Palisades', serviceType: 'General Contracting', beforeImage: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800', afterImage: '/images/projects/project-5.jpg' },
     { id: '6', title: 'Historic Craftsman Restoration', city: 'Silver Lake', serviceType: 'Home Addition', beforeImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=800', afterImage: '/images/projects/project-6.jpg' },
