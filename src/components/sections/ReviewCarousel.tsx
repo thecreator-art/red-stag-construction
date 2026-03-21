@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
+import { useRef, useState } from 'react';
 
 export interface Review {
   id: string;
@@ -15,35 +15,11 @@ interface ReviewCarouselProps {
 }
 
 export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const dragState = useRef({ isDragging: false, startX: 0, startScrollLeft: 0 });
   const [isPaused, setIsPaused] = useState(false);
 
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % reviews.length);
-  }, [reviews.length]);
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev === 0 ? reviews.length - 1 : prev - 1));
-  };
-
-  useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(nextSlide, 5000);
-    return () => clearInterval(timer);
-  }, [isPaused, nextSlide]);
-
   if (!reviews || reviews.length === 0) return null;
-
-  // Extract active chunk bounds via dynamic modulo spanning arrays safely
-  const getVisibleReviews = () => {
-    const visible = [];
-    for (let i = 0; i < 3; i++) {
-      visible.push(reviews[(currentIndex + i) % reviews.length]);
-    }
-    return visible;
-  };
-
-  const visibleReviews = getVisibleReviews();
 
   const getPlatformIcon = (platform: string) => {
     if (platform === 'Google') {
@@ -76,53 +52,125 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
     return null;
   };
 
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    const node = scrollRef.current;
+    if (!node) return;
+
+    dragState.current = {
+      isDragging: true,
+      startX: event.clientX,
+      startScrollLeft: node.scrollLeft,
+    };
+
+    setIsPaused(true);
+    node.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const node = scrollRef.current;
+    if (!node || !dragState.current.isDragging) return;
+
+    const distance = event.clientX - dragState.current.startX;
+    node.scrollLeft = dragState.current.startScrollLeft - distance;
+  };
+
+  const handlePointerEnd = (event: React.PointerEvent<HTMLDivElement>) => {
+    const node = scrollRef.current;
+    if (!node) return;
+
+    dragState.current.isDragging = false;
+    node.releasePointerCapture(event.pointerId);
+    setIsPaused(false);
+  };
+
   return (
-    <div 
-      className={`relative w-full bg-navy-deep py-20 px-6 md:px-12 overflow-hidden ${className}`}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-    >
-      <div className="max-w-7xl mx-auto">
-        
-        {/* Core Nav controls mapping exactly to the local iterator limiters */}
-        <div className="flex justify-between items-end mb-10 border-b border-gray-800 pb-6">
-          <h2 className="text-3xl md:text-4xl font-serif text-white font-bold leading-tight">Client Reviews</h2>
-          <div className="flex space-x-3">
-            <button onClick={prevSlide} className="p-3 bg-[#222] hover:bg-accent-red transition-colors text-white shadow-xl">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
-            </button>
-            <button onClick={nextSlide} className="p-3 bg-[#222] hover:bg-accent-red transition-colors text-white shadow-xl">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
-            </button>
-          </div>
+    <section className={`relative w-full overflow-hidden bg-navy-deep px-6 py-20 md:px-12 ${className}`}>
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-10 border-b border-gray-800 pb-6">
+          <h2 className="text-3xl font-serif font-bold leading-tight text-white md:text-4xl">Client Reviews</h2>
         </div>
 
-        {/* Component Grid Projection handling responsive 1 column > 3 column mapping blocks */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {visibleReviews.map((review, i) => (
-            <div 
-              key={`${review.id}-${i}`} 
-              className={`bg-navy-deep border-t-4 border-accent-red p-8 shadow-2xl flex flex-col justify-between h-full ${i > 0 ? 'hidden md:flex' : 'flex'}`}
-            >
-              <div>
-                <div className="flex justify-between items-start mb-6">
-                  {/* Dynamic star injection tracking discrete integer payloads */}
-                  <div className="flex items-center space-x-1 text-yellow-400">
-                    {[...Array(review.rating)].map((_, idx) => (
-                      <svg key={idx} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd" /></svg>
-                    ))}
-                  </div>
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-md">
-                    {getPlatformIcon(review.platform)}
-                  </div>
+        <div
+          ref={scrollRef}
+          className="overflow-x-auto overflow-y-hidden scrollbar-none cursor-grab touch-pan-x"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerEnd}
+          onPointerCancel={handlePointerEnd}
+        >
+          <div
+            className={`flex w-max gap-8 will-change-transform ${isPaused ? 'paused' : ''}`}
+          >
+            <div className="ticker-track flex gap-8">
+              {[0, 1].map((groupIndex) => (
+                <div key={groupIndex} className="ticker-group flex gap-8">
+                  {reviews.map((review) => (
+                    <article
+                      key={`${groupIndex}-${review.id}`}
+                      className="flex h-[320px] w-[320px] shrink-0 flex-col justify-between border-t-4 border-accent-red bg-navy-deep p-8 shadow-2xl md:w-[360px]"
+                    >
+                      <div>
+                        <div className="mb-6 flex items-start justify-between">
+                          <div className="flex items-center space-x-1 text-yellow-400">
+                            {[...Array(review.rating)].map((_, idx) => (
+                              <svg key={idx} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+                                <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd" />
+                              </svg>
+                            ))}
+                          </div>
+                          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-md">
+                            {getPlatformIcon(review.platform)}
+                          </div>
+                        </div>
+                        <p className="line-clamp-6 font-serif italic leading-relaxed text-gray-300">
+                          &ldquo;{review.text}&rdquo;
+                        </p>
+                      </div>
+                      <div className="text-xs font-extrabold uppercase tracking-widest text-white opacity-80">
+                        {review.name}
+                      </div>
+                    </article>
+                  ))}
                 </div>
-                <p className="text-gray-300 italic mb-10 leading-relaxed font-serif">&ldquo;{review.text}&rdquo;</p>
-              </div>
-              <div className="text-white font-extrabold tracking-widest text-xs uppercase opacity-80">{review.name}</div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
-    </div>
+
+      <style jsx>{`
+        .ticker-track {
+          animation: reviewTicker 36s linear infinite;
+        }
+
+        .paused .ticker-track,
+        .paused.ticker-track {
+          animation-play-state: paused;
+        }
+
+        .scrollbar-none {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+
+        .scrollbar-none::-webkit-scrollbar {
+          display: none;
+        }
+
+        @keyframes reviewTicker {
+          from {
+            transform: translate3d(0, 0, 0);
+          }
+
+          to {
+            transform: translate3d(calc(-50% - 1rem), 0, 0);
+          }
+        }
+      `}</style>
+    </section>
   );
 };
