@@ -90,7 +90,7 @@ export const PortfolioFilter = ({ projects, className = '' }: PortfolioFilterPro
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               key={project.id}
-              className="group flex flex-col bg-[#111111] rounded-sm overflow-hidden border border-gray-800 shadow-xl"
+              className="group flex flex-col bg-navy-deep rounded-sm overflow-hidden border border-gray-800 shadow-xl"
             >
               <div className="overflow-hidden">
                 <BeforeAfterSlider 
@@ -123,7 +123,7 @@ export const PortfolioFilter = ({ projects, className = '' }: PortfolioFilterPro
           <motion.div 
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
-            className="col-span-1 lg:col-span-2 py-32 text-center text-gray-500 border border-dashed border-gray-700 flex flex-col items-center justify-center bg-[#0a0a0a]"
+            className="col-span-1 lg:col-span-2 py-32 text-center text-gray-500 border border-dashed border-gray-700 flex flex-col items-center justify-center bg-navy-deep"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 mb-4 opacity-50">
               <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
