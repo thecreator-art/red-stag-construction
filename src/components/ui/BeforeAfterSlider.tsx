@@ -21,29 +21,39 @@ export const BeforeAfterSlider = ({
   altText = 'Before and After Project Comparison',
 }: BeforeAfterSliderProps) => {
   const [sliderPosition, setSliderPosition] = useState(50);
-  const [isDragging, setIsDragging] = useState(false);
+  const interactionLayerRef = useRef<HTMLDivElement>(null);
+  const isDraggingRef = useRef(false);
   const activePointerIdRef = useRef<number | null>(null);
 
-  const getSliderPosition = (clientX: number, rect: DOMRect) => {
-    const rawPercentage = ((clientX - rect.left) / rect.width) * 100;
-    return Math.min(100, Math.max(0, rawPercentage));
+  const updateSliderPosition = (clientX: number, rect: DOMRect) => {
+    const percentage = ((clientX - rect.left) / rect.width) * 100;
+    const clampedPercentage = Math.min(100, Math.max(0, percentage));
+    setSliderPosition(clampedPercentage);
+  };
+
+  const setCursor = (cursor: 'grab' | 'grabbing') => {
+    if (interactionLayerRef.current) {
+      interactionLayerRef.current.style.cursor = cursor;
+    }
   };
 
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
+
+    isDraggingRef.current = true;
     activePointerIdRef.current = event.pointerId;
     event.currentTarget.setPointerCapture(event.pointerId);
-    setSliderPosition(getSliderPosition(event.clientX, rect));
-    setIsDragging(true);
+    setCursor('grabbing');
+    updateSliderPosition(event.clientX, rect);
   };
 
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging || activePointerIdRef.current !== event.pointerId) {
+    if (!isDraggingRef.current || activePointerIdRef.current !== event.pointerId) {
       return;
     }
 
     const rect = event.currentTarget.getBoundingClientRect();
-    setSliderPosition(getSliderPosition(event.clientX, rect));
+    updateSliderPosition(event.clientX, rect);
   };
 
   const handlePointerEnd = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -55,19 +65,13 @@ export const BeforeAfterSlider = ({
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
 
+    isDraggingRef.current = false;
     activePointerIdRef.current = null;
-    setIsDragging(false);
+    setCursor('grab');
   };
 
   return (
-    <div
-      className={`relative aspect-[3/2] w-full select-none overflow-hidden bg-navy-deep ${isDragging ? 'cursor-grabbing' : 'cursor-grab'} ${className}`}
-      style={{ touchAction: 'none' }}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerEnd}
-      onPointerCancel={handlePointerEnd}
-    >
+    <div className={`relative aspect-[3/2] w-full overflow-hidden bg-navy-deep ${className}`}>
       <Image
         src={afterImage}
         alt={altText}
@@ -79,7 +83,10 @@ export const BeforeAfterSlider = ({
 
       <div
         className="pointer-events-none absolute inset-0 overflow-hidden"
-        style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+        style={{
+          clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`,
+          willChange: 'clip-path',
+        }}
       >
         <Image
           src={beforeImage}
@@ -87,27 +94,40 @@ export const BeforeAfterSlider = ({
           fill
           priority
           sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover"
+          className="pointer-events-none object-cover"
         />
       </div>
 
       <div
-        className="pointer-events-none absolute inset-y-0 z-10 flex w-px -translate-x-1/2 items-center justify-center bg-accent-red shadow-[0_0_15px_rgba(0,0,0,0.55)]"
+        className="pointer-events-none absolute inset-y-0 z-20 w-px -translate-x-1/2 bg-accent-red shadow-[0_0_14px_rgba(0,0,0,0.45)]"
+        style={{ left: `${sliderPosition}%` }}
+      />
+
+      <div
+        className="pointer-events-none absolute top-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-accent-red bg-navy-deep text-white shadow-xl"
         style={{ left: `${sliderPosition}%` }}
       >
-        <div className={`flex h-11 w-11 items-center justify-center rounded-full border-2 border-accent-red bg-navy-deep text-white shadow-xl ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
-            <path d="M8 5v14l-6-7 6-7zM16 5v14l6-7-6-7z" />
-          </svg>
-        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
+          <path d="M8 5v14l-6-7 6-7zM16 5v14l6-7-6-7z" />
+        </svg>
       </div>
 
-      <div className="pointer-events-none absolute left-4 top-4 z-20 rounded-sm bg-navy-deep/75 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-white md:text-sm">
+      <div className="pointer-events-none absolute left-4 top-4 z-30 rounded-sm bg-navy-deep/75 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-white md:text-sm">
         {labelBefore}
       </div>
-      <div className="pointer-events-none absolute right-4 top-4 z-20 rounded-sm bg-navy-deep/75 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-white md:text-sm">
+      <div className="pointer-events-none absolute right-4 top-4 z-30 rounded-sm bg-navy-deep/75 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-white md:text-sm">
         {labelAfter}
       </div>
+
+      <div
+        ref={interactionLayerRef}
+        className="absolute inset-0 z-40 cursor-grab touch-none"
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerEnd}
+        onPointerCancel={handlePointerEnd}
+        aria-label="Before and after image comparison slider"
+      />
     </div>
   );
 };
