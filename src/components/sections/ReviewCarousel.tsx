@@ -84,10 +84,10 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
   };
 
   return (
-    <section className={`relative w-full overflow-hidden bg-navy-deep px-6 py-20 md:px-12 ${className}`}>
+    <section className={`relative w-full overflow-hidden bg-[#F0EDE8] px-6 py-20 md:px-12 ${className}`}>
       <div className="mx-auto max-w-7xl">
-        <div className="mb-10 border-b border-gray-800 pb-6">
-          <h2 className="text-3xl font-serif font-bold leading-tight text-white md:text-4xl">Client Reviews</h2>
+        <div className="mb-10 border-b border-[#d9d1c5] pb-6">
+          <h2 className="text-3xl font-serif font-bold leading-tight text-navy-deep md:text-4xl">Client Reviews</h2>
         </div>
 
         <div
@@ -111,7 +111,7 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
                   {reviews.map((review) => (
                     <article
                       key={`${groupIndex}-${review.id}`}
-                      className="flex h-[320px] w-[320px] shrink-0 flex-col justify-between border-t-4 border-accent-red bg-navy-deep p-8 shadow-2xl md:w-[360px]"
+                      className="flex h-[320px] w-[320px] shrink-0 flex-col justify-between border-t-4 border-accent-red bg-white p-8 shadow-[0_16px_40px_rgba(21,45,69,0.12)] md:w-[360px]"
                     >
                       <div>
                         <div className="mb-6 flex items-start justify-between">
@@ -126,11 +126,11 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
                             {getPlatformIcon(review.platform)}
                           </div>
                         </div>
-                        <p className="line-clamp-6 font-serif italic leading-relaxed text-gray-300">
+                        <p className="line-clamp-6 font-serif italic leading-relaxed text-navy-deep">
                           &ldquo;{review.text}&rdquo;
                         </p>
                       </div>
-                      <div className="text-xs font-extrabold uppercase tracking-widest text-white opacity-80">
+                      <div className="text-xs font-extrabold uppercase tracking-widest text-[#1A1A1A] opacity-80">
                         {review.name}
                       </div>
                     </article>

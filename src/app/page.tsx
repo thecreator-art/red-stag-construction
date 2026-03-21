@@ -161,16 +161,16 @@ export default function HomePage() {
       <SplitBreakCTA />
 
       {/* SECTION 9 */}
-      <ProcessSection />
-
-      {/* SECTION 10 */}
       <TeamSection />
 
+      {/* SECTION 10 */}
+      <ProcessSection />
+
       {/* SECTION 11 */}
-      <section className="w-full border-y border-[#e2ddd5] bg-[#F0EDE8] px-6 py-24 md:px-12 md:py-28">
+      <section className="w-full border-y border-white/10 bg-navy-deep px-6 py-24 md:px-12 md:py-28">
         <div className="mx-auto max-w-5xl">
           <div className="text-center">
-            <h2 className="font-serif text-4xl font-bold text-[#1A1A1A] md:text-5xl">
+            <h2 className="font-serif text-4xl font-bold text-white md:text-5xl">
               Frequently Asked Questions
             </h2>
             <div className="mx-auto mt-5 h-1.5 w-24 bg-accent-red shadow-md" />
@@ -178,6 +178,7 @@ export default function HomePage() {
 
           <div className="mt-14">
             <FAQAccordion
+              darkMode
               showSearch={false}
               categories={[
                 {

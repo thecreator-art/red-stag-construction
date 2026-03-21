@@ -15,9 +15,10 @@ interface FAQCategory {
 interface FAQAccordionProps {
   categories: FAQCategory[];
   showSearch?: boolean;
+  darkMode?: boolean;
 }
 
-export const FAQAccordion = ({ categories, showSearch = true }: FAQAccordionProps) => {
+export const FAQAccordion = ({ categories, showSearch = true, darkMode = false }: FAQAccordionProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [openIndexes, setOpenIndexes] = useState<Record<string, number | null>>({});
 
@@ -66,7 +67,7 @@ export const FAQAccordion = ({ categories, showSearch = true }: FAQAccordionProp
     <>
       {showSearch ? (
       <div className="relative z-10 mb-10">
-        <label htmlFor="faq-search" className="mb-3 block font-sans text-xs font-bold uppercase tracking-[0.2em] text-navy-deep">
+        <label htmlFor="faq-search" className={`mb-3 block font-sans text-xs font-bold uppercase tracking-[0.2em] ${darkMode ? 'text-white' : 'text-navy-deep'}`}>
           Search Questions
         </label>
         <input
@@ -76,7 +77,11 @@ export const FAQAccordion = ({ categories, showSearch = true }: FAQAccordionProp
           onChange={(event) => setSearchTerm(event.target.value)}
           placeholder="Search permits, timelines, ADUs, costs, HOA requirements..."
           autoComplete="off"
-          className="w-full border border-gray-300 bg-white px-5 py-4 font-sans text-base text-text-body outline-none transition-colors focus:border-accent-red focus:ring-2 focus:ring-accent-red/20"
+          className={`w-full px-5 py-4 font-sans text-base outline-none transition-colors focus:border-accent-red focus:ring-2 focus:ring-accent-red/20 ${
+            darkMode
+              ? 'border border-white/15 bg-white text-text-body'
+              : 'border border-gray-300 bg-white text-text-body'
+          }`}
         />
       </div>
       ) : null}
@@ -84,7 +89,7 @@ export const FAQAccordion = ({ categories, showSearch = true }: FAQAccordionProp
       <div>
         {filteredCategories.map((category) => (
           <section key={category.categoryTitle} className="mb-12 last:mb-0">
-            <h3 className="font-sans text-2xl font-bold text-navy-deep">{category.categoryTitle}</h3>
+            <h3 className={`font-sans text-2xl font-bold ${darkMode ? 'text-white' : 'text-navy-deep'}`}>{category.categoryTitle}</h3>
             <div className="mb-6 mt-2 h-0.5 w-16 bg-accent-red" />
 
             <div className="space-y-4">
@@ -94,7 +99,9 @@ export const FAQAccordion = ({ categories, showSearch = true }: FAQAccordionProp
                 return (
                   <div
                     key={`${category.categoryTitle}-${question.question}`}
-                    className={`border border-gray-200 bg-white transition-shadow duration-300 ${
+                    className={`transition-shadow duration-300 ${
+                      darkMode ? 'border border-white/10 bg-white' : 'border border-gray-200 bg-white'
+                    } ${
                       isOpen ? 'shadow-md' : ''
                     }`}
                   >
@@ -104,7 +111,7 @@ export const FAQAccordion = ({ categories, showSearch = true }: FAQAccordionProp
                       className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
                       aria-expanded={isOpen}
                     >
-                      <span className="font-sans text-lg font-semibold text-navy-deep cursor-pointer">
+                      <span className="cursor-pointer font-sans text-lg font-semibold text-navy-deep">
                         {question.question}
                       </span>
                       <svg
@@ -137,7 +144,11 @@ export const FAQAccordion = ({ categories, showSearch = true }: FAQAccordionProp
         ))}
 
         {filteredCategories.length === 0 && (
-          <div className="border border-dashed border-gray-300 bg-white px-6 py-12 text-center font-sans text-base text-text-body">
+          <div className={`px-6 py-12 text-center font-sans text-base ${
+            darkMode
+              ? 'border border-dashed border-white/20 bg-white text-text-body'
+              : 'border border-dashed border-gray-300 bg-white text-text-body'
+          }`}>
             No FAQ entries match your search. Try a city name, permit question, or service type.
           </div>
         )}

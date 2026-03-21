@@ -49,6 +49,10 @@ export const Footer = () => {
                 <span>3211 Cahuenga Blvd W Ste 207</span>
                 <span>Los Angeles, CA 90068</span>
               </p>
+              <p className="flex flex-col">
+                <span className="text-gray-500 mb-1">Hours</span>
+                <span>Mon-Sat 8AM-6PM</span>
+              </p>
             </div>
           </div>
 
