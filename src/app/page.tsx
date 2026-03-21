@@ -17,9 +17,9 @@ export default function HomePage() {
     { slug: 'bathroom-remodel-los-angeles', title: 'Bathroom Remodel', imageSrc: '/images/services/bathroom.jpg' },
     { slug: 'adu-contractor-los-angeles', title: 'ADU Construction', imageSrc: '/images/services/adu.jpg' },
     { slug: 'custom-home-builder-los-angeles', title: 'Custom Home Build', imageSrc: '/images/services/custom.jpg' },
-    { slug: 'home-addition-contractor-los-angeles', title: 'Home Addition', imageSrc: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=800' },
-    { slug: 'general-contractor-los-angeles', title: 'General Contracting', imageSrc: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800' },
-    { slug: 'hardscape-contractor-los-angeles', title: 'Hardscaping', imageSrc: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800' },
+    { slug: 'home-addition-contractor-los-angeles', title: 'Home Addition', imageSrc: '/images/services/home.jpg' },
+    { slug: 'general-contractor-los-angeles', title: 'General Contracting', imageSrc: '/images/services/general.jpg' },
+    { slug: 'hardscape-contractor-los-angeles', title: 'Hardscaping', imageSrc: '/images/services/hardscape.jpg' },
     { slug: 'fence-company-los-angeles', title: 'Fencing & Gates', imageSrc: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=800' },
     { slug: 'window-replacement-los-angeles', title: 'Window Replacement', imageSrc: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=800' }
   ];
