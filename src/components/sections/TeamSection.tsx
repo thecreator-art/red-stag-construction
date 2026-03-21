@@ -1,8 +1,8 @@
 export const TeamSection = () => {
   const team = [
-    { name: 'Israel Aquino', title: 'Founder & CEO', bio: 'With over twenty years of high-end structural experience, Israel directs the unified vision and operational execution of every Red Stag build.', photo: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800' },
-    { name: 'Anthony Torsarkissian', title: 'Chief Architect', bio: 'Licensed architectural engineer mapping out structural feasibility and breathtaking aesthetic continuity across all residential assets.', photo: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800' },
-    { name: 'Zack Ward', title: 'Master Form Setter', bio: 'The foundation of Red Stag. Zack ensures structural perimeters and concrete executions exceed local engineering code natively.', photo: 'https://images.unsplash.com/photo-1540569014015-19a7be504e3a?q=80&w=800' }
+    { name: 'Israel', title: 'Founder, CEO & Prime Contractor', bio: 'Israel manages the physical execution of every Red Stag job site. He oversees all structural work, framing, and on-site crews to guarantee the build meets local codes and our standard of quality.', photo: '/images/team/israel.jpg' },
+    { name: 'Anthony', title: 'COO & Prime Contractor', bio: 'Anthony drives day-to-day logistics, vendor management, and material procurement. He keeps every project phased, scheduled, and moving forward on timeline without costly delays.', photo: '/images/team/anthony.jpg' },
+    { name: 'Zack', title: 'Head of Project Development', bio: 'Zack leads initial client consultations, site evaluations, and pre-construction planning. He breaks down the raw numbers, assesses structural feasibility, and guides homeowners through the permitting process.', photo: '/images/team/zack.jpg' }
   ];
 
   return (
