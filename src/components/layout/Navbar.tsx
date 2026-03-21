@@ -179,12 +179,16 @@ export const Navbar = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m6 9 6 6 6-6" />
                 </svg>
               </button>
-              <div className="absolute left-0 top-full pt-4">
+              <div
+                className={`absolute left-0 top-full pt-4 ${
+                  activeDesktopMenu === 'services' ? 'pointer-events-auto' : 'pointer-events-none'
+                }`}
+              >
                 <div
                   className={`w-[920px] max-w-[calc(100vw-2rem)] rounded-sm border border-white/10 bg-navy-deep p-8 shadow-[0_18px_50px_rgba(10,24,38,0.35)] transition-all duration-200 ${
                     activeDesktopMenu === 'services'
-                      ? 'visible translate-y-0 opacity-100'
-                      : 'invisible -translate-y-2 opacity-0'
+                      ? 'visible translate-y-0 opacity-100 pointer-events-auto'
+                      : 'invisible -translate-y-2 opacity-0 pointer-events-none'
                   }`}
                 >
                   <div className="grid grid-cols-[minmax(0,1fr)_280px] gap-8">
@@ -236,12 +240,16 @@ export const Navbar = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m6 9 6 6 6-6" />
                 </svg>
               </button>
-              <div className="absolute left-1/2 top-full -translate-x-1/2 pt-4">
+              <div
+                className={`absolute left-1/2 top-full -translate-x-1/2 pt-4 ${
+                  activeDesktopMenu === 'areas' ? 'pointer-events-auto' : 'pointer-events-none'
+                }`}
+              >
                 <div
                   className={`w-[760px] rounded-sm border border-white/10 bg-navy-deep p-8 shadow-[0_18px_50px_rgba(10,24,38,0.35)] transition-all duration-200 ${
                     activeDesktopMenu === 'areas'
-                      ? 'visible translate-y-0 opacity-100'
-                      : 'invisible -translate-y-2 opacity-0'
+                      ? 'visible translate-y-0 opacity-100 pointer-events-auto'
+                      : 'invisible -translate-y-2 opacity-0 pointer-events-none'
                   }`}
                 >
                   <div className="grid grid-cols-4 gap-x-8 gap-y-4">
