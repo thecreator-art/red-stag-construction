@@ -79,7 +79,9 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
     if (!node) return;
 
     dragState.current.isDragging = false;
-    node.releasePointerCapture(event.pointerId);
+    if (node.hasPointerCapture(event.pointerId)) {
+      node.releasePointerCapture(event.pointerId);
+    }
     setIsPaused(false);
   };
 
@@ -92,7 +94,7 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
 
         <div
           ref={scrollRef}
-          className="overflow-x-auto overflow-y-hidden scrollbar-none cursor-grab touch-pan-x"
+          className="relative z-[1] overflow-x-auto overflow-y-hidden scrollbar-none cursor-grab touch-pan-x"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={() => setIsPaused(true)}
@@ -111,7 +113,7 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
                   {reviews.map((review) => (
                     <article
                       key={`${groupIndex}-${review.id}`}
-                      className="flex h-[320px] w-[320px] shrink-0 flex-col justify-between border-t-4 border-accent-red bg-white p-8 shadow-[0_16px_40px_rgba(21,45,69,0.12)] md:w-[360px]"
+                      className="group flex h-[320px] w-[320px] shrink-0 cursor-pointer flex-col justify-between border-t-4 border-accent-red bg-white p-8 shadow-[0_16px_40px_rgba(21,45,69,0.12)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(21,45,69,0.18)] md:w-[360px]"
                     >
                       <div>
                         <div className="mb-6 flex items-start justify-between">
@@ -126,7 +128,7 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
                             {getPlatformIcon(review.platform)}
                           </div>
                         </div>
-                        <p className="line-clamp-6 font-serif italic leading-relaxed text-navy-deep">
+                        <p className="line-clamp-6 font-serif italic leading-relaxed text-navy-deep transition-colors duration-300 group-hover:text-[#1A1A1A]">
                           &ldquo;{review.text}&rdquo;
                         </p>
                       </div>

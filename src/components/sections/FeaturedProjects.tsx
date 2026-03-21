@@ -33,19 +33,19 @@ export const FeaturedProjects = () => {
 
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-3">
           {projects.map(project => (
-            <div key={project.id} className="bg-navy-deep rounded-sm overflow-hidden border border-gray-800 shadow-2xl group flex flex-col">
+            <div key={project.id} className="group flex flex-col overflow-hidden rounded-sm border border-gray-800 bg-navy-deep shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(0,0,0,0.35)]">
               <BeforeAfterSlider 
                 beforeImage={project.beforeImage} 
                 afterImage={project.afterImage} 
                 altText={`${project.title} Before and After`}
               />
-              <div className="p-8 md:p-10 flex flex-col flex-grow justify-between border-t border-gray-800">
+              <div className="flex flex-grow flex-col justify-between border-t border-gray-800 p-8 md:p-10">
                 <div>
-                  <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center mb-6 gap-4">
-                    <h3 className="text-2xl md:text-3xl font-serif text-white leading-tight">{project.title}</h3>
-                    <span className="text-accent-red font-bold text-[10px] md:text-xs tracking-widest uppercase border border-accent-red/30 px-3 py-1.5 bg-accent-red/10 whitespace-nowrap rounded-sm">{project.city}</span>
+                  <div className="mb-6 flex flex-col items-start gap-4 xl:flex-row xl:items-center xl:justify-between">
+                    <h3 className="font-serif text-2xl leading-tight text-white transition-colors duration-300 group-hover:text-accent-red md:text-3xl">{project.title}</h3>
+                    <span className="whitespace-nowrap rounded-sm border border-accent-red/30 bg-accent-red/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-accent-red md:text-xs">{project.city}</span>
                   </div>
-                  <p className="text-gray-400 text-sm md:text-base">{project.serviceType}</p>
+                  <p className="text-sm text-gray-400 transition-colors duration-300 group-hover:text-gray-200 md:text-base">{project.serviceType}</p>
                 </div>
               </div>
             </div>

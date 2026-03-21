@@ -159,12 +159,10 @@ export const Navbar = () => {
           <nav className="hidden lg:flex items-center space-x-8 text-sm font-semibold tracking-wide">
             <Link href="/" className="hover:text-accent-red transition-colors">Home</Link>
 
-            <div
-              className="relative"
-            >
+            <div className="relative">
               <button
                 type="button"
-                className="flex items-center gap-2 hover:text-accent-red transition-colors"
+                className="flex min-h-11 items-center gap-2 transition-colors hover:text-accent-red"
                 onClick={() => toggleDesktopMenu('services')}
                 aria-expanded={activeDesktopMenu === 'services'}
               >
@@ -195,7 +193,7 @@ export const Navbar = () => {
                         <Link
                           key={service.slug}
                           href={service.slug}
-                          className="rounded-sm border border-white/10 bg-white/5 px-4 py-4 transition-colors hover:border-accent-red hover:bg-white/8"
+                          className="block rounded-sm border border-white/10 bg-white/5 px-4 py-4 transition-all duration-200 hover:border-accent-red hover:bg-white/8"
                         >
                           <span className="block font-sans text-sm font-bold text-white">{service.name}</span>
                           <span className="mt-1 block truncate text-xs text-gray-400">{service.description}</span>
@@ -218,12 +216,10 @@ export const Navbar = () => {
 
             <Link href="/our-work" className="hover:text-accent-red transition-colors">Our Work</Link>
 
-            <div
-              className="relative"
-            >
+            <div className="relative">
               <button
                 type="button"
-                className="flex items-center gap-2 hover:text-accent-red transition-colors"
+                className="flex min-h-11 items-center gap-2 transition-colors hover:text-accent-red"
                 onClick={() => toggleDesktopMenu('areas')}
                 aria-expanded={activeDesktopMenu === 'areas'}
               >
@@ -253,7 +249,7 @@ export const Navbar = () => {
                       <Link
                         key={city.slug}
                         href={city.slug}
-                        className="font-sans text-sm font-semibold text-gray-200 transition-colors hover:text-accent-red"
+                        className="block rounded-sm px-3 py-2 font-sans text-sm font-semibold text-gray-200 transition-all duration-200 hover:bg-white/8 hover:text-accent-red"
                       >
                         {city.name}
                       </Link>
@@ -277,7 +273,7 @@ export const Navbar = () => {
               Get an Estimate
             </Button>
             <button
-              className="lg:hidden p-2 text-white"
+              className="min-h-11 min-w-11 p-2 text-white lg:hidden"
               onClick={() => setIsOpen((current) => !current)}
               aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={isOpen}
@@ -302,13 +298,13 @@ export const Navbar = () => {
         >
           <div className="flex h-full flex-col overflow-y-auto border-t border-white/10 px-5 py-6">
             <nav className="flex flex-col gap-2 text-lg font-semibold">
-              <Link href="/" className="px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
+              <Link href="/" className="block min-h-11 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
                 Home
               </Link>
 
               <div className="border-t border-white/10 pt-2">
                 <button
-                  className="flex w-full items-center justify-between px-3 py-3 text-left text-white transition-colors hover:text-accent-red"
+                  className="flex min-h-11 w-full items-center justify-between px-3 py-3 text-left text-white transition-colors hover:text-accent-red"
                   onClick={() => {
                     setMobileServicesOpen((current) => !current);
                     setMobileAreasOpen(false);
@@ -332,7 +328,7 @@ export const Navbar = () => {
                       <Link
                         key={service.slug}
                         href={service.slug}
-                        className="block rounded-sm border border-white/10 bg-white/5 px-4 py-3"
+                        className="block min-h-11 rounded-sm border border-white/10 bg-white/5 px-4 py-3 transition-all duration-200 hover:border-accent-red hover:bg-white/8"
                         onClick={closeMobileMenu}
                       >
                         <span className="block font-sans text-sm font-bold text-white">{service.name}</span>
@@ -343,13 +339,13 @@ export const Navbar = () => {
                 )}
               </div>
 
-              <Link href="/our-work" className="border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
+              <Link href="/our-work" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
                 Our Work
               </Link>
 
               <div className="border-t border-white/10 pt-2">
                 <button
-                  className="flex w-full items-center justify-between px-3 py-3 text-left text-white transition-colors hover:text-accent-red"
+                  className="flex min-h-11 w-full items-center justify-between px-3 py-3 text-left text-white transition-colors hover:text-accent-red"
                   onClick={() => {
                     setMobileAreasOpen((current) => !current);
                     setMobileServicesOpen(false);
@@ -373,7 +369,7 @@ export const Navbar = () => {
                       <Link
                         key={city.slug}
                         href={city.slug}
-                        className="rounded-sm border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-gray-100"
+                        className="block min-h-11 rounded-sm border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-gray-100 transition-all duration-200 hover:border-accent-red hover:bg-white/8"
                         onClick={closeMobileMenu}
                       >
                         {city.name}
@@ -383,13 +379,13 @@ export const Navbar = () => {
                 )}
               </div>
 
-              <Link href="/about" className="border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
+              <Link href="/about" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
                 About
               </Link>
-              <Link href="/faq" className="border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
+              <Link href="/faq" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
                 FAQ
               </Link>
-              <Link href="/blog" className="border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
+              <Link href="/blog" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
                 Blog
               </Link>
             </nav>

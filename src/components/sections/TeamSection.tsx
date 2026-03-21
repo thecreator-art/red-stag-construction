@@ -19,14 +19,14 @@ export const TeamSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
           {team.map((member, i) => (
-            <div key={i} className="flex flex-col group bg-warm-white shadow-xl hover:shadow-2xl transition-shadow pb-8 rounded-sm overflow-hidden">
+            <div key={i} className="group flex cursor-pointer flex-col overflow-hidden rounded-sm bg-warm-white pb-8 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
               <div className="w-full aspect-[3/4] overflow-hidden mb-8 bg-gray-200 border-b-[6px] border-accent-red relative">
-                <div className="absolute inset-0 bg-accent-red/20 opacity-0 group-hover:opacity-100 transition-opacity z-10 duration-500 mix-blend-multiply"></div>
-                <img src={member.photo} alt={member.name} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 filter grayscale group-hover:grayscale-0 relative z-0" />
+                <div className="pointer-events-none absolute inset-0 z-10 bg-accent-red/20 opacity-0 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-100"></div>
+                <img src={member.photo} alt={member.name} className="relative z-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0 grayscale" />
               </div>
-              <h3 className="text-2xl font-bold uppercase tracking-widest px-8 mb-2 text-[#111]">{member.name}</h3>
-              <p className="text-accent-red font-bold text-xs tracking-[0.2em] uppercase mb-6 px-8">{member.title}</p>
-              <p className="text-gray-600 leading-relaxed font-serif px-8">{member.bio}</p>
+              <h3 className="mb-2 px-8 text-2xl font-bold uppercase tracking-widest text-[#111] transition-colors duration-300 group-hover:text-accent-red">{member.name}</h3>
+              <p className="mb-6 px-8 text-xs font-bold uppercase tracking-[0.2em] text-accent-red">{member.title}</p>
+              <p className="px-8 font-serif leading-relaxed text-gray-600 transition-colors duration-300 group-hover:text-[#2A2A2A]">{member.bio}</p>
             </div>
           ))}
         </div>

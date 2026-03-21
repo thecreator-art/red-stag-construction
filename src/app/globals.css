@@ -48,6 +48,17 @@
     cursor: pointer;
   }
 
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  [role="button"] {
+    pointer-events: auto;
+    position: relative;
+    z-index: 1;
+  }
+
   button:disabled {
     cursor: not-allowed;
   }

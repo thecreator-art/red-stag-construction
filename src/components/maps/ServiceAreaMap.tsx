@@ -2,7 +2,7 @@
 
 export const ServiceAreaMap = () => {
   return (
-    <div className="w-full h-[500px] md:h-[600px] overflow-hidden rounded-sm shadow-2xl border-4 border-white">
+    <div className="relative z-0 h-[500px] w-full overflow-hidden rounded-sm border-4 border-white shadow-2xl md:h-[600px]">
       <iframe
         src="https://maps.google.com/maps?q=Los+Angeles,+CA&t=&z=10&ie=UTF8&iwloc=&output=embed"
         width="100%"

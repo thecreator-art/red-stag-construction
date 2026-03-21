@@ -125,12 +125,12 @@ export const ExitIntentPopup = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-navy-deep/80 backdrop-blur-sm p-4">
-      <div className="bg-navy-deep border-t-4 border-accent-red w-full max-w-lg p-8 rounded-sm shadow-2xl relative animate-in zoom-in-95 duration-300">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-navy-deep/80 p-4 backdrop-blur-sm">
+      <div className="relative z-[1] w-full max-w-lg animate-in zoom-in-95 rounded-sm border-t-4 border-accent-red bg-navy-deep p-8 shadow-2xl duration-300">
         
         <button 
           onClick={() => setIsVisible(false)}
-          className="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors"
+          className="absolute top-4 right-4 z-[2] text-gray-500 transition-colors hover:text-white"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -152,7 +152,7 @@ export const ExitIntentPopup = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="relative z-[1] space-y-4">
           {/* Honeypot Security Payload */}
           <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
 
@@ -165,7 +165,7 @@ export const ExitIntentPopup = () => {
             {fieldErrors.phone ? <p className="mt-2 text-sm text-accent-red">{fieldErrors.phone}</p> : null}
           </div>
           
-          <button disabled={isSubmitting} type="submit" className="mt-2 flex w-full items-center justify-center bg-accent-red py-4 font-extrabold uppercase tracking-widest text-white shadow-[0_0_15px_rgba(179,18,23,0.3)] transition-all duration-200 hover:scale-[1.02] hover:bg-[#990000] hover:brightness-110 disabled:opacity-50">
+          <button disabled={isSubmitting} type="submit" className="relative z-[1] mt-2 flex w-full items-center justify-center bg-accent-red py-4 font-extrabold uppercase tracking-widest text-white shadow-[0_0_15px_rgba(179,18,23,0.3)] transition-all duration-200 hover:scale-[1.02] hover:bg-[#990000] hover:brightness-110 disabled:opacity-50">
             {isSubmitting ? (
               <span className="flex items-center">
                 <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>

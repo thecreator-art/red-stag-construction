@@ -108,7 +108,7 @@ export const FAQAccordion = ({ categories, showSearch = true, darkMode = false }
                     <button
                       type="button"
                       onClick={() => toggleQuestion(category.categoryTitle, index)}
-                      className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
+                      className="flex min-h-11 w-full cursor-pointer items-center justify-between gap-4 px-6 py-5 text-left"
                       aria-expanded={isOpen}
                     >
                       <span className="cursor-pointer font-sans text-lg font-semibold text-navy-deep">
