@@ -54,7 +54,7 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
 
   return (
     <div 
-      className={`relative w-full bg-[#1A1A1A] py-20 px-6 md:px-12 overflow-hidden ${className}`}
+      className={`relative w-full bg-navy-deep py-20 px-6 md:px-12 overflow-hidden ${className}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -78,7 +78,7 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
           {visibleReviews.map((review, i) => (
             <div 
               key={`${review.id}-${i}`} 
-              className={`bg-[#111] border-t-4 border-accent-red p-8 shadow-2xl flex flex-col justify-between h-full ${i > 0 ? 'hidden md:flex' : 'flex'}`}
+              className={`bg-navy-deep border-t-4 border-accent-red p-8 shadow-2xl flex flex-col justify-between h-full ${i > 0 ? 'hidden md:flex' : 'flex'}`}
             >
               <div>
                 <div className="flex justify-between items-start mb-6">
