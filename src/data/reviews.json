@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "reviewerName": "M. Peterson",
+    "platform": "Google",
+    "rating": 5,
+    "reviewText": "Red Stag handled our kitchen remodel with absolute precision. Their design-build team caught structural issues early and addressed them without delaying the timeline. Israel was on site every day during the critical phases.",
+    "city": "Beverly Hills",
+    "serviceType": "Kitchen Remodel"
+  },
+  {
+    "id": 2,
+    "reviewerName": "S. Reynolds",
+    "platform": "Yelp",
+    "rating": 5,
+    "reviewText": "We hired them for an 800 square foot ADU in Sherman Oaks. They navigated the city permitting process entirely on their own which was a huge relief. Came in on budget and the quality is exceptional.",
+    "city": "Sherman Oaks",
+    "serviceType": "ADU Construction"
+  },
+  {
+    "id": 3,
+    "reviewerName": "D. Choy",
+    "platform": "Houzz",
+    "rating": 5,
+    "reviewText": "Exceptional attention to detail on our custom home build in Bel Air. Israel and Anthony were always available for site walks and never made us feel like a burden for asking questions.",
+    "city": "Bel Air",
+    "serviceType": "Custom Home Build"
+  },
+  {
+    "id": 4,
+    "reviewerName": "J. Larson",
+    "platform": "Google",
+    "rating": 5,
+    "reviewText": "They rebuilt our master suite and bathroom in Studio City. The craftsmanship on the tilework and custom vanity is stunning. On time on budget no surprises.",
+    "city": "Studio City",
+    "serviceType": "Bathroom Remodel"
+  },
+  {
+    "id": 5,
+    "reviewerName": "A. Davies",
+    "platform": "Yelp",
+    "rating": 5,
+    "reviewText": "Professional clean job site and no surprise invoices. Red Stag stuck perfectly to their original estimate on our Encino kitchen remodel.",
+    "city": "Encino",
+    "serviceType": "Kitchen Remodel"
+  },
+  {
+    "id": 6,
+    "reviewerName": "R. Hoffman",
+    "platform": "Google",
+    "rating": 5,
+    "reviewText": "Red Stag built our detached ADU in Pacific Palisades from scratch. The permit process with the coastal requirements was complex and they handled every bit of it.",
+    "city": "Pacific Palisades",
+    "serviceType": "ADU Construction"
+  },
+  {
+    "id": 7,
+    "reviewerName": "T. Morrison",
+    "platform": "Houzz",
+    "rating": 5,
+    "reviewText": "Our home addition in Calabasas required HOA approval and Red Stag managed the entire design review process. Incredible team.",
+    "city": "Calabasas",
+    "serviceType": "Home Addition"
+  },
+  {
+    "id": 8,
+    "reviewerName": "C. Nakamura",
+    "platform": "Google",
+    "rating": 5,
+    "reviewText": "The hardscaping and pool deck Red Stag built at our Malibu property is breathtaking. They understood the coastal requirements and delivered exactly what we envisioned.",
+    "city": "Malibu",
+    "serviceType": "Hardscaping"
+  },
+  {
+    "id": 9,
+    "reviewerName": "B. Williams",
+    "platform": "Yelp",
+    "rating": 5,
+    "reviewText": "Red Stag replaced all the windows in our Manhattan Beach home. Clean work fast installation and the energy efficiency improvement is noticeable.",
+    "city": "Manhattan Beach",
+    "serviceType": "Window Replacement"
+  },
+  {
+    "id": 10,
+    "reviewerName": "K. Chen",
+    "platform": "Google",
+    "rating": 5,
+    "reviewText": "We hired Red Stag as general contractor for a full property renovation in West Hollywood. Israel coordinated 12 different trades over 6 months without a single scheduling conflict.",
+    "city": "West Hollywood",
+    "serviceType": "General Contracting"
+  }
+]

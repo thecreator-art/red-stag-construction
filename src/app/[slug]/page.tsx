@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import blogsData from '@/data/blogs.json';
 import locationsData from '@/data/locations.json';
 import matrixData from '@/data/matrix.json';
+import reviewsData from '@/data/reviews.json';
 import servicesData from '@/data/services.json';
 import { ContactForm } from '@/components/forms/ContactForm';
 import { TrustBar } from '@/components/sections/TrustBar';
@@ -24,6 +25,7 @@ const BASE_URL = 'https://redstagcc.com';
 type ServiceEntry = (typeof servicesData)[number];
 type LocationEntry = (typeof locationsData)[number];
 type MatrixEntry = (typeof matrixData)[number];
+type ReviewEntry = (typeof reviewsData)[number];
 
 interface CostTier {
   typicalProjectSize: string;
@@ -684,6 +686,61 @@ const countWords = (value: string) => {
   const normalized = value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
   return normalized ? normalized.split(' ').length : 0;
 };
+
+const normalizeReviewServiceType = (value?: string | null) => {
+  const normalized = (value || '').toLowerCase().trim();
+
+  if (normalized.includes('kitchen')) return 'Kitchen Remodel';
+  if (normalized.includes('bathroom')) return 'Bathroom Remodel';
+  if (normalized.includes('adu')) return 'ADU Construction';
+  if (normalized.includes('custom home')) return 'Custom Home Build';
+  if (normalized.includes('addition')) return 'Home Addition';
+  if (normalized.includes('general')) return 'General Contracting';
+  if (normalized.includes('hardscape')) return 'Hardscaping';
+  if (normalized.includes('fence')) return 'Fencing and Gates';
+  if (normalized.includes('window')) return 'Window Replacement';
+
+  return value || '';
+};
+
+const getRelevantReview = (city?: string | null, serviceType?: string | null): ReviewEntry => {
+  const normalizedServiceType = normalizeReviewServiceType(serviceType);
+
+  return (
+    reviewsData.find(
+      (review) =>
+        Boolean(city) &&
+        Boolean(normalizedServiceType) &&
+        review.city === city &&
+        review.serviceType === normalizedServiceType
+    ) ||
+    reviewsData.find((review) => Boolean(city) && review.city === city) ||
+    reviewsData.find((review) => Boolean(normalizedServiceType) && review.serviceType === normalizedServiceType) ||
+    reviewsData[0]
+  );
+};
+
+const ReviewFeatureCard = ({ review }: { review: ReviewEntry }) => (
+  <section className="bg-white py-20 md:py-24">
+    <div className="container mx-auto max-w-5xl px-4">
+      <div className="bg-navy-deep px-8 py-10 md:px-10 md:py-12 shadow-xl">
+        <span className="block text-6xl leading-none text-accent-red">&ldquo;</span>
+        <p className="mt-4 text-2xl font-serif italic leading-10 text-white">
+          {review.reviewText}
+        </p>
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6">
+          <div>
+            <p className="text-base font-bold text-white">{review.reviewerName}</p>
+            <p className="mt-1 text-sm text-gray-400">
+              {review.city} / {review.platform}
+            </p>
+          </div>
+          <div className="text-xl tracking-[0.3em] text-[#D4AF37]">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
 
 const parseBlogDate = (fileContent: string) => {
   const match = fileContent.match(/date:\s*"([^"]+)"/);
@@ -2364,6 +2421,7 @@ export default async function DynamicSlugPage({ params }: PageProps) {
     const faqCategories = buildServiceFaqCategories(config);
     const serviceAreaLinks = getServiceAreaLinks(config.matrixService);
     const relatedServices = getRelatedServices(config.relatedServices);
+    const matchedReview = getRelevantReview(undefined, config.serviceName);
     const serviceCrumbs = [
       { label: 'Home', href: '/' },
       { label: 'Services', href: '/' },
@@ -2548,6 +2606,8 @@ export default async function DynamicSlugPage({ params }: PageProps) {
           </div>
         </section>
 
+        <ReviewFeatureCard review={matchedReview} />
+
         <section className="bg-navy-deep py-20 md:py-24">
           <div className="container mx-auto px-4 max-w-5xl text-center">
             <h2 className="text-3xl md:text-5xl font-serif font-bold text-white">{config.finalHeadline}</h2>
@@ -2582,6 +2642,7 @@ export default async function DynamicSlugPage({ params }: PageProps) {
     const faqCategories = buildLocationFaqCategories(location, config);
     const serviceTiles = getLocationServiceTiles(location.city || '');
     const secondaryServiceLink = getSecondaryLocationServiceLink(location.city || '');
+    const matchedReview = getRelevantReview(location.city || '', undefined);
     const tierPricing = tierPricingMap[config.tier];
     const tierCities = locationsData
       .filter((entry) => getLocationConfig(entry).tier === config.tier)
@@ -2757,6 +2818,8 @@ export default async function DynamicSlugPage({ params }: PageProps) {
           </div>
         </section>
 
+        <ReviewFeatureCard review={matchedReview} />
+
         <section className="bg-navy-deep py-20 md:py-24">
           <div className="container mx-auto px-4 max-w-5xl text-center">
             <h2 className="text-3xl md:text-5xl font-serif font-bold text-white">
@@ -2788,6 +2851,7 @@ export default async function DynamicSlugPage({ params }: PageProps) {
     const costGuide = locationConfig ? getMatrixCostGuide(matrix.service || '', locationConfig.tier) : null;
     const relatedMatrixPages = getRelatedMatrixPages(matrix.service || '', matrix.city || '');
     const matrixService = getMatrixServiceCrumb(matrix.service || 'Service');
+    const matchedReview = getRelevantReview(matrix.city || '', matrix.service || '');
     const parentLocationHref = parentLocation ? `/${parentLocation.slug}` : '/areas-we-serve';
     const permitTimeline = getCityPermitTimeline(matrix.city || '');
     const cityReference = cityReferenceMap[matrix.city || ''] || `${matrix.city} site conditions and permit requirements`;
@@ -3012,6 +3076,8 @@ export default async function DynamicSlugPage({ params }: PageProps) {
             </div>
           </div>
         </section>
+
+        <ReviewFeatureCard review={matchedReview} />
 
         <section className="bg-navy-deep py-20 md:py-24">
           <div className="container mx-auto px-4 max-w-5xl text-center">
