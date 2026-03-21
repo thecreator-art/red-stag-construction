@@ -4,7 +4,7 @@ import { BeforeAfterSlider } from '../ui/BeforeAfterSlider';
 
 export const FeaturedProjects = () => {
   const projects = [
-    { id: '1', title: 'Trousdale Estates Renovation', city: 'Beverly Hills', serviceType: 'Custom Home Build', beforeImage: 'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?q=80&w=800', afterImage: '/images/projects/project-1.jpg' },
+    { id: '1', title: 'Trousdale Estates Renovation', city: 'Beverly Hills', serviceType: 'Custom Home Build', beforeImage: '/images/projects/trousdale-before.jpg', afterImage: '/images/projects/trousdale-after.jpg' },
     { id: '2', title: 'Canyon Modern ADU Addition', city: 'Sherman Oaks', serviceType: 'ADU Construction', beforeImage: 'https://images.unsplash.com/photo-1542316527-0cf75cce9697?q=80&w=800', afterImage: '/images/projects/project-2.jpg' },
     { id: '3', title: 'Bel Air Primary Suite Expansion', city: 'Bel Air', serviceType: 'Bathroom Remodel', beforeImage: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?q=80&w=800', afterImage: '/images/projects/project-3.jpg' },
     { id: '4', title: 'Chef\'s Kitchen Open Concept', city: 'Studio City', serviceType: 'Kitchen Remodel', beforeImage: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=800', afterImage: '/images/projects/project-4.jpg' },
