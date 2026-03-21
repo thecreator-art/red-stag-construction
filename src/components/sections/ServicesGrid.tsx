@@ -20,7 +20,7 @@ export const ServicesGrid = ({ services, className = '' }: ServicesGridProps) =>
         <Link 
           key={idx} 
           href={`/${service.slug}`}
-          className="group relative w-full aspect-[4/5] overflow-hidden block bg-[#1A1A1A]"
+          className="group relative w-full aspect-[4/5] overflow-hidden block bg-navy-deep"
         >
           <Image 
             src={service.imageSrc} 

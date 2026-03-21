@@ -90,7 +90,7 @@ export const BeforeAfterSlider = ({
         className="absolute top-0 bottom-0 w-1 bg-accent-red cursor-ew-resize pointer-events-none flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.8)] z-10"
         style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
       >
-        <div className="w-10 h-10 rounded-full bg-[#1A1A1A] shadow-xl flex items-center justify-center border-2 border-accent-red pointer-events-auto transition-transform hover:scale-110">
+        <div className="w-10 h-10 rounded-full bg-navy-deep shadow-xl flex items-center justify-center border-2 border-accent-red pointer-events-auto transition-transform hover:scale-110">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-6 h-6">
             <path d="M8 5v14l-6-7 6-7zM16 5v14l6-7-6-7z"/>
           </svg>
