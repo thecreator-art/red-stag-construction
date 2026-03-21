@@ -6,6 +6,35 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  const validateFieldValues = (formData: FormData) => {
+    const nextErrors: Record<string, string> = {};
+    const requiredFields = [
+      { key: 'fullName', label: 'Full Name' },
+      { key: 'phone', label: 'Phone Number' },
+      { key: 'projectType', label: 'Project Type' },
+      { key: 'city', label: 'City' },
+      { key: 'message', label: 'Tell Us About Your Project' },
+    ];
+
+    requiredFields.forEach(({ key, label }) => {
+      if (!String(formData.get(key) || '').trim()) {
+        nextErrors[key] = `${label} is required.`;
+      }
+    });
+
+    return nextErrors;
+  };
+
+  const clearFieldError = (field: string) => {
+    setFieldErrors((current) => {
+      if (!current[field]) return current;
+      const next = { ...current };
+      delete next[field];
+      return next;
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,6 +48,15 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
       setIsSubmitting(false);
       return; 
     }
+
+    const nextErrors = validateFieldValues(formData);
+    if (Object.keys(nextErrors).length > 0) {
+      setFieldErrors(nextErrors);
+      setIsSubmitting(false);
+      return;
+    }
+
+    setFieldErrors({});
 
     const payload = {
       fullName: formData.get('fullName'),
@@ -58,7 +96,7 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
       } else {
         throw new Error('Internal Server Handshake Configuration Dropped');
       }
-    } catch (err) {
+    } catch {
       setErrorMsg('There was an error submitting your request to our system. Please try calling us directly at (626) 652-2303.');
       setIsSubmitting(false);
     }
@@ -82,18 +120,20 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
           <label htmlFor="fullName" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-accent-red pl-2">Full Name</label>
-          <input required type="text" id="fullName" name="fullName" className="w-full bg-navy-deep border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
+          <input required type="text" id="fullName" name="fullName" aria-invalid={Boolean(fieldErrors.fullName)} onChange={() => clearFieldError('fullName')} className="w-full bg-navy-deep border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red focus:ring-2 focus:ring-accent-red/20 transition-colors" />
+          {fieldErrors.fullName ? <p className="mt-2 text-sm text-accent-red">{fieldErrors.fullName}</p> : null}
         </div>
         <div>
           <label htmlFor="phone" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-accent-red pl-2">Phone Number</label>
-          <input required type="tel" id="phone" name="phone" className="w-full bg-navy-deep border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
+          <input required type="tel" id="phone" name="phone" aria-invalid={Boolean(fieldErrors.phone)} onChange={() => clearFieldError('phone')} className="w-full bg-navy-deep border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red focus:ring-2 focus:ring-accent-red/20 transition-colors" />
+          {fieldErrors.phone ? <p className="mt-2 text-sm text-accent-red">{fieldErrors.phone}</p> : null}
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
           <label htmlFor="projectType" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-accent-red pl-2">Project Type</label>
-          <select required id="projectType" name="projectType" className="w-full bg-navy-deep border border-gray-700 text-gray-200 px-4 py-3 focus:outline-none focus:border-accent-red transition-colors appearance-none">
+          <select required id="projectType" name="projectType" aria-invalid={Boolean(fieldErrors.projectType)} onChange={() => clearFieldError('projectType')} className="w-full bg-navy-deep border border-gray-700 text-gray-200 px-4 py-3 focus:outline-none focus:border-accent-red focus:ring-2 focus:ring-accent-red/20 transition-colors appearance-none">
             <option value="">Select Project Type</option>
             <option value="Bathroom Remodel">Bathroom Remodel</option>
             <option value="Kitchen Remodel">Kitchen Remodel</option>
@@ -103,16 +143,19 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
             <option value="General Contracting">General Contracting</option>
             <option value="Other">Other Design-Build</option>
           </select>
+          {fieldErrors.projectType ? <p className="mt-2 text-sm text-accent-red">{fieldErrors.projectType}</p> : null}
         </div>
         <div>
           <label htmlFor="city" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-accent-red pl-2">City</label>
-          <input required type="text" id="city" name="city" placeholder="e.g. Sherman Oaks" className="w-full bg-navy-deep border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
+          <input required type="text" id="city" name="city" aria-invalid={Boolean(fieldErrors.city)} onChange={() => clearFieldError('city')} placeholder="e.g. Sherman Oaks" className="w-full bg-navy-deep border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red focus:ring-2 focus:ring-accent-red/20 transition-colors" />
+          {fieldErrors.city ? <p className="mt-2 text-sm text-accent-red">{fieldErrors.city}</p> : null}
         </div>
       </div>
 
       <div className="mb-8">
         <label htmlFor="message" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-accent-red pl-2">Tell Us About Your Project</label>
-        <textarea required id="message" name="message" rows={5} placeholder="Briefly describe your scope regarding budget, timing, or architectural desires..." className="w-full bg-navy-deep border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors resize-y" />
+        <textarea required id="message" name="message" rows={5} aria-invalid={Boolean(fieldErrors.message)} onChange={() => clearFieldError('message')} placeholder="Briefly describe your scope regarding budget, timing, or architectural desires..." className="w-full bg-navy-deep border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red focus:ring-2 focus:ring-accent-red/20 transition-colors resize-y" />
+        {fieldErrors.message ? <p className="mt-2 text-sm text-accent-red">{fieldErrors.message}</p> : null}
       </div>
 
       <button disabled={isSubmitting} type="submit" className="w-full bg-accent-red hover:bg-[#990000] transition-all duration-300 text-white font-extrabold uppercase tracking-widest py-5 shadow-[0_0_15px_rgba(179,18,23,0.3)] disabled:opacity-50 disabled:shadow-none flex justify-center items-center group relative overflow-hidden">

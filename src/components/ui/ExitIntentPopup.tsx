@@ -9,6 +9,7 @@ export const ExitIntentPopup = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     // Suppress specifically tracking the thank you conversion route
@@ -46,6 +47,29 @@ export const ExitIntentPopup = () => {
     };
   }, [pathname]);
 
+  const validateFieldValues = (formData: FormData) => {
+    const nextErrors: Record<string, string> = {};
+
+    if (!String(formData.get('fullName') || '').trim()) {
+      nextErrors.fullName = 'Full Name is required.';
+    }
+
+    if (!String(formData.get('phone') || '').trim()) {
+      nextErrors.phone = 'Phone Number is required.';
+    }
+
+    return nextErrors;
+  };
+
+  const clearFieldError = (field: string) => {
+    setFieldErrors((current) => {
+      if (!current[field]) return current;
+      const next = { ...current };
+      delete next[field];
+      return next;
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -58,6 +82,15 @@ export const ExitIntentPopup = () => {
       setIsSubmitting(false);
       return; 
     }
+
+    const nextErrors = validateFieldValues(formData);
+    if (Object.keys(nextErrors).length > 0) {
+      setFieldErrors(nextErrors);
+      setIsSubmitting(false);
+      return;
+    }
+
+    setFieldErrors({});
 
     const payload = {
       fullName: formData.get('fullName'),
@@ -83,7 +116,7 @@ export const ExitIntentPopup = () => {
       } else {
         throw new Error('Transmission Failed');
       }
-    } catch (err) {
+    } catch {
       setErrorMsg('Error contacting servers. Please call us directly at (626) 652-2303.');
       setIsSubmitting(false);
     }
@@ -124,13 +157,15 @@ export const ExitIntentPopup = () => {
           <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
 
           <div>
-            <input required type="text" name="fullName" placeholder="Full Name" className="w-full bg-navy-deep border border-gray-800 text-white rounded-sm px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
+            <input required type="text" name="fullName" aria-invalid={Boolean(fieldErrors.fullName)} onChange={() => clearFieldError('fullName')} placeholder="Full Name" className="w-full rounded-sm border border-gray-800 bg-navy-deep px-4 py-3 text-white transition-colors focus:border-accent-red focus:outline-none focus:ring-2 focus:ring-accent-red/20" />
+            {fieldErrors.fullName ? <p className="mt-2 text-sm text-accent-red">{fieldErrors.fullName}</p> : null}
           </div>
           <div>
-            <input required type="tel" name="phone" placeholder="Phone Number" className="w-full bg-navy-deep border border-gray-800 text-white rounded-sm px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
+            <input required type="tel" name="phone" aria-invalid={Boolean(fieldErrors.phone)} onChange={() => clearFieldError('phone')} placeholder="Phone Number" className="w-full rounded-sm border border-gray-800 bg-navy-deep px-4 py-3 text-white transition-colors focus:border-accent-red focus:outline-none focus:ring-2 focus:ring-accent-red/20" />
+            {fieldErrors.phone ? <p className="mt-2 text-sm text-accent-red">{fieldErrors.phone}</p> : null}
           </div>
           
-          <button disabled={isSubmitting} type="submit" className="w-full bg-accent-red hover:bg-[#990000] transition-colors text-white font-extrabold uppercase tracking-widest py-4 mt-2 shadow-[0_0_15px_rgba(179,18,23,0.3)] disabled:opacity-50 flex justify-center items-center">
+          <button disabled={isSubmitting} type="submit" className="mt-2 flex w-full items-center justify-center bg-accent-red py-4 font-extrabold uppercase tracking-widest text-white shadow-[0_0_15px_rgba(179,18,23,0.3)] transition-all duration-200 hover:scale-[1.02] hover:bg-[#990000] hover:brightness-110 disabled:opacity-50">
             {isSubmitting ? (
               <span className="flex items-center">
                 <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>

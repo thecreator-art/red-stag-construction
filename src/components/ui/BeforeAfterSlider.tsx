@@ -68,7 +68,7 @@ export const BeforeAfterSlider = ({
   return (
     <div 
       ref={containerRef}
-      className={`relative w-full aspect-[3/2] overflow-hidden select-none touch-none cursor-ew-resize bg-navy-deep ${className}`}
+      className={`group relative w-full aspect-[3/2] overflow-hidden select-none touch-none bg-navy-deep ${isDragging ? 'cursor-grabbing' : 'cursor-grab'} ${className}`}
       onMouseDown={(event) => handleDragStart(event.clientX)}
       onTouchStart={(event) => handleDragStart(event.touches[0].clientX)}
     >
@@ -79,7 +79,7 @@ export const BeforeAfterSlider = ({
         fill
         priority
         sizes="(max-width: 768px) 100vw, 50vw"
-        className="object-cover absolute inset-0 pointer-events-none" 
+        className="absolute inset-0 object-cover pointer-events-none transition-transform duration-500 group-hover:scale-105" 
       />
       
       {/* Before Image (Clipped) */}
@@ -93,16 +93,16 @@ export const BeforeAfterSlider = ({
           fill
           priority
           sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover" 
+          className="object-cover transition-transform duration-500 group-hover:scale-105" 
         />
       </div>
       
       {/* Slider Handle & Divider */}
       <div 
-        className="absolute top-0 bottom-0 w-1 bg-accent-red cursor-ew-resize pointer-events-none flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.8)] z-10"
+        className="absolute top-0 bottom-0 z-10 flex w-1 pointer-events-none items-center justify-center bg-accent-red shadow-[0_0_15px_rgba(0,0,0,0.8)]"
         style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
       >
-        <div className="w-10 h-10 rounded-full bg-navy-deep shadow-xl flex items-center justify-center border-2 border-accent-red pointer-events-auto transition-transform hover:scale-110">
+        <div className={`pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border-2 border-accent-red bg-navy-deep shadow-xl transition-transform hover:scale-110 ${isDragging ? 'cursor-grabbing scale-110' : 'cursor-grab'}`}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-6 h-6">
             <path d="M8 5v14l-6-7 6-7zM16 5v14l6-7-6-7z"/>
           </svg>
@@ -110,8 +110,8 @@ export const BeforeAfterSlider = ({
       </div>
       
       {/* Labels */}
-      <div className="absolute top-4 left-4 bg-navy-deep/70 text-white text-xs md:text-sm px-3 py-1.5 font-bold tracking-widest rounded-sm pointer-events-none uppercase">{labelBefore}</div>
-      <div className="absolute top-4 right-4 bg-navy-deep/70 text-white text-xs md:text-sm px-3 py-1.5 font-bold tracking-widest rounded-sm pointer-events-none uppercase">{labelAfter}</div>
+      <div className="pointer-events-none absolute left-4 top-4 z-20 rounded-sm bg-navy-deep/70 px-3 py-1.5 text-xs font-bold tracking-widest text-white uppercase md:text-sm">{labelBefore}</div>
+      <div className="pointer-events-none absolute right-4 top-4 z-20 rounded-sm bg-navy-deep/70 px-3 py-1.5 text-xs font-bold tracking-widest text-white uppercase md:text-sm">{labelAfter}</div>
     </div>
   );
 };

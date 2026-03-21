@@ -28,6 +28,7 @@ export const ParallaxHero = ({
   const bgRef = useRef<HTMLDivElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     // Highly optimized passive scroll capturing window.scrollY without triggering React render cycles.
@@ -49,6 +50,33 @@ export const ParallaxHero = ({
     };
   }, []);
 
+  const validateFieldValues = (formData: FormData) => {
+    const nextErrors: Record<string, string> = {};
+    const requiredFields = [
+      { key: 'fullName', label: 'Name' },
+      { key: 'phone', label: 'Phone Number' },
+      { key: 'email', label: 'Email' },
+      { key: 'message', label: 'Project Details' },
+    ];
+
+    requiredFields.forEach(({ key, label }) => {
+      if (!String(formData.get(key) || '').trim()) {
+        nextErrors[key] = `${label} is required.`;
+      }
+    });
+
+    return nextErrors;
+  };
+
+  const clearFieldError = (field: string) => {
+    setFieldErrors((current) => {
+      if (!current[field]) return current;
+      const next = { ...current };
+      delete next[field];
+      return next;
+    });
+  };
+
   const handleQuickQuoteSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -60,6 +88,15 @@ export const ParallaxHero = ({
       setIsSubmitting(false);
       return;
     }
+
+    const nextErrors = validateFieldValues(formData);
+    if (Object.keys(nextErrors).length > 0) {
+      setFieldErrors(nextErrors);
+      setIsSubmitting(false);
+      return;
+    }
+
+    setFieldErrors({});
 
     const payload = {
       fullName: formData.get('fullName'),
@@ -160,38 +197,58 @@ export const ParallaxHero = ({
 
             <div>
               <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-[1fr_1fr_1fr_1.25fr_auto]">
-                <input
-                  required
-                  type="text"
-                  name="fullName"
-                  placeholder="Name"
-                  className="h-12 min-w-0 rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-sm text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red"
-                />
-                <input
-                  required
-                  type="tel"
-                  name="phone"
-                  placeholder="Number"
-                  className="h-12 min-w-0 rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-sm text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red"
-                />
-                <input
-                  required
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  className="h-12 min-w-0 rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-sm text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red"
-                />
-                <input
-                  required
-                  type="text"
-                  name="message"
-                  placeholder="Project details"
-                  className="h-12 min-w-0 rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-sm text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red"
-                />
+                <div>
+                  <input
+                    required
+                    type="text"
+                    name="fullName"
+                    aria-invalid={Boolean(fieldErrors.fullName)}
+                    onChange={() => clearFieldError('fullName')}
+                    placeholder="Name"
+                    className="h-12 min-w-0 w-full rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-base text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red focus:ring-2 focus:ring-accent-red/20"
+                  />
+                  {fieldErrors.fullName ? <p className="mt-1 text-xs font-medium text-accent-red">{fieldErrors.fullName}</p> : null}
+                </div>
+                <div>
+                  <input
+                    required
+                    type="tel"
+                    name="phone"
+                    aria-invalid={Boolean(fieldErrors.phone)}
+                    onChange={() => clearFieldError('phone')}
+                    placeholder="Number"
+                    className="h-12 min-w-0 w-full rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-base text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red focus:ring-2 focus:ring-accent-red/20"
+                  />
+                  {fieldErrors.phone ? <p className="mt-1 text-xs font-medium text-accent-red">{fieldErrors.phone}</p> : null}
+                </div>
+                <div>
+                  <input
+                    required
+                    type="email"
+                    name="email"
+                    aria-invalid={Boolean(fieldErrors.email)}
+                    onChange={() => clearFieldError('email')}
+                    placeholder="Email"
+                    className="h-12 min-w-0 w-full rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-base text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red focus:ring-2 focus:ring-accent-red/20"
+                  />
+                  {fieldErrors.email ? <p className="mt-1 text-xs font-medium text-accent-red">{fieldErrors.email}</p> : null}
+                </div>
+                <div>
+                  <input
+                    required
+                    type="text"
+                    name="message"
+                    aria-invalid={Boolean(fieldErrors.message)}
+                    onChange={() => clearFieldError('message')}
+                    placeholder="Project details"
+                    className="h-12 min-w-0 w-full rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-base text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red focus:ring-2 focus:ring-accent-red/20"
+                  />
+                  {fieldErrors.message ? <p className="mt-1 text-xs font-medium text-accent-red">{fieldErrors.message}</p> : null}
+                </div>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="h-12 min-w-[170px] rounded-sm bg-accent-red px-6 text-sm font-extrabold uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#990000] disabled:cursor-not-allowed disabled:opacity-60"
+                  className="h-12 min-w-[170px] rounded-sm bg-accent-red px-6 text-sm font-extrabold uppercase tracking-[0.14em] text-white transition-all duration-200 hover:scale-[1.02] hover:bg-[#990000] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {isSubmitting ? 'Sending...' : 'Get Estimate'}
                 </button>

@@ -20,7 +20,7 @@ export const ServicesGrid = ({ services, className = '' }: ServicesGridProps) =>
         <Link 
           key={idx} 
           href={`/${service.slug}`}
-          className="group relative w-full aspect-[4/5] overflow-hidden block bg-navy-deep"
+          className="group relative block w-full aspect-[4/5] overflow-hidden bg-navy-deep transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
         >
           <Image 
             src={service.imageSrc} 
@@ -53,7 +53,7 @@ export const ServicesGrid = ({ services, className = '' }: ServicesGridProps) =>
       {/* 10th Slot: Capstone Call to Action */}
       <Link 
         href="/contact"
-        className="group relative w-full aspect-[4/5] overflow-hidden flex flex-col items-center justify-center bg-[#F0EDE8] transition-colors duration-500 hover:bg-[#E8E4DE] border border-gray-200 shadow-inner"
+        className="group relative flex w-full aspect-[4/5] flex-col items-center justify-center overflow-hidden border border-gray-200 bg-[#F0EDE8] shadow-inner transition-all duration-200 hover:-translate-y-1 hover:bg-[#E8E4DE] hover:shadow-lg"
       >
         <div className="relative w-28 h-28 mb-6 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-2">
           <Image 

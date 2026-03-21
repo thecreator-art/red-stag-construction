@@ -1,6 +1,4 @@
-import React from 'react';
 import Link from 'next/link';
-import { Button } from '../ui/Button';
 
 export const Footer = () => {
   return (
@@ -26,8 +24,8 @@ export const Footer = () => {
               <a
                 href="https://www.cslb.ca.gov"
                 target="_blank"
-                rel="noreferrer"
-                className="inline-flex text-gray-400 transition-colors hover:text-white"
+                rel="noopener noreferrer"
+                className="inline-flex text-gray-400 transition-colors hover:text-accent-red"
               >
                 CSLB License #964664
               </a>

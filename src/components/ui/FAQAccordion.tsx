@@ -14,9 +14,10 @@ interface FAQCategory {
 
 interface FAQAccordionProps {
   categories: FAQCategory[];
+  showSearch?: boolean;
 }
 
-export const FAQAccordion = ({ categories }: FAQAccordionProps) => {
+export const FAQAccordion = ({ categories, showSearch = true }: FAQAccordionProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [openIndexes, setOpenIndexes] = useState<Record<string, number | null>>({});
 
@@ -63,7 +64,8 @@ export const FAQAccordion = ({ categories }: FAQAccordionProps) => {
 
   return (
     <>
-      <div className="mb-10">
+      {showSearch ? (
+      <div className="relative z-10 mb-10">
         <label htmlFor="faq-search" className="mb-3 block font-sans text-xs font-bold uppercase tracking-[0.2em] text-navy-deep">
           Search Questions
         </label>
@@ -73,9 +75,11 @@ export const FAQAccordion = ({ categories }: FAQAccordionProps) => {
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
           placeholder="Search permits, timelines, ADUs, costs, HOA requirements..."
-          className="w-full border border-gray-300 bg-white px-5 py-4 font-sans text-sm text-text-body outline-none transition-colors focus:border-accent-red"
+          autoComplete="off"
+          className="w-full border border-gray-300 bg-white px-5 py-4 font-sans text-base text-text-body outline-none transition-colors focus:border-accent-red focus:ring-2 focus:ring-accent-red/20"
         />
       </div>
+      ) : null}
 
       <div>
         {filteredCategories.map((category) => (

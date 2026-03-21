@@ -16,10 +16,15 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background-color: var(--color-warm-white);
     color: var(--color-text-body);
     font-family: var(--font-sans);
+    overflow-x: hidden;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -34,5 +39,39 @@
   
   h3 {
     color: var(--color-accent-red);
+  }
+
+  a,
+  button,
+  summary,
+  [role="button"] {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid var(--color-accent-red);
+    outline-offset: 2px;
+  }
+
+  a[href^="tel:"]:hover,
+  a[href^="mailto:"]:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px;
+    }
   }
 }
