@@ -20,7 +20,7 @@ export const ServicesGrid = ({ services, className = '' }: ServicesGridProps) =>
         <Link 
           key={idx} 
           href={`/${service.slug}`}
-          className="group relative block w-full aspect-[4/5] overflow-hidden bg-navy-deep transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+          className="group relative block w-full aspect-[4/5] cursor-pointer overflow-hidden bg-navy-deep transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
         >
           <Image 
             src={service.imageSrc} 
@@ -30,22 +30,22 @@ export const ServicesGrid = ({ services, className = '' }: ServicesGridProps) =>
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
           />
-          {/* Default Dark Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-colors duration-500 group-hover:bg-navy-light/80" />
+          {/* Full-card hover layer */}
+          <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-all duration-300 group-hover:bg-navy-light/80" />
           
-          {/* Default Visible Title (bottom left) */}
-          <div className="absolute bottom-6 left-6 right-6 transition-all duration-500 group-hover:-translate-y-6">
-            <h3 className="text-white font-bold text-lg md:text-xl leading-tight font-serif drop-shadow-md">
-              {service.title}
-            </h3>
-          </div>
+          <div className="absolute inset-0 z-20 flex flex-col justify-end p-6">
+            <div className="transition-all duration-300 group-hover:-translate-y-6">
+              <h3 className="font-serif text-lg font-bold leading-tight text-white drop-shadow-md md:text-xl">
+                {service.title}
+              </h3>
+            </div>
 
-          {/* Hover Arrow/Action */}
-          <div className="absolute bottom-6 left-6 opacity-0 transition-all duration-500 translate-y-4 group-hover:translate-y-0 group-hover:opacity-100 flex items-center text-accent-red">
-            <span className="text-xs font-bold tracking-widest uppercase mr-2 text-white/90">View Details</span>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4 text-accent-red">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-            </svg>
+            <div className="mt-3 flex translate-y-4 items-center text-accent-red opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+              <span className="mr-2 text-xs font-bold uppercase tracking-widest text-white/90">View Details</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="h-4 w-4 text-accent-red">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </div>
           </div>
         </Link>
       ))}
@@ -53,7 +53,7 @@ export const ServicesGrid = ({ services, className = '' }: ServicesGridProps) =>
       {/* 10th Slot: Capstone Call to Action */}
       <Link 
         href="/contact"
-        className="group relative flex w-full aspect-[4/5] flex-col items-center justify-center overflow-hidden border border-gray-200 bg-[#F0EDE8] shadow-inner transition-all duration-200 hover:-translate-y-1 hover:bg-[#E8E4DE] hover:shadow-lg"
+        className="group relative flex w-full aspect-[4/5] cursor-pointer flex-col items-center justify-center overflow-hidden border border-gray-200 bg-[#F0EDE8] shadow-inner transition-all duration-300 hover:-translate-y-1 hover:bg-[#E8E4DE] hover:shadow-lg"
       >
         <div className="relative w-28 h-28 mb-6 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-2">
           <Image 

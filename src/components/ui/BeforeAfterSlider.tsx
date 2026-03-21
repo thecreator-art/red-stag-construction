@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
 
 export interface BeforeAfterSliderProps {
@@ -22,6 +22,7 @@ export const BeforeAfterSlider = ({
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const activePointerId = useRef<number | null>(null);
 
   const updateSliderPosition = useCallback((clientX: number) => {
     if (!containerRef.current) return;
@@ -31,46 +32,42 @@ export const BeforeAfterSlider = ({
     setSliderPosition(percentage);
   }, []);
 
-  const handleMove = useCallback((clientX: number) => {
-    if (!isDragging) return;
-    updateSliderPosition(clientX);
-  }, [isDragging, updateSliderPosition]);
-
   const handleDragStart = (clientX: number) => {
     setIsDragging(true);
     updateSliderPosition(clientX);
   };
 
-  useEffect(() => {
-    const handleMouseUp = () => setIsDragging(false);
-    const handleMouseMove = (e: MouseEvent) => handleMove(e.clientX);
-    const handleTouchMove = (e: TouchEvent) => {
-      // Prevent the page from scrolling on mobile while dragging the handle
-      e.preventDefault();
-      handleMove(e.touches[0].clientX);
-    };
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    activePointerId.current = event.pointerId;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    handleDragStart(event.clientX);
+  };
 
-    if (isDragging) {
-      window.addEventListener('mouseup', handleMouseUp);
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('touchend', handleMouseUp);
-      window.addEventListener('touchmove', handleTouchMove, { passive: false });
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging || activePointerId.current !== event.pointerId) return;
+    updateSliderPosition(event.clientX);
+  };
+
+  const handlePointerEnd = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (activePointerId.current !== event.pointerId) return;
+    setIsDragging(false);
+    activePointerId.current = null;
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
     }
-    
-    return () => {
-      window.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchend', handleMouseUp);
-      window.removeEventListener('touchmove', handleTouchMove);
-    };
-  }, [isDragging, handleMove]);
+  };
 
   return (
     <div 
       ref={containerRef}
-      className={`group relative w-full aspect-[3/2] overflow-hidden select-none touch-none bg-navy-deep ${isDragging ? 'cursor-grabbing' : 'cursor-grab'} ${className}`}
-      onMouseDown={(event) => handleDragStart(event.clientX)}
-      onTouchStart={(event) => handleDragStart(event.touches[0].clientX)}
+      className={`group relative w-full aspect-[3/2] overflow-hidden select-none bg-navy-deep ${isDragging ? 'cursor-grabbing' : 'cursor-grab'} ${className}`}
+      style={{ touchAction: 'none' }}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerEnd}
+      onPointerCancel={handlePointerEnd}
+      onPointerLeave={handlePointerEnd}
     >
       {/* After Image (Background) */}
       <Image 
@@ -112,6 +109,8 @@ export const BeforeAfterSlider = ({
       {/* Labels */}
       <div className="pointer-events-none absolute left-4 top-4 z-20 rounded-sm bg-navy-deep/70 px-3 py-1.5 text-xs font-bold tracking-widest text-white uppercase md:text-sm">{labelBefore}</div>
       <div className="pointer-events-none absolute right-4 top-4 z-20 rounded-sm bg-navy-deep/70 px-3 py-1.5 text-xs font-bold tracking-widest text-white uppercase md:text-sm">{labelAfter}</div>
+
+      <div className="absolute inset-0 z-[5]" aria-hidden="true" />
     </div>
   );
 };
