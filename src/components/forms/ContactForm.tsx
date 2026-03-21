@@ -41,6 +41,18 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
       });
 
       if (response.ok) {
+        const gtag = typeof window !== 'undefined'
+          ? (window as Window & { gtag?: (...args: unknown[]) => void }).gtag
+          : undefined;
+
+        if (gtag) {
+          gtag('event', 'contact_form_submitted', {
+            service_type: formData.get('projectType'),
+            city: formData.get('city'),
+            page_location: window.location.href,
+          });
+        }
+
         // Enforce structural redirect to custom validation pathing routing 
         router.push('/thank-you');
       } else {

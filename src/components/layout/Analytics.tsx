@@ -1,8 +1,42 @@
+'use client';
+
+import { useEffect } from 'react';
 import Script from 'next/script';
 
 export const Analytics = () => {
   const gtmId = 'GTM-XXXXXXX'; // Replace with actual GTM ID from client
   const gaId = 'G-XXXXXXXXXX'; // Replace with actual GA4 ID from client
+
+  useEffect(() => {
+    const handlePhoneClick = (event: MouseEvent) => {
+      const target = event.target;
+
+      if (!(target instanceof Element)) {
+        return;
+      }
+
+      const phoneLink = target.closest('a[href^="tel:"]');
+      if (!phoneLink) {
+        return;
+      }
+
+      const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
+      if (!gtag) {
+        return;
+      }
+
+      gtag('event', 'phone_click', {
+        phone_number: phoneLink.getAttribute('href'),
+        page_location: window.location.href,
+      });
+    };
+
+    document.addEventListener('click', handlePhoneClick);
+
+    return () => {
+      document.removeEventListener('click', handlePhoneClick);
+    };
+  }, []);
 
   return (
     <>
