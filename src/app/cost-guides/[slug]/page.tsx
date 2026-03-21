@@ -16,7 +16,7 @@ const costGuides = [
       { q: "How long does a kitchen remodel take?", a: "A full gut remodel typically takes 8 to 12 weeks once permits are issued." },
       { q: "Does a kitchen remodel increase home value?", a: "Yes, high-end kitchen remodels in Los Angeles yield one of the highest ROI percentages of any interior renovation." }
     ],
-    contentPlaceholder: "The kitchen is the heart of the home, and in Los Angeles, expectations for design and functionality are higher than ever. Whether you are knocking down walls to create an open-concept living space or simply upgrading to chef-grade appliances, understanding the true cost of a kitchen remodel is the first step toward a successful project.\n\nIn this comprehensive 2026 guide, we break down exactly what goes into the pricing of a high-end kitchen renovation in Southern California. The reality is that 'average' costs can be misleading. A cosmetic update in a condo costs drastically less than a structural, studs-out rebuild in a historic hillside home. We will explore the material costs, the labor requirements, structural engineering fees, and the often-overlooked permitting expenses inherent to building in Los Angeles county. By the end of this guide, you will have a clear, realistic framework for budgeting your dream kitchen."
+    contentPlaceholder: "The kitchen is the heart of the home, and in Los Angeles, expectations for design and functionality are higher than ever. Whether you are knocking down walls to create an open-concept living space or simply upgrading to chef-grade appliances, understanding the true cost of a kitchen remodel is the first step toward a successful project.\n\nIn this detailed 2026 guide, we break down exactly what goes into the pricing of a high-end kitchen renovation in Southern California. The reality is that 'average' costs can be misleading. A cosmetic update in a condo costs drastically less than a structural, studs-out rebuild in a historic hillside home. We will explore the material costs, the labor requirements, structural engineering fees, and the often-overlooked permitting expenses inherent to building in Los Angeles county. By the end of this guide, you will have a clear, realistic framework for budgeting your dream kitchen."
   },
   { 
     slug: "bathroom-remodel-cost-los-angeles", 
@@ -181,14 +181,14 @@ export default async function CostGuidePage({ params }: PageProps) {
             </div>
             <div className="bg-navy-deep text-white p-8 rounded shadow-xl border-t-4 border-accent-red">
               <h3 className="text-2xl font-serif font-bold mb-6">What Red Stag Includes</h3>
-              <p className="text-gray-300 mb-6">Unlike low-bidding contractors who hit you with change orders, our estimates are intensely comprehensive.</p>
+              <p className="text-gray-300 mb-6">Unlike low-bidding contractors who hit you with change orders, our estimates are built to be detailed and complete.</p>
               <ul className="space-y-3 text-sm text-gray-300">
                 <li className="flex items-center"><span className="text-accent-red mr-3">■</span> Full Architectural Design & 3D Renderings</li>
                 <li className="flex items-center"><span className="text-accent-red mr-3">■</span> Structural Engineering & Title 24</li>
                 <li className="flex items-center"><span className="text-accent-red mr-3">■</span> Dedicated On-Site Project Manager</li>
                 <li className="flex items-center"><span className="text-accent-red mr-3">■</span> Complete Permit Expediting</li>
                 <li className="flex items-center"><span className="text-accent-red mr-3">■</span> Premium Custom Finishes & Installation</li>
-                <li className="flex items-center"><span className="text-accent-red mr-3">■</span> 2-Year Comprehensive Workmanship Warranty</li>
+                <li className="flex items-center"><span className="text-accent-red mr-3">■</span> 2-Year Workmanship Warranty</li>
               </ul>
             </div>
           </div>
