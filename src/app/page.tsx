@@ -1,5 +1,6 @@
 import { ParallaxHero } from '@/components/ui/ParallaxHero';
 import { ServicesGrid } from '@/components/sections/ServicesGrid';
+import { SplitBreak } from '@/components/sections/SplitBreak';
 import { WhyRedStag } from '@/components/sections/WhyRedStag';
 import { FeaturedProjects } from '@/components/sections/FeaturedProjects';
 import { SplitBreakCTA } from '@/components/sections/SplitBreakCTA';
@@ -140,24 +141,27 @@ export default function HomePage() {
       <ServicesGrid services={services} className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5" />
 
       {/* SECTION 3 */}
-      <WhyRedStag />
+      <SplitBreak />
 
       {/* SECTION 4 */}
-      <FeaturedProjects />
+      <WhyRedStag />
 
       {/* SECTION 5 */}
-      <ReviewCarousel reviews={reviews} />
+      <FeaturedProjects />
 
       {/* SECTION 6 */}
-      <SplitBreakCTA />
+      <ReviewCarousel reviews={reviews} />
 
       {/* SECTION 7 */}
-      <ProcessSection />
+      <SplitBreakCTA />
 
       {/* SECTION 8 */}
-      <TeamSection />
+      <ProcessSection />
 
       {/* SECTION 9 */}
+      <TeamSection />
+
+      {/* SECTION 10 */}
       <section className="w-full border-y border-[#e2ddd5] bg-[#F0EDE8] px-6 py-24 md:px-12 md:py-28">
         <div className="mx-auto max-w-5xl">
           <div className="text-center">
@@ -194,7 +198,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 10 */}
+      {/* SECTION 11 */}
       <section className="w-full bg-white py-24 md:py-32 px-6 md:px-12 border-y border-gray-200">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16">
           <div className="lg:w-1/3 flex flex-col justify-center">
@@ -231,7 +235,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 11 */}
+      {/* SECTION 12 */}
       <section className="w-full bg-navy-deep py-24 md:py-32 px-6 md:px-12 select-none relative overflow-hidden">
         {/* Background Ghost Element */}
         <div className="absolute top-1/2 -translate-y-1/2 -right-40 opacity-[0.03] pointer-events-none w-[800px] h-[800px]">
