@@ -95,7 +95,10 @@ export async function generateMetadata({ params }: PageProps) {
     title: `${guide.title} | Red Stag Construction`, 
     description: `Detailed 2026 cost breakdown for ${guide.title}. Find out what affects pricing and what to expect.` 
   };
-  return { title: "Cost Guide Not Found" };
+  return {
+    title: "Cost Guide Not Found | Red Stag Construction",
+    description: "This Red Stag Construction cost guide could not be found.",
+  };
 }
 
 export default async function CostGuidePage({ params }: PageProps) {

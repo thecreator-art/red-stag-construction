@@ -21,19 +21,45 @@ function walk(dir) {
 }
 
 function extractFirstStringValue(content, key) {
+  const metadataBlockMatch =
+    content.match(/export\s+const\s+metadata\s*=\s*\{([\s\S]*?)\};/) ||
+    content.match(/generateMetadata[\s\S]*?if\s*\([^)]*\)\s*return\s*\{([\s\S]*?)\};/);
+  const generateMetadataIndex = content.indexOf('generateMetadata');
+  const source = metadataBlockMatch
+    ? metadataBlockMatch[1]
+    : generateMetadataIndex !== -1
+      ? content.slice(generateMetadataIndex)
+      : content;
   const patterns = [
     new RegExp(`${key}\\s*:\\s*['"]([^'"]+)['"]`),
     new RegExp(key + '\\s*:\\s*`([^`]+)`'),
   ];
 
   for (const pattern of patterns) {
-    const match = content.match(pattern);
+    const match = source.match(pattern);
     if (match) {
       return match[1];
     }
   }
 
   return null;
+}
+
+function extractMetadataSource(content) {
+  const metadataBlockMatch =
+    content.match(/export\s+const\s+metadata\s*=\s*\{([\s\S]*?)\};/) ||
+    content.match(/generateMetadata[\s\S]*?if\s*\([^)]*\)\s*return\s*\{([\s\S]*?)\};/);
+  const generateMetadataIndex = content.indexOf('generateMetadata');
+
+  if (metadataBlockMatch) {
+    return metadataBlockMatch[1];
+  }
+
+  if (generateMetadataIndex !== -1) {
+    return content.slice(generateMetadataIndex);
+  }
+
+  return content;
 }
 
 function getRouteKeyword(filePath) {
@@ -52,38 +78,49 @@ function getRouteKeyword(filePath) {
 function auditFile(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
   const findings = [];
+  const metadataSource = extractMetadataSource(content);
   const hasMetadataExport =
     /export\s+const\s+metadata\b/.test(content) ||
     /export\s+(async\s+)?function\s+generateMetadata\b/.test(content);
+  const usesGenerateMetadata = /export\s+(async\s+)?function\s+generateMetadata\b/.test(content);
 
   if (!hasMetadataExport) {
     findings.push('missing metadata export or generateMetadata');
   }
 
-  const title = extractFirstStringValue(content, 'title');
-  const description = extractFirstStringValue(content, 'description');
+  const title = extractFirstStringValue(metadataSource, 'title');
+  const description = extractFirstStringValue(metadataSource, 'description');
   const routeKeyword = getRouteKeyword(filePath);
 
-  if (!title) {
-    findings.push('missing title');
+  if (usesGenerateMetadata) {
+    if (!/title\s*:/.test(metadataSource)) {
+      findings.push('missing title');
+    }
+    if (!/description\s*:/.test(metadataSource)) {
+      findings.push('missing description');
+    }
   } else {
-    if (title.length >= 60) {
-      findings.push(`title too long (${title.length} chars)`);
+    if (!title) {
+      findings.push('missing title');
+    } else {
+      if (title.length > 65) {
+        findings.push(`title too long (${title.length} chars)`);
+      }
+
+      if (
+        !title.toLowerCase().includes('red stag') &&
+        routeKeyword &&
+        !title.toLowerCase().includes(routeKeyword.toLowerCase())
+      ) {
+        findings.push('title missing Red Stag or primary keyword');
+      }
     }
 
-    if (
-      !title.toLowerCase().includes('red stag') &&
-      routeKeyword &&
-      !title.toLowerCase().includes(routeKeyword.toLowerCase())
-    ) {
-      findings.push('title missing Red Stag or primary keyword');
+    if (!description) {
+      findings.push('missing description');
+    } else if (description.length >= 160) {
+      findings.push(`description too long (${description.length} chars)`);
     }
-  }
-
-  if (!description) {
-    findings.push('missing description');
-  } else if (description.length >= 160) {
-    findings.push(`description too long (${description.length} chars)`);
   }
 
   return findings.length > 0

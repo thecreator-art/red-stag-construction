@@ -67,6 +67,7 @@ export const BeforeAfterSlider = ({
         src={afterImage} 
         alt={altText}
         fill
+        priority
         sizes="(max-width: 768px) 100vw, 50vw"
         className="object-cover absolute inset-0 pointer-events-none" 
       />
@@ -80,6 +81,7 @@ export const BeforeAfterSlider = ({
           src={beforeImage} 
           alt={altText}
           fill
+          priority
           sizes="(max-width: 768px) 100vw, 50vw"
           className="object-cover" 
         />
