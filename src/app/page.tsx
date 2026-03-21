@@ -20,8 +20,8 @@ export default function HomePage() {
     { slug: 'home-addition-contractor-los-angeles', title: 'Home Addition', imageSrc: '/images/services/home.jpg' },
     { slug: 'general-contractor-los-angeles', title: 'General Contracting', imageSrc: '/images/services/general.jpg' },
     { slug: 'hardscape-contractor-los-angeles', title: 'Hardscaping', imageSrc: '/images/services/hardscape.jpg' },
-    { slug: 'fence-company-los-angeles', title: 'Fencing & Gates', imageSrc: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=800' },
-    { slug: 'window-replacement-los-angeles', title: 'Window Replacement', imageSrc: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=800' }
+    { slug: 'fence-company-los-angeles', title: 'Fencing & Gates', imageSrc: '/images/services/fence.jpg' },
+    { slug: 'window-replacement-los-angeles', title: 'Window Replacement', imageSrc: '/images/services/window.jpg' }
   ];
 
   const reviews: Review[] = [
