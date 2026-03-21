@@ -9,7 +9,7 @@ export const FeaturedProjects = () => {
     { id: '3', title: 'Bel Air Primary Suite Expansion', city: 'Bel Air', serviceType: 'Bathroom Remodel', beforeImage: '/images/projects/belair-before.jpg', afterImage: '/images/projects/belair-after.jpg' },
     { id: '4', title: 'Chef\'s Kitchen Open Concept', city: 'Studio City', serviceType: 'Kitchen Remodel', beforeImage: '/images/projects/studio-before.png', afterImage: '/images/projects/studio-after.jpg' },
     { id: '5', title: 'Hillside Patio Construction', city: 'Los Angeles', serviceType: 'Patio Construction', beforeImage: '/images/projects/hillside-before.png', afterImage: '/images/projects/hillside-after.jpg' },
-    { id: '6', title: 'Historic Craftsman Restoration', city: 'Silver Lake', serviceType: 'Home Addition', beforeImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=800', afterImage: '/images/projects/project-6.jpg' },
+    { id: '6', title: 'Historic Craftsman Restoration', city: 'Silver Lake', serviceType: 'Home Addition', beforeImage: '/images/projects/silverlake-before.jpg', afterImage: '/images/projects/silverlake-after.png' },
   ];
 
   return (
