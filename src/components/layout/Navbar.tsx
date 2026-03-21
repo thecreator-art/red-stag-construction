@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/Button';
 
@@ -78,35 +78,38 @@ const cities = [
 type DesktopMenu = 'services' | 'areas' | null;
 
 export const Navbar = () => {
+  const navbarRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileAreasOpen, setMobileAreasOpen] = useState(false);
   const [activeDesktopMenu, setActiveDesktopMenu] = useState<DesktopMenu>(null);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isUserScrolling, setIsUserScrolling] = useState(false);
 
   useEffect(() => {
-    let scrollTimeout: number | undefined;
-
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 24);
-      setIsUserScrolling(true);
       setActiveDesktopMenu(null);
-      if (scrollTimeout !== undefined) {
-        window.clearTimeout(scrollTimeout);
-      }
-      scrollTimeout = window.setTimeout(() => {
-        setIsUserScrolling(false);
-      }, 160);
+      setMobileServicesOpen(false);
+      setMobileAreasOpen(false);
     };
 
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
-      if (scrollTimeout !== undefined) {
-        window.clearTimeout(scrollTimeout);
-      }
       window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!navbarRef.current?.contains(event.target as Node)) {
+        setActiveDesktopMenu(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -121,20 +124,17 @@ export const Navbar = () => {
     setIsOpen(false);
     setMobileServicesOpen(false);
     setMobileAreasOpen(false);
+    setActiveDesktopMenu(null);
   };
 
-  const openDesktopMenu = (menu: DesktopMenu) => {
-    if (isUserScrolling) {
-      return;
-    }
-
-    setActiveDesktopMenu(menu);
+  const toggleDesktopMenu = (menu: Exclude<DesktopMenu, null>) => {
+    setActiveDesktopMenu((current) => (current === menu ? null : menu));
   };
 
   return (
     <div
+      ref={navbarRef}
       className="sticky top-0 z-50 w-full"
-      onMouseLeave={() => setActiveDesktopMenu(null)}
     >
       <header
         className={`w-full border-b border-white/10 bg-navy-deep text-white transition-[height,box-shadow] duration-300 ${
@@ -161,9 +161,13 @@ export const Navbar = () => {
 
             <div
               className="relative"
-              onMouseEnter={() => openDesktopMenu('services')}
             >
-              <button className="flex items-center gap-2 hover:text-accent-red transition-colors">
+              <button
+                type="button"
+                className="flex items-center gap-2 hover:text-accent-red transition-colors"
+                onClick={() => toggleDesktopMenu('services')}
+                aria-expanded={activeDesktopMenu === 'services'}
+              >
                 Services
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -216,9 +220,13 @@ export const Navbar = () => {
 
             <div
               className="relative"
-              onMouseEnter={() => openDesktopMenu('areas')}
             >
-              <Link href="/areas-we-serve" className="flex items-center gap-2 hover:text-accent-red transition-colors">
+              <button
+                type="button"
+                className="flex items-center gap-2 hover:text-accent-red transition-colors"
+                onClick={() => toggleDesktopMenu('areas')}
+                aria-expanded={activeDesktopMenu === 'areas'}
+              >
                 Areas We Serve
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -231,7 +239,7 @@ export const Navbar = () => {
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m6 9 6 6 6-6" />
                 </svg>
-              </Link>
+              </button>
               <div className="absolute left-1/2 top-full -translate-x-1/2 pt-4">
                 <div
                   className={`w-[760px] rounded-sm border border-white/10 bg-navy-deep p-8 shadow-[0_18px_50px_rgba(10,24,38,0.35)] transition-all duration-200 ${
@@ -256,6 +264,7 @@ export const Navbar = () => {
             </div>
 
             <Link href="/about" className="hover:text-accent-red transition-colors">About</Link>
+            <Link href="/faq" className="hover:text-accent-red transition-colors">FAQ</Link>
             <Link href="/blog" className="hover:text-accent-red transition-colors">Blog</Link>
           </nav>
 
@@ -300,7 +309,10 @@ export const Navbar = () => {
               <div className="border-t border-white/10 pt-2">
                 <button
                   className="flex w-full items-center justify-between px-3 py-3 text-left text-white transition-colors hover:text-accent-red"
-                  onClick={() => setMobileServicesOpen((current) => !current)}
+                  onClick={() => {
+                    setMobileServicesOpen((current) => !current);
+                    setMobileAreasOpen(false);
+                  }}
                   aria-expanded={mobileServicesOpen}
                 >
                   <span>Services</span>
@@ -338,7 +350,10 @@ export const Navbar = () => {
               <div className="border-t border-white/10 pt-2">
                 <button
                   className="flex w-full items-center justify-between px-3 py-3 text-left text-white transition-colors hover:text-accent-red"
-                  onClick={() => setMobileAreasOpen((current) => !current)}
+                  onClick={() => {
+                    setMobileAreasOpen((current) => !current);
+                    setMobileServicesOpen(false);
+                  }}
                   aria-expanded={mobileAreasOpen}
                 >
                   <span>Areas We Serve</span>
@@ -370,6 +385,9 @@ export const Navbar = () => {
 
               <Link href="/about" className="border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
                 About
+              </Link>
+              <Link href="/faq" className="border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
+                FAQ
               </Link>
               <Link href="/blog" className="border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
                 Blog
