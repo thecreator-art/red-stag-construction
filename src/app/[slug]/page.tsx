@@ -560,6 +560,102 @@ const serviceTemplateConfig: Record<string, ServiceTemplateConfig> = {
 
 const getServiceCrumb = (slug: string) => serviceCrumbMap[slug] || { label: 'Service', href: `/${slug}` };
 
+const secondaryLocationServiceSlugMap: Record<string, string> = {
+  'Beverly Hills': '/kitchen-remodel-los-angeles',
+  'Bel Air': '/home-addition-contractor-los-angeles',
+  Brentwood: '/home-addition-contractor-los-angeles',
+  Malibu: '/hardscape-contractor-los-angeles',
+  'Pacific Palisades': '/home-addition-contractor-los-angeles',
+  'Manhattan Beach': '/window-replacement-los-angeles',
+  'Santa Monica': '/adu-contractor-los-angeles',
+  'Studio City': '/adu-contractor-los-angeles',
+  'Sherman Oaks': '/home-addition-contractor-los-angeles',
+  Encino: '/home-addition-contractor-los-angeles',
+  Calabasas: '/home-addition-contractor-los-angeles',
+  'Hidden Hills': '/hardscape-contractor-los-angeles',
+  'West Hollywood': '/bathroom-remodel-los-angeles',
+  'Silver Lake': '/kitchen-remodel-los-angeles',
+  Burbank: '/adu-contractor-los-angeles',
+  'Granada Hills': '/adu-contractor-los-angeles',
+  Northridge: '/home-addition-contractor-los-angeles',
+  'San Fernando': '/kitchen-remodel-los-angeles',
+  Tarzana: '/adu-contractor-los-angeles',
+  'Woodland Hills': '/home-addition-contractor-los-angeles',
+};
+
+const blogTopicServiceMatchers = [
+  { slug: 'kitchen-remodel-los-angeles', patterns: ['kitchen', 'cabinet', 'island'] },
+  { slug: 'bathroom-remodel-los-angeles', patterns: ['bathroom', 'bath ', 'shower', 'tub', 'tile'] },
+  { slug: 'adu-contractor-los-angeles', patterns: ['adu', 'garage conversion', 'setback'] },
+  { slug: 'custom-home-builder-los-angeles', patterns: ['custom home', 'architect', 'draftsman'] },
+  { slug: 'home-addition-contractor-los-angeles', patterns: ['addition', 'second story', 'room add'] },
+  { slug: 'hardscape-contractor-los-angeles', patterns: ['hardscape', 'retaining wall', 'waterproofing', 'deck', 'outdoor kitchen', 'drought'] },
+  { slug: 'fence-company-los-angeles', patterns: ['fenc', 'gate', 'privacy', 'security'] },
+  { slug: 'window-replacement-los-angeles', patterns: ['window', 'title 24', 'energy efficient'] },
+  { slug: 'general-contractor-los-angeles', patterns: ['general contractor', 'design-build', 'permit process', 'ladbs', 'hillside construction'] },
+] as const;
+
+const relatedBlogServiceFallbacks: Record<string, string[]> = {
+  'kitchen-remodel-los-angeles': ['home-addition-contractor-los-angeles', 'general-contractor-los-angeles', 'bathroom-remodel-los-angeles'],
+  'bathroom-remodel-los-angeles': ['kitchen-remodel-los-angeles', 'general-contractor-los-angeles', 'home-addition-contractor-los-angeles'],
+  'adu-contractor-los-angeles': ['home-addition-contractor-los-angeles', 'general-contractor-los-angeles', 'custom-home-builder-los-angeles'],
+  'custom-home-builder-los-angeles': ['general-contractor-los-angeles', 'home-addition-contractor-los-angeles', 'hardscape-contractor-los-angeles'],
+  'home-addition-contractor-los-angeles': ['kitchen-remodel-los-angeles', 'general-contractor-los-angeles', 'adu-contractor-los-angeles'],
+  'hardscape-contractor-los-angeles': ['general-contractor-los-angeles', 'custom-home-builder-los-angeles', 'window-replacement-los-angeles'],
+  'fence-company-los-angeles': ['general-contractor-los-angeles', 'hardscape-contractor-los-angeles', 'window-replacement-los-angeles'],
+  'window-replacement-los-angeles': ['general-contractor-los-angeles', 'kitchen-remodel-los-angeles', 'custom-home-builder-los-angeles'],
+  'general-contractor-los-angeles': ['kitchen-remodel-los-angeles', 'adu-contractor-los-angeles', 'home-addition-contractor-los-angeles'],
+};
+
+const getSecondaryLocationServiceLink = (city: string) => {
+  const href = secondaryLocationServiceSlugMap[city] || '/home-addition-contractor-los-angeles';
+  return {
+    href,
+    label: getServiceCrumb(href.replace(/^\//, '')).label.toLowerCase(),
+  };
+};
+
+const getBlogServiceLinks = (sourceText: string) => {
+  const normalized = sourceText.toLowerCase();
+  const matchedSlugs = blogTopicServiceMatchers
+    .filter(({ patterns }) => patterns.some((pattern) => normalized.includes(pattern)))
+    .map(({ slug }) => slug);
+  const uniqueSlugs = Array.from(new Set(matchedSlugs));
+  const primarySlug = uniqueSlugs[0] || 'general-contractor-los-angeles';
+  const fallbackSlugs = relatedBlogServiceFallbacks[primarySlug] || relatedBlogServiceFallbacks['general-contractor-los-angeles'];
+  const finalSlugs = Array.from(new Set([primarySlug, ...uniqueSlugs.slice(1), ...fallbackSlugs])).slice(0, 3);
+
+  return finalSlugs.map((slug) => {
+    const crumb = getServiceCrumb(slug);
+    return { slug, href: crumb.href, label: crumb.label };
+  });
+};
+
+const buildBlogInternalLinkParagraphs = (serviceLinks: { href: string; label: string }[]) => {
+  const [primary, secondary, tertiary] = serviceLinks;
+  const paragraphs = [];
+
+  if (primary) {
+    paragraphs.push(
+      `<p class="mb-6 leading-relaxed text-lg">If this topic is part of a live project, start with our <a href="${primary.href}" class="font-semibold text-[#CC0000] underline underline-offset-4">${primary.label}</a> page. It lays out the Los Angeles permit path, cost ranges, and production issues that usually decide whether a plan is realistic before drawings and ordering begin.</p>`
+    );
+  }
+
+  if (secondary) {
+    paragraphs.push(
+      `<p class="mb-6 leading-relaxed text-lg">A lot of homeowners comparing scope also review our <a href="${secondary.href}" class="font-semibold text-[#CC0000] underline underline-offset-4">${secondary.label}</a> work, because utility upgrades, inspection sequencing, and finish coordination often overlap once a remodel starts moving beyond surface-level changes.</p>`
+    );
+  }
+
+  if (tertiary) {
+    paragraphs.push(
+      `<p class="mb-6 leading-relaxed text-lg">If the project may expand, our <a href="${tertiary.href}" class="font-semibold text-[#CC0000] underline underline-offset-4">${tertiary.label}</a> page shows how Red Stag plans larger Los Angeles scopes around approvals, structural review, procurement, and occupied-home scheduling instead of treating them like a quick cosmetic update.</p>`
+    );
+  }
+
+  return paragraphs;
+};
+
 const getMatrixServiceCrumb = (serviceName: string) => {
   const matchedSlug = matrixServiceMap[serviceName];
   return matchedSlug ? getServiceCrumb(matchedSlug) : { label: serviceName, href: '/' };
@@ -1776,10 +1872,40 @@ export default async function DynamicSlugPage({ params }: PageProps) {
     contentBody = contentBody.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     
     const parts = contentBody.split('\n\n');
-    let htmlContent = parts.map(p => {
-      if (p.trim() === '' || p.startsWith('<h') || p.startsWith('<script') || p.startsWith('</script') || p.includes('type="application/ld+json"') || p.startsWith('---')) return p;
-      return `<p class="mb-6 leading-relaxed text-lg">${p}</p>`;
-    }).join('\n');
+    const blogServiceLinks = getBlogServiceLinks(`${blog.title} ${blog.keyword} ${contentBody}`);
+    const blogLinkParagraphs = buildBlogInternalLinkParagraphs(blogServiceLinks);
+    const insertAfterParagraphCounts = [1, 3, 5];
+    let paragraphCount = 0;
+    let insertedLinks = 0;
+
+    const htmlContent = parts
+      .flatMap((part) => {
+        if (
+          part.trim() === '' ||
+          part.startsWith('<h') ||
+          part.startsWith('<script') ||
+          part.startsWith('</script') ||
+          part.includes('type="application/ld+json"') ||
+          part.startsWith('---')
+        ) {
+          return part;
+        }
+
+        paragraphCount += 1;
+        const renderedParts = [`<p class="mb-6 leading-relaxed text-lg">${part}</p>`];
+
+        if (
+          insertedLinks < blogLinkParagraphs.length &&
+          paragraphCount >= insertAfterParagraphCounts[insertedLinks]
+        ) {
+          renderedParts.push(blogLinkParagraphs[insertedLinks]);
+          insertedLinks += 1;
+        }
+
+        return renderedParts;
+      })
+      .concat(blogLinkParagraphs.slice(insertedLinks))
+      .join('\n');
 
     return (
       <div className="bg-white py-24 min-h-screen">
@@ -2022,6 +2148,7 @@ export default async function DynamicSlugPage({ params }: PageProps) {
     const introContent = buildLocationIntroParagraphs(location, config);
     const faqCategories = buildLocationFaqCategories(location, config);
     const serviceTiles = getLocationServiceTiles(location.city || '');
+    const secondaryServiceLink = getSecondaryLocationServiceLink(location.city || '');
     const tierPricing = tierPricingMap[config.tier];
     const tierCities = locationsData
       .filter((entry) => getLocationConfig(entry).tier === config.tier)
@@ -2066,6 +2193,13 @@ export default async function DynamicSlugPage({ params }: PageProps) {
                   {config.serviceLinkLabel}
                 </Link>
                 {introContent.firstParagraph.afterLink}
+              </p>
+              <p>
+                Homeowners in {location.city || 'Los Angeles'} also ask us to price{' '}
+                <Link href={secondaryServiceLink.href} className="font-semibold text-accent-red underline decoration-accent-red underline-offset-4">
+                  {secondaryServiceLink.label}
+                </Link>{' '}
+                when the project needs more square footage, stronger resale positioning, or a cleaner path through permits and construction sequencing. That second conversation matters because most houses here are not one-scope properties. They are opportunities to solve circulation, utility upgrades, storage, and long-term value in one coordinated plan instead of forcing the owner to reopen the house again in two years.
               </p>
               {introContent.remainingParagraphs.map((paragraph, index) => (
                 <p key={`${location.slug}-intro-${index}`}>{paragraph}</p>
