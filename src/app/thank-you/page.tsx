@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 export const metadata = {
   title: "Thank You | Red Stag Construction",
+  description: "Thank you for contacting Red Stag Construction. Our team will follow up shortly to discuss your Los Angeles project.",
   robots: "noindex, nofollow"
 };
 

@@ -1,4 +1,8 @@
-export const metadata = { title: 'Privacy Policy | Red Stag Construction', robots: 'noindex' };
+export const metadata = {
+  title: 'Privacy Policy | Red Stag Construction',
+  description: 'Read the Red Stag Construction privacy policy covering contact forms, SMS communication, and customer data handling.',
+  robots: 'noindex',
+};
 export default function PrivacyPolicy() {
   return (
     <div className="bg-white py-24 min-h-screen">

@@ -1,4 +1,8 @@
-export const metadata = { title: 'Terms of Service | Red Stag Construction', robots: 'noindex' };
+export const metadata = {
+  title: 'Terms of Service | Red Stag Construction',
+  description: 'Review the Red Stag Construction terms of service for estimates, liability limits, licensing, and project documentation.',
+  robots: 'noindex',
+};
 export default function Terms() {
   return (
     <div className="bg-white py-24 min-h-screen">
