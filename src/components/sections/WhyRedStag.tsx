@@ -10,7 +10,7 @@ export const WhyRedStag = () => {
               When you hire Red Stag Construction, you are not hiring a broker who subcontracts every phase of your build to the lowest bidder. You are hiring a dedicated design-build team that manages your project from the first architectural sketch to the final coat of paint.
             </p>
             <p>
-              We bring the structural engineers, the permitted architects, and the master tradesmen together under one roof. This unified approach eliminates the traditional friction between designers and builders, ensuring your custom home, ADU, or luxury remodel is executed cleanly, on schedule, and to an exacting standard of quality.
+              We bring the structural engineers, the permitted architects, and the master tradesmen together under one roof. This unified approach eliminates the traditional friction between designers and builders. We do not subcontract your project to the lowest bidder. We build it ourselves.
             </p>
           </div>
         </div>

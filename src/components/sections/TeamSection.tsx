@@ -6,11 +6,13 @@ export const TeamSection = () => {
   ];
 
   return (
-    <section className="w-full bg-[#F5F0E8] py-24 md:py-32 px-6 md:px-12 text-[#2A2A2A] border-y border-[#dcd2c6] shadow-inner">
+    <section className="w-full bg-[#F5F0E8] py-20 md:py-32 px-6 md:px-12 text-[#2A2A2A] border-y border-[#dcd2c6] shadow-inner">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20 md:mb-28">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold leading-tight mb-8">The Team Behind Your Project</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto font-serif text-xl border-l-4 border-accent-red pl-6 py-2">Uncompromising standards require uncompromising leadership.</p>
+          <p className="text-gray-600 max-w-2xl mx-auto font-serif text-xl border-l-4 border-accent-red pl-6 py-2">
+            15 years. 100+ projects. Every one permitted and delivered on time.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
@@ -25,6 +27,12 @@ export const TeamSection = () => {
               <p className="text-gray-600 leading-relaxed font-serif px-8">{member.bio}</p>
             </div>
           ))}
+        </div>
+
+        <div className="mt-20 text-center">
+          <a href="/contact" className="inline-block bg-accent-red text-white text-sm md:text-base font-bold tracking-[0.2em] uppercase px-12 py-5 hover:bg-[#B31217] hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+            Schedule a Consultation
+          </a>
         </div>
       </div>
     </section>
