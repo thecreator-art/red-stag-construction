@@ -1461,6 +1461,249 @@ const getRelatedLocationEntries = (cityNames: string[]) => {
     .filter((entry): entry is LocationEntry => Boolean(entry));
 };
 
+const cityReferenceMap: Record<string, string> = {
+  'Beverly Hills': 'the independent Beverly Hills permit process, Trousdale hillside lots, and ultra-premium finish expectations',
+  'Bel Air': 'gated access, canyon-lot engineering, and private-road coordination',
+  'Brentwood': 'the split between flat Brentwood lots and the hills above Sunset',
+  'Pacific Palisades': 'geology, coastal material demands, and premium neighborhood standards',
+  'Malibu': 'Coastal Commission review, fire-zone hardening, and coastal site logistics',
+  'Santa Monica': 'the independent Santa Monica review process, dense older structures, and green-building rules',
+  'Manhattan Beach': 'Sand Section lot constraints, Hill Section structure, and salt-air exposure',
+  'Studio City': 'LADBS review, older ranch homes south of Ventura, and mid-century properties in the hills',
+  'Sherman Oaks': 'older Valley housing stock, generous lots, and Ventura Boulevard adjacency',
+  'Encino': 'large mid-century ranch homes, hillside work north of Ventura, and high finish expectations',
+  'Calabasas': 'strict HOA review, guard-gate logistics, and premium suburban expectations',
+  'Hidden Hills': 'equestrian zoning, privacy protocols, and estate-scale access planning',
+  'Tarzana': 'older ranch homes, Ventura corridor access, and mixed flat-to-hillside parcels',
+  'Woodland Hills': 'Warner Center adjacency, larger home footprints, and hillside sites to the north',
+  'West Hollywood': 'tight urban lots, planning review, and design-sensitive neighborhood standards',
+  'Silver Lake': 'hillside lots, character homes, and design-sensitive renovation work',
+  'Burbank': 'older family housing stock and studio-adjacent client schedules',
+  'Granada Hills': 'larger suburban lots, older homes, and retrofit-aware family remodeling',
+  'Northridge': 'post-earthquake structural awareness, older homes, and CSUN-adjacent demand',
+  'San Fernando': 'the City of San Fernando permit office, compact lots, and bilingual field communication',
+};
+
+const tierMultipliers: Record<1 | 2 | 3 | 4 | 5, number> = {
+  1: 1.35,
+  2: 1.18,
+  3: 1,
+  4: 0.82,
+  5: 0.72,
+};
+
+const serviceProcessNotes: Record<string, string> = {
+  'Kitchen Remodel':
+    'kitchens in this market usually involve layout studies, appliance planning, cabinet lead times, electrical capacity review, and close coordination between stone, cabinetry, plumbing, and finish carpentry',
+  'Bathroom Remodel':
+    'bathroom projects here usually hinge on waterproofing, plumbing layout, ventilation, tile procurement, custom glass timing, and getting the inspection sequence right before finishes start',
+  'ADU Contractor':
+    'ADU work here is driven by feasibility, utility routing, setbacks, fire-separation rules, engineering, and the difference between what looks possible on paper and what the lot can actually support',
+  'Custom Home Builder':
+    'custom-home work here is shaped by entitlement strategy, engineering, procurement, long lead times, and a production schedule that has to stay coordinated from site prep through finish carpentry',
+  'Home Addition':
+    'addition projects here are usually defined by setbacks, structural tie-ins, roofing transitions, utility expansion, and how cleanly the new space connects back into the existing house',
+  'General Contracting':
+    'general-contracting work here means coordinating consultants, permits, trades, procurement, inspections, and owner communication without letting the project break into disconnected handoffs',
+  'Hardscape & Concrete':
+    'hardscape work here depends on grading, drainage, base preparation, retaining needs, concrete or paver sequencing, and how the exterior scope ties back into the house and site',
+  'Fence Company':
+    'fence and gate work here is shaped by line verification, frontage rules, post depth, automation, material durability, and how the system performs over time instead of just on install day',
+  'Window Replacement':
+    'window replacement here depends on Title 24 compliance, field measurement, flashing, stucco and trim repair, noise goals, and deciding whether the opening needs a true full-frame solution',
+};
+
+const parseMoneyToken = (value: string) => {
+  const match = value.match(/\$([0-9]+(?:\.[0-9]+)?)([KM])?(\+)?/i);
+
+  if (!match) {
+    return null;
+  }
+
+  const amount = Number.parseFloat(match[1]);
+  const unit = (match[2] || '').toUpperCase();
+  const plus = Boolean(match[3]);
+
+  let numeric = amount;
+
+  if (unit === 'K') {
+    numeric *= 1000;
+  } else if (unit === 'M') {
+    numeric *= 1000000;
+  }
+
+  return { numeric, plus };
+};
+
+const formatMoneyValue = (value: number, plus = false) => {
+  if (value >= 1000000) {
+    const millions = (Math.round((value / 1000000) * 10) / 10).toFixed(1).replace(/\.0$/, '');
+    return `$${millions}M${plus ? '+' : ''}`;
+  }
+
+  const thousands = Math.round(value / 1000);
+  return `$${thousands}K${plus ? '+' : ''}`;
+};
+
+const adjustCostRange = (range: string, multiplier: number) => {
+  if (!range.includes('$')) {
+    return range;
+  }
+
+  return range.replace(/\$[0-9]+(?:\.[0-9]+)?[KM]?\+?/gi, (token) => {
+    const parsed = parseMoneyToken(token);
+
+    if (!parsed) {
+      return token;
+    }
+
+    return formatMoneyValue(parsed.numeric * multiplier, parsed.plus);
+  });
+};
+
+const getMatrixServiceEntry = (serviceName: string) => {
+  const serviceSlug = matrixServiceMap[serviceName];
+  return servicesData.find((service) => service.slug === serviceSlug);
+};
+
+const getMatrixServiceConfig = (serviceName: string) => {
+  const serviceEntry = getMatrixServiceEntry(serviceName);
+  return serviceEntry ? getServiceConfig(serviceEntry) : null;
+};
+
+const getMatrixCostGuide = (serviceName: string, tier: 1 | 2 | 3 | 4 | 5) => {
+  const serviceConfig = getMatrixServiceConfig(serviceName);
+
+  if (!serviceConfig) {
+    return null;
+  }
+
+  const multiplier = tierMultipliers[tier];
+
+  return {
+    focused: {
+      label: 'Focused Scope',
+      costRange: adjustCostRange(serviceConfig.costGuide.basic.costRange, multiplier),
+      timeline: serviceConfig.costGuide.basic.timeline,
+      includes: serviceConfig.costGuide.basic.whatIsIncluded,
+      variables: serviceConfig.costGuide.basic.keyVariables,
+    },
+    common: {
+      label: 'Common Scope',
+      costRange: adjustCostRange(serviceConfig.costGuide.mid.costRange, multiplier),
+      timeline: serviceConfig.costGuide.mid.timeline,
+      includes: serviceConfig.costGuide.mid.whatIsIncluded,
+      variables: serviceConfig.costGuide.mid.keyVariables,
+    },
+    premium: {
+      label: 'Premium Scope',
+      costRange: adjustCostRange(serviceConfig.costGuide.premium.costRange, multiplier),
+      timeline: serviceConfig.costGuide.premium.timeline,
+      includes: serviceConfig.costGuide.premium.whatIsIncluded,
+      variables: serviceConfig.costGuide.premium.keyVariables,
+    },
+  };
+};
+
+const buildMatrixFaqQuestions = (serviceName: string, city: string) => {
+  const baseQuestions: Record<string, string[]> = {
+    'Kitchen Remodel': [
+      `How much does a kitchen remodel cost in ${city}?`,
+      `Do I need permits for a kitchen remodel in ${city}?`,
+      `How long does a kitchen remodel take in ${city}?`,
+      `What drives kitchen remodel pricing in ${city}?`,
+      `How do I choose a kitchen remodel contractor in ${city}?`,
+    ],
+    'Bathroom Remodel': [
+      `How much does a bathroom remodel cost in ${city}?`,
+      `Do I need permits for a bathroom remodel in ${city}?`,
+      `How long does a bathroom remodel take in ${city}?`,
+      `What affects bathroom remodel pricing in ${city}?`,
+      `Who should I hire for a bathroom remodel in ${city}?`,
+    ],
+    'ADU Contractor': [
+      `How much does an ADU cost in ${city}?`,
+      `Do I need permits to build an ADU in ${city}?`,
+      `How long does an ADU project take in ${city}?`,
+      `What can I build as an ADU on my lot in ${city}?`,
+      `How do I choose an ADU contractor in ${city}?`,
+    ],
+    'Custom Home Builder': [
+      `How much does a custom home cost in ${city}?`,
+      `How long does it take to build a custom home in ${city}?`,
+      `What permits are required for a custom home in ${city}?`,
+      `What drives custom home pricing in ${city}?`,
+      `How do I choose a custom home builder in ${city}?`,
+    ],
+    'Home Addition': [
+      `How much does a home addition cost in ${city}?`,
+      `Do I need permits for a home addition in ${city}?`,
+      `How long does a home addition take in ${city}?`,
+      `What affects addition pricing in ${city}?`,
+      `How do I choose a home addition contractor in ${city}?`,
+    ],
+    'General Contracting': [
+      `What does a general contractor do in ${city}?`,
+      `How much does a general contractor cost in ${city}?`,
+      `Do I need a general contractor for a remodel in ${city}?`,
+      `How do permits work with a general contractor in ${city}?`,
+      `How do I choose a general contractor in ${city}?`,
+    ],
+    'Hardscape & Concrete': [
+      `How much does hardscaping cost in ${city}?`,
+      `Do I need permits for hardscape work in ${city}?`,
+      `How long does a hardscape project take in ${city}?`,
+      `What drives patio and retaining wall pricing in ${city}?`,
+      `How do I choose a hardscape contractor in ${city}?`,
+    ],
+    'Fence Company': [
+      `How much does fence installation cost in ${city}?`,
+      `Do I need permits for a fence or gate in ${city}?`,
+      `How long does fence installation take in ${city}?`,
+      `What affects fence and gate pricing in ${city}?`,
+      `How do I choose a fence contractor in ${city}?`,
+    ],
+    'Window Replacement': [
+      `How much does window replacement cost in ${city}?`,
+      `Do I need permits to replace windows in ${city}?`,
+      `How long does window replacement take in ${city}?`,
+      `What affects window replacement pricing in ${city}?`,
+      `How do I choose a window contractor in ${city}?`,
+    ],
+  };
+
+  return baseQuestions[serviceName] || [
+    `How much does ${serviceName.toLowerCase()} cost in ${city}?`,
+    `Do I need permits for ${serviceName.toLowerCase()} in ${city}?`,
+    `How long does ${serviceName.toLowerCase()} take in ${city}?`,
+    `What affects ${serviceName.toLowerCase()} pricing in ${city}?`,
+    `How do I choose a contractor for ${serviceName.toLowerCase()} in ${city}?`,
+  ];
+};
+
+const getCityPermitTimeline = (city: string) => {
+  if (city === 'Malibu') return '6 to 12 months';
+  if (city === 'Beverly Hills' || city === 'Bel Air' || city === 'Hidden Hills') return '6 to 10 weeks';
+  if (city === 'Santa Monica' || city === 'Manhattan Beach' || city === 'Pacific Palisades') return '6 to 12 weeks';
+  if (city === 'San Fernando') return '4 to 8 weeks';
+  return '4 to 8 weeks';
+};
+
+const getRelatedMatrixPages = (serviceName: string, city: string) => {
+  const location = locationsData.find((entry) => entry.city === city);
+  const locationConfig = location ? getLocationConfig(location) : null;
+
+  if (!locationConfig) {
+    return [];
+  }
+
+  return locationConfig.relatedCities
+    .map((relatedCity) =>
+      matrixData.find((entry) => entry.service === serviceName && entry.city === relatedCity)
+    )
+    .filter((entry): entry is MatrixEntry => Boolean(entry));
+};
+
 // 1. Static Paths for Build Time
 export async function generateStaticParams() {
   const serviceParams = servicesData.map(s => ({ slug: s.slug }));
@@ -1972,7 +2215,69 @@ export default async function DynamicSlugPage({ params }: PageProps) {
 
   // --- MATRIX PAGE TEMPLATE ---
   if (matrix) {
+    const parentLocation = locationsData.find((entry) => entry.city === matrix.city);
+    const locationConfig = parentLocation ? getLocationConfig(parentLocation) : null;
+    const serviceConfig = getMatrixServiceConfig(matrix.service || '');
+    const costGuide = locationConfig ? getMatrixCostGuide(matrix.service || '', locationConfig.tier) : null;
+    const relatedMatrixPages = getRelatedMatrixPages(matrix.service || '', matrix.city || '');
     const matrixService = getMatrixServiceCrumb(matrix.service || 'Service');
+    const parentLocationHref = parentLocation ? `/${parentLocation.slug}` : '/areas-we-serve';
+    const permitTimeline = getCityPermitTimeline(matrix.city || '');
+    const cityReference = cityReferenceMap[matrix.city || ''] || `${matrix.city} site conditions and permit requirements`;
+    const faqQuestions = buildMatrixFaqQuestions(matrix.service || 'Service', matrix.city || 'Los Angeles');
+    const faqCategories = [
+      {
+        categoryTitle: `Questions about ${matrix.service || 'this service'} in ${matrix.city || 'Los Angeles'}`,
+        questions: faqQuestions.map((question) => {
+          if (question.includes('What does a general contractor do')) {
+            return {
+              question,
+              answer: `In ${matrix.city}, a general contractor is the party that coordinates the whole residential project: planning, consultant alignment, permit management, trade sequencing, inspections, schedule control, and quality control in the field. ${locationConfig?.permitFocus || `The local permit path in ${matrix.city} matters.`} On a real project that means your contractor is not just hiring subs. They are deciding whether the drawings match the site, whether the scope is priced honestly, whether inspections are scheduled correctly, and whether trades are arriving in the right order. Red Stag handles that work directly because most construction failures in this market do not come from one bad finish. They come from weak coordination. In ${matrix.city}, where site conditions and review requirements can shift the plan quickly, a good general contractor is the person protecting the project from those avoidable failures.`,
+            };
+          }
+
+          if (question.includes('How much')) {
+            return {
+              question,
+              answer: `The honest answer starts with the city tier and the actual property. In ${matrix.city}, most homeowners planning ${matrix.service?.toLowerCase() || 'this work'} land around ${costGuide?.common.costRange || 'a custom quoted range'}, while smaller focused scopes can start near ${costGuide?.focused.costRange || 'a lower custom range'} and premium work can move toward ${costGuide?.premium.costRange || 'a premium custom range'}. ${locationConfig?.siteFocus || `Local site conditions in ${matrix.city} still drive the number.`} Labor, permits, consultant needs, access, finish level, and how much hidden work shows up after demolition all affect the total. That is why we do not treat online averages as real pricing. We use city-tier planning numbers to set expectations, then tighten the budget once the scope, review path, and site conditions are clear enough to price responsibly.`,
+            };
+          }
+
+          if (question.includes('permit') || question.includes('permits')) {
+            return {
+              question,
+              answer: `${locationConfig?.permitFocus || `Permitting in ${matrix.city} has to be reviewed before work starts.`} For ${matrix.service?.toLowerCase() || 'this scope'}, permits usually apply whenever the project touches structure, utilities, exterior changes, grading, mechanical systems, or anything else that goes beyond a purely cosmetic refresh. In practical terms, that means homeowners should expect drawings, plan review, and inspection coordination to be part of the schedule. The local process in ${matrix.city} is one of the reasons we front-load planning instead of trying to figure it out after the contract is signed. Skipping permits may lower the number on paper, but it pushes risk directly onto the owner. We build the approval path into the project from day one so the work can close out correctly and hold up when it is time to refinance, sell, or start the next phase.`,
+            };
+          }
+
+          if (question.includes('How long')) {
+            return {
+              question,
+              answer: `A realistic schedule in ${matrix.city} starts with approvals, not with demolition. For this kind of ${matrix.service?.toLowerCase() || 'project'}, we typically plan around a permit window of about ${permitTimeline} before field work fully starts, then layer the construction schedule on top of that. The production side depends on scope: a focused job moves faster, a permit-heavy or structural scope takes longer, and any project with premium materials or custom fabrication needs lead time built in from the beginning. ${locationConfig?.logisticsFocus || `Local logistics in ${matrix.city} also affect the calendar.`} We give owners a schedule tied to actual milestones like design completion, permit submission, procurement, rough inspections, finish installation, and punch. That is the only way the timeline remains useful once the project is active.`,
+            };
+          }
+
+          if (question.includes('What can I build')) {
+            return {
+              question,
+              answer: `That answer depends on the lot, setbacks, utilities, access, and how the local review path in ${matrix.city} interprets the scope. With ADU work in particular, homeowners often hear broad state-level rules and assume the lot will support more than it actually can. We start with feasibility because the property still decides what is practical even when the code allows the use category. ${locationConfig?.siteFocus || `Site conditions in ${matrix.city} are still the deciding factor.`} We look at the parcel, the existing structures, utility routes, fire-separation needs, and how expensive it will be to turn an allowed concept into a buildable project. That way the owner gets a real answer instead of a generic yes that collapses as soon as drawings and engineering begin.`,
+            };
+          }
+
+          if (question.includes('What affects') || question.includes('What drives')) {
+            return {
+              question,
+              answer: `${serviceProcessNotes[matrix.service || ''] || `The scope of ${matrix.service?.toLowerCase() || 'the work'} matters more than the headline label.`} In ${matrix.city}, the biggest pricing and schedule swings usually come from the site itself, the review path, and how much hidden work is sitting behind existing finishes. A project on paper can look identical to one in another city and still cost materially more because the access is tighter, the house is older, the permit office wants more documentation, or the finish level expected by the neighborhood is higher. ${locationConfig?.marketContext || `The local market sets the standard in ${matrix.city}.`} That is why we price these jobs by condition and process, not by a generic square-foot shortcut that ignores what the city and the property are actually asking for.`,
+            };
+          }
+
+          return {
+            question,
+            answer: `The right contractor in ${matrix.city} should understand both ${matrix.service?.toLowerCase() || 'the scope'} and the city-specific issues that shape it. That means licensing and insurance, but it also means permit knowledge, scheduling discipline, realistic budgeting, and a field team that can execute without constant handoffs. ${locationConfig?.differentiatorFocus || `In ${matrix.city}, direct project control matters.`} We tell homeowners to ask who is supervising the work, who handles permits and inspections, how hidden conditions are managed, and whether the contractor has actually worked in the same kind of neighborhood and property type before. In a market like ${matrix.city}, the best contractor is rarely the one with the lowest number. It is the one who understands the job well enough to price it honestly and build it without losing control halfway through.`,
+          };
+        }),
+      },
+    ];
     const matrixCrumbs = [
       { label: 'Home', href: '/' },
       { label: 'Services', href: '/' },
@@ -1987,35 +2292,178 @@ export default async function DynamicSlugPage({ params }: PageProps) {
             <Breadcrumbs crumbs={matrixCrumbs} />
           </div>
         </section>
-        <ParallaxHero 
-          imageSrc={`/images/services/${(matrix.service || 'general').toLowerCase().split(' ')[0]}.jpg`} // Fallback
+        <ParallaxHero
+          imageSrc={serviceConfig?.heroImage || `/images/services/${(matrix.service || 'general').toLowerCase().split(' ')[0]}.jpg`}
           imageAlt={`${matrix.service || 'Service'} in ${matrix.city || 'Los Angeles'}`}
-          h1Text={matrix.title || 'Construction Services'}
-          h2Text={`${matrix.city || 'Los Angeles'}, CA`}
+          h1Text={`${matrix.service || 'Construction Service'} in ${matrix.city || 'Los Angeles'}, CA`}
+          h2Text={`${serviceConfig?.heroSubline || `${matrix.service} planned with real permits, budgets, and production control`}. Built for ${cityReference}.`}
           ctaText="Get a Free Estimate"
           ctaHref="/contact"
-          phoneNumber="(626) 652-2303"
+          phoneNumber={PHONE_NUMBER}
         />
-        <TrustBadge />
-        <section className="bg-warm-white py-24">
-          <div className="container mx-auto px-4 max-w-4xl">
-            <div className="flex items-center space-x-4 mb-8">
-              <span className="w-12 h-1 bg-accent-red"></span>
-              <h2 className="text-2xl md:text-3xl font-serif font-bold text-text-dark">Serving {matrix.city || 'Los Angeles'} and Surrounding Areas</h2>
+        <TrustBar />
+        <section className="bg-warm-white py-20 md:py-24">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="flex items-center gap-4 mb-10">
+              <span className="w-14 h-0.5 bg-accent-red"></span>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-text-dark">
+                {matrix.service} work in {matrix.city}
+              </h2>
             </div>
-            <p className="text-lg text-text-body leading-relaxed">
-              {matrix.intro || ''}
+            <div className="space-y-8 text-lg leading-8 text-text-body">
+              <p>
+                {locationConfig?.introStart || `${matrix.city} projects require city-specific planning.`} {locationConfig?.introEnd || ''} As one of the leading general contractors serving {matrix.city} we handle every aspect of your project from permits through completion -{' '}
+                <Link href={parentLocationHref} className="font-semibold text-accent-red underline decoration-accent-red underline-offset-4">
+                  learn more about all our services in {matrix.city}
+                </Link>
+                . That matters on a {matrix.service?.toLowerCase() || 'construction'} project because local review, lot conditions, and the age or value of the surrounding homes all change how the work should be designed and priced from the beginning.
+              </p>
+              <p>
+                In practical terms, {matrix.service?.toLowerCase() || 'this kind of work'} in {matrix.city} means {serviceProcessNotes[matrix.service || ''] || 'a tightly coordinated construction process'} with city-specific cost and permit pressure layered on top. Most homeowners here plan around {costGuide?.common.costRange || 'a custom quoted mid-range cost'} for a common scope, with focused work starting closer to {costGuide?.focused.costRange || 'a lower custom range'} and premium scopes climbing toward {costGuide?.premium.costRange || 'a premium custom range'}. The timeline is shaped by both construction and review. {locationConfig?.permitFocus || `Permits in ${matrix.city} need to be handled directly.`} {locationConfig?.siteFocus || ''} Those variables are the reason this cannot be treated like a generic city-swap project.
+              </p>
+              <p>
+                Red Stag brings a different level of control to {matrix.service?.toLowerCase() || 'this work'} in {matrix.city}. {serviceConfig?.processDetails || `We handle the project through one accountable design-build team.`} {locationConfig?.redStagContext || ''} We have spent 15 years working across this market, and that experience shows up in how we plan permits, verify site conditions, manage selections, and keep the field crew aligned with the actual scope instead of improvising once the house or lot is open. Clients in and around {matrix.city} call us because they want the schedule, the drawings, and the finished work to stay connected all the way through the project.
+              </p>
+              <p>
+                For a complete overview of our {matrix.service?.toLowerCase() || 'construction'} work across Greater Los Angeles including our full project gallery cost guide and FAQ visit our{' '}
+                <Link href={matrixService.href} className="font-semibold text-accent-red underline decoration-accent-red underline-offset-4">
+                  {matrixService.label} Los Angeles page
+                </Link>
+                . That page gives the broader service picture, but the reason you are on this city page is that {matrix.city} changes the planning. Between the permit path, the neighborhood standard, and the way properties in this market behave once demolition or site work starts, the right construction approach here needs its own explanation.
+              </p>
+              <p>
+                The process is straightforward when the planning is honest: consultation, design, permit, and build. We start with a site walk to understand the property, then move into scope definition, early budgeting, and the design-build work needed for drawings and procurement. In {matrix.city}, a realistic permit window is usually about {permitTimeline}, although more complex sites or approvals can stretch that further. Once permits and long-lead items are in motion, we sequence demolition, rough work, inspections, finishes, and punch with the city-specific issues already accounted for instead of reacting to them late. That approach protects the owner from the two biggest problems on residential jobs in this market: schedules built on wishful thinking and budgets built without enough field knowledge.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-navy-deep py-16 md:py-20">
+          <div className="container mx-auto px-4 max-w-6xl text-center">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-white">
+              Ready to start your {matrix.service?.toLowerCase() || 'construction'} project in {matrix.city}?
+            </h2>
+            <a href={PHONE_HREF} className="mt-6 block text-4xl font-bold text-white transition-opacity hover:opacity-90">
+              {PHONE_NUMBER}
+            </a>
+            <Link
+              href="/contact"
+              className="mt-8 inline-flex items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90"
+            >
+              Get a Free Estimate
+            </Link>
+          </div>
+        </section>
+
+        <section className="bg-white py-20 md:py-24">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="flex items-center gap-4 mb-10">
+              <span className="w-14 h-0.5 bg-accent-red"></span>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-text-dark">
+                {matrix.service} cost guide for {matrix.city}
+              </h2>
+            </div>
+            <div className="overflow-x-auto border border-gray-200">
+              <table className="min-w-full border-collapse">
+                <thead>
+                  <tr className="bg-navy-deep text-left text-white">
+                    <th className="border-b border-white/10 px-5 py-4 text-sm font-bold uppercase tracking-[0.16em] font-sans">Scope</th>
+                    <th className="border-b border-white/10 px-5 py-4 text-sm font-bold uppercase tracking-[0.16em] font-sans">{costGuide?.focused.label || 'Focused Scope'}</th>
+                    <th className="border-b border-white/10 px-5 py-4 text-sm font-bold uppercase tracking-[0.16em] font-sans">{costGuide?.common.label || 'Common Scope'}</th>
+                    <th className="border-b border-white/10 px-5 py-4 text-sm font-bold uppercase tracking-[0.16em] font-sans">{costGuide?.premium.label || 'Premium Scope'}</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white text-sm md:text-base text-text-body">
+                  <tr>
+                    <td className="bg-warm-white px-5 py-4 font-bold text-text-dark border-b border-gray-200">Cost range</td>
+                    <td className="px-5 py-4 border-b border-gray-200">{costGuide?.focused.costRange || 'Contact for Custom Quote'}</td>
+                    <td className="px-5 py-4 border-b border-gray-200">{costGuide?.common.costRange || 'Contact for Custom Quote'}</td>
+                    <td className="px-5 py-4 border-b border-gray-200">{costGuide?.premium.costRange || 'Contact for Custom Quote'}</td>
+                  </tr>
+                  <tr>
+                    <td className="bg-warm-white px-5 py-4 font-bold text-text-dark border-b border-gray-200">Timeline</td>
+                    <td className="px-5 py-4 border-b border-gray-200">{costGuide?.focused.timeline || 'Scope dependent'}</td>
+                    <td className="px-5 py-4 border-b border-gray-200">{costGuide?.common.timeline || 'Scope dependent'}</td>
+                    <td className="px-5 py-4 border-b border-gray-200">{costGuide?.premium.timeline || 'Scope dependent'}</td>
+                  </tr>
+                  <tr>
+                    <td className="bg-warm-white px-5 py-4 font-bold text-text-dark border-b border-gray-200">What is included</td>
+                    <td className="px-5 py-4 border-b border-gray-200">{costGuide?.focused.includes || 'Scope dependent'}</td>
+                    <td className="px-5 py-4 border-b border-gray-200">{costGuide?.common.includes || 'Scope dependent'}</td>
+                    <td className="px-5 py-4 border-b border-gray-200">{costGuide?.premium.includes || 'Scope dependent'}</td>
+                  </tr>
+                  <tr>
+                    <td className="bg-warm-white px-5 py-4 font-bold text-text-dark">Key variables</td>
+                    <td className="px-5 py-4">{costGuide?.focused.variables || 'Scope dependent'}</td>
+                    <td className="px-5 py-4">{costGuide?.common.variables || 'Scope dependent'}</td>
+                    <td className="px-5 py-4">{costGuide?.premium.variables || 'Scope dependent'}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-8 text-lg leading-8 text-text-body">
+              These figures are city-tier planning numbers for {matrix.city}, not generic Los Angeles averages. They already account for the way local permits, labor, access, finish expectations, and site conditions change the real cost of {matrix.service?.toLowerCase() || 'this work'} in this part of the market.
             </p>
           </div>
         </section>
-        <section className="bg-white py-24 border-t border-gray-200">
-           <div className="container mx-auto px-4 max-w-4xl text-center">
-             <h2 className="text-4xl font-serif font-bold text-text-dark mb-6">Expert {matrix.service || 'Construction'} Installation</h2>
-             <p className="text-xl text-text-body mb-12">Red Stag Construction handles all permits and engineering requirements natively. Contact us today.</p>
-             <div className="bg-gray-50 p-8 md:p-12 text-left border border-gray-200">
-               <ContactForm />
-             </div>
-           </div>
+
+        <section className="bg-warm-white py-20 md:py-24">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="flex items-center gap-4 mb-10">
+              <span className="w-14 h-0.5 bg-accent-red"></span>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-text-dark">
+                Questions homeowners ask about {matrix.service?.toLowerCase() || 'this work'} in {matrix.city}
+              </h2>
+            </div>
+            <FAQAccordion categories={faqCategories} />
+          </div>
+        </section>
+
+        <section className="bg-white py-20 md:py-24">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="flex items-center gap-4 mb-10">
+              <span className="w-14 h-0.5 bg-accent-red"></span>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-text-dark">
+                Nearby {matrix.service?.toLowerCase() || 'service'} pages
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {relatedMatrixPages.map((entry) => (
+                <Link
+                  key={entry.slug}
+                  href={`/${entry.slug}`}
+                  className="border border-gray-200 bg-warm-white p-8 transition-colors hover:border-accent-red"
+                >
+                  <h3 className="text-2xl font-serif font-bold text-text-dark">
+                    {entry.service} in {entry.city}
+                  </h3>
+                  <p className="mt-4 text-base leading-7 text-text-body">
+                    Compare how this same service is planned and priced in nearby {entry.city}.
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-navy-deep py-20 md:py-24">
+          <div className="container mx-auto px-4 max-w-5xl text-center">
+            <h2 className="text-3xl md:text-5xl font-serif font-bold text-white">
+              Start your {matrix.service?.toLowerCase() || 'construction'} project in {matrix.city} with a contractor who already knows the local path.
+            </h2>
+            <p className="mt-6 text-lg md:text-xl text-white/80">
+              We handle design-build planning, permits, scheduling, and field execution under one accountable team.
+            </p>
+            <a href={PHONE_HREF} className="mt-8 block text-4xl font-bold text-white transition-opacity hover:opacity-90">
+              {PHONE_NUMBER}
+            </a>
+            <Link
+              href="/contact"
+              className="mt-8 inline-flex items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90"
+            >
+              Get a Free Estimate
+            </Link>
+          </div>
         </section>
       </>
     );
