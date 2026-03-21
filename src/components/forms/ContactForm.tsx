@@ -53,7 +53,7 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={`w-full bg-[#1A1A1A] p-8 md:p-12 shadow-2xl ${className}`}>
+    <form onSubmit={handleSubmit} className={`w-full bg-navy-deep p-8 md:p-12 shadow-2xl ${className}`}>
       
       {/* Inline Persistent Error Delivery Mechanics */}
       {errorMsg && (
@@ -70,18 +70,18 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
           <label htmlFor="fullName" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-accent-red pl-2">Full Name</label>
-          <input required type="text" id="fullName" name="fullName" className="w-full bg-[#111] border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
+          <input required type="text" id="fullName" name="fullName" className="w-full bg-navy-deep border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
         </div>
         <div>
           <label htmlFor="phone" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-accent-red pl-2">Phone Number</label>
-          <input required type="tel" id="phone" name="phone" className="w-full bg-[#111] border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
+          <input required type="tel" id="phone" name="phone" className="w-full bg-navy-deep border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
           <label htmlFor="projectType" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-accent-red pl-2">Project Type</label>
-          <select required id="projectType" name="projectType" className="w-full bg-[#111] border border-gray-700 text-gray-200 px-4 py-3 focus:outline-none focus:border-accent-red transition-colors appearance-none">
+          <select required id="projectType" name="projectType" className="w-full bg-navy-deep border border-gray-700 text-gray-200 px-4 py-3 focus:outline-none focus:border-accent-red transition-colors appearance-none">
             <option value="">Select Project Type</option>
             <option value="Bathroom Remodel">Bathroom Remodel</option>
             <option value="Kitchen Remodel">Kitchen Remodel</option>
@@ -94,13 +94,13 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
         </div>
         <div>
           <label htmlFor="city" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-accent-red pl-2">City</label>
-          <input required type="text" id="city" name="city" placeholder="e.g. Sherman Oaks" className="w-full bg-[#111] border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
+          <input required type="text" id="city" name="city" placeholder="e.g. Sherman Oaks" className="w-full bg-navy-deep border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors" />
         </div>
       </div>
 
       <div className="mb-8">
         <label htmlFor="message" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 border-l-2 border-accent-red pl-2">Tell Us About Your Project</label>
-        <textarea required id="message" name="message" rows={5} placeholder="Briefly describe your scope regarding budget, timing, or architectural desires..." className="w-full bg-[#111] border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors resize-y" />
+        <textarea required id="message" name="message" rows={5} placeholder="Briefly describe your scope regarding budget, timing, or architectural desires..." className="w-full bg-navy-deep border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-accent-red transition-colors resize-y" />
       </div>
 
       <button disabled={isSubmitting} type="submit" className="w-full bg-accent-red hover:bg-[#990000] transition-all duration-300 text-white font-extrabold uppercase tracking-widest py-5 shadow-[0_0_15px_rgba(179,18,23,0.3)] disabled:opacity-50 disabled:shadow-none flex justify-center items-center group relative overflow-hidden">

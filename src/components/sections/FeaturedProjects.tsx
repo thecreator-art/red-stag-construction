@@ -13,7 +13,7 @@ export const FeaturedProjects = () => {
   ];
 
   return (
-    <section className="w-full bg-[#111] py-24 md:py-32 px-6 md:px-12 border-y border-gray-900">
+    <section className="w-full bg-navy-deep py-24 md:py-32 px-6 md:px-12 border-y border-gray-900">
       <div className="max-w-7xl mx-auto">
         
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-gray-800 pb-10">
@@ -33,7 +33,7 @@ export const FeaturedProjects = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 mb-16">
           {projects.map(project => (
-            <div key={project.id} className="bg-[#1A1A1A] rounded-sm overflow-hidden border border-gray-800 shadow-2xl group flex flex-col">
+            <div key={project.id} className="bg-navy-deep rounded-sm overflow-hidden border border-gray-800 shadow-2xl group flex flex-col">
               <BeforeAfterSlider 
                 beforeImage={project.beforeImage} 
                 afterImage={project.afterImage} 
@@ -53,7 +53,7 @@ export const FeaturedProjects = () => {
         </div>
 
         <div className="text-center">
-          <Link href="/our-work" className="inline-block bg-[#1A1A1A] hover:bg-accent-red border border-gray-700 hover:border-accent-red transition-all text-white font-extrabold tracking-widest uppercase px-12 py-5 rounded-sm shadow-xl hover:-translate-y-1 duration-300">
+          <Link href="/our-work" className="inline-block bg-navy-deep hover:bg-accent-red border border-gray-700 hover:border-accent-red transition-all text-white font-extrabold tracking-widest uppercase px-12 py-5 rounded-sm shadow-xl hover:-translate-y-1 duration-300">
             Explore Portfolio
           </Link>
         </div>
