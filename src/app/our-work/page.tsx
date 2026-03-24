@@ -25,7 +25,7 @@ export default function OurWorkPage() {
           <p className="text-xs font-bold uppercase tracking-[0.24em] text-accent-red">
             Signature Portfolio
           </p>
-          <h1 className="mt-6 font-sans text-5xl font-black uppercase tracking-tight md:text-7xl">
+          <h1 className="mt-6 font-sans text-5xl font-black uppercase tracking-tight text-white drop-shadow-[0_4px_18px_rgba(0,0,0,0.5)] md:text-7xl">
             Discover How Vision
             <br />
             Meets Precision
@@ -57,7 +57,7 @@ export default function OurWorkPage() {
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     priority
                   />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#152d45]/95 via-[#152d45]/15 to-transparent transition-colors duration-300 group-hover:from-[#152d45]/85" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#152d45]/95 via-[#152d45]/20 to-transparent transition-colors duration-300 group-hover:from-[#152d45]/85" />
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 p-8 text-center md:p-10">
                     <h2 className="font-sans text-3xl font-bold tracking-tight text-white md:text-5xl">
                       {project.title}
@@ -123,6 +123,30 @@ export default function OurWorkPage() {
               </a>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="bg-navy-deep py-20 text-center md:py-24">
+        <div className="container mx-auto max-w-5xl px-4">
+          <h2 className="font-serif text-3xl font-bold text-white md:text-5xl">
+            Ready to talk through your own project?
+          </h2>
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-white/75">
+            If you have seen enough, the next move is simple. Call us, walk the site, and get a real
+            read on scope, sequencing, and what the build will take.
+          </p>
+          <a
+            href="tel:6266522303"
+            className="mt-8 block text-4xl font-bold text-white transition-opacity hover:opacity-90"
+          >
+            (626) 652-2303
+          </a>
+          <Link
+            href="/contact"
+            className="mt-8 inline-flex min-h-11 items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-all duration-200 hover:brightness-110"
+          >
+            Start Your Estimate
+          </Link>
         </div>
       </section>
     </>

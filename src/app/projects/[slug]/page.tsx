@@ -76,7 +76,7 @@ export default async function ProjectPage({ params }: PageProps) {
             <span aria-hidden="true">←</span>
             Back to Gallery
           </Link>
-          <h1 className="mt-8 font-sans text-5xl font-black uppercase tracking-tight md:text-7xl">
+          <h1 className="mt-8 font-sans text-5xl font-black uppercase tracking-tight text-white drop-shadow-[0_4px_18px_rgba(0,0,0,0.5)] md:text-7xl">
             {project.title}
           </h1>
           <p className="mt-5 text-base font-semibold uppercase tracking-[0.18em] text-white/70 md:text-lg">
