@@ -1,4 +1,5 @@
 import { ParallaxHero } from "@/components/ui/ParallaxHero";
+import { TrustBadge } from "@/components/ui/TrustBadge";
 
 export const metadata = {
   title: "Licenses & Insurance | Red Stag Construction",
@@ -17,14 +18,31 @@ export default function Licenses() {
         ctaHref="https://www.cslb.ca.gov"
         phoneNumber="(626) 652-2303"
       />
+
+      <TrustBadge />
       
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4 max-w-4xl text-center">
-          <div className="w-24 h-24 mx-auto bg-navy-deep text-white rounded-full flex items-center justify-center mb-10 shadow-xl border-4 border-cream">
-            <span className="text-4xl" aria-hidden="true">🏛️</span>
-          </div>
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-text-dark mb-4">CSLB License #964664</h2>
           <p className="text-xl text-text-body mb-12">Established in 2011, Red Stag Construction maintains an impeccable standing with the California Contractors State License Board.</p>
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a
+              href="https://www.cslb.ca.gov"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center justify-center rounded-sm bg-accent-red px-8 py-4 text-sm font-extrabold uppercase tracking-widest text-white transition-all duration-200 hover:scale-[1.02] hover:bg-[#990000]"
+            >
+              Verify License
+            </a>
+            <a
+              href="/documents/red-stag-license.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center justify-center rounded-sm border-2 border-navy-deep px-8 py-4 text-sm font-extrabold uppercase tracking-widest text-navy-deep transition-all duration-200 hover:border-accent-red hover:text-accent-red"
+            >
+              Download License PDF
+            </a>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left mt-16">
             <div className="bg-warm-white p-8 border border-gray-200 rounded">

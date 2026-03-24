@@ -20,6 +20,8 @@ export default function OurWork() {
         phoneNumber="(626) 652-2303"
       />
 
+      <TrustBadge />
+
       <section className="bg-navy-deep pt-12 pb-24 border-b border-gray-800 text-white">
         <div className="container mx-auto px-4">
           {/* Static portfolio gallery showcasing the primary projects */}
@@ -88,8 +90,6 @@ export default function OurWork() {
           </div>
         </div>
       </section>
-
-      <TrustBadge />
     </>
   );
 }

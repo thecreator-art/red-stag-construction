@@ -32,7 +32,7 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
             <div className="bg-white border border-gray-200 overflow-hidden shadow-sm">
               <div className="relative h-80 w-full">
-                <Image src="/images/team/israel-aquino-red-stag-construction-founder-01.jpg" alt="Israel Aquino — Founder and General Contractor" fill sizes="33vw" priority className="object-cover object-top filter grayscale" />
+                <Image src="/images/team/israel.jpg" alt="Israel Aquino — Founder and General Contractor" fill sizes="33vw" priority className="object-cover object-top filter grayscale" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-text-dark mb-1">Israel Aquino</h3>
@@ -45,7 +45,7 @@ export default function About() {
 
             <div className="bg-white border border-gray-200 overflow-hidden shadow-sm">
               <div className="relative h-80 w-full">
-                <Image src="/images/team/anthony-torsarkissian.jpg" alt="Anthony Torsarkissian — COO" fill sizes="33vw" priority className="object-cover object-top filter grayscale" />
+                <Image src="/images/team/anthony.jpg" alt="Anthony Torsarkissian — COO" fill sizes="33vw" priority className="object-cover object-top filter grayscale" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-text-dark mb-1">Anthony Torsarkissian</h3>
@@ -58,7 +58,7 @@ export default function About() {
 
             <div className="bg-white border border-gray-200 overflow-hidden shadow-sm">
               <div className="relative h-80 w-full">
-                <Image src="/images/team/zack-ward.jpg" alt="Zack Ward — Head of Project Development" fill sizes="33vw" priority className="object-cover object-top filter grayscale" />
+                <Image src="/images/team/zack.jpg" alt="Zack Ward — Head of Project Development" fill sizes="33vw" priority className="object-cover object-top filter grayscale" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-text-dark mb-1">Zack Ward</h3>
