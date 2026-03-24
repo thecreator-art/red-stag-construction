@@ -109,6 +109,28 @@ export default function HomePage() {
     email: 'support@redstagcc.com',
     slogan: 'Designed here. Built right. Delivered on time.',
     foundingDate: '2011',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '3211 Cahuenga Blvd W Ste 207',
+      addressLocality: 'Los Angeles',
+      addressRegion: 'CA',
+      postalCode: '90068',
+      addressCountry: 'US',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: 5.0,
+      reviewCount: 47,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    license: {
+      value: 'https://www.cslb.ca.gov',
+      identifier: '964664',
+    },
+    priceRange: '$$$',
+    currenciesAccepted: 'USD',
+    paymentAccepted: 'Cash Check Credit Card',
     sameAs: [
       'https://www.yelp.com/biz/red-stag-construction-los-angeles',
       'https://www.houzz.com/professionals/red-stag-construction',
