@@ -2422,6 +2422,37 @@ export default async function DynamicSlugPage({ params }: PageProps) {
     const serviceAreaLinks = getServiceAreaLinks(config.matrixService);
     const relatedServices = getRelatedServices(config.relatedServices);
     const matchedReview = getRelevantReview(undefined, config.serviceName);
+    const serviceSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: config.serviceName,
+      serviceType: config.matrixService,
+      provider: {
+        '@type': 'LocalBusiness',
+        name: 'Red Stag Construction',
+        url: BASE_URL,
+        telephone: '626-652-2303',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: '3211 Cahuenga Blvd W Ste 207',
+          addressLocality: 'Los Angeles',
+          addressRegion: 'CA',
+          postalCode: '90068',
+          addressCountry: 'US',
+        },
+      },
+      areaServed: locationsData.map((entry) => entry.city),
+      description: introParagraphs.join(' ').slice(0, 200).trim(),
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'USD',
+        priceSpecification: {
+          '@type': 'PriceSpecification',
+          price: config.costGuide.mid.costRange,
+          priceCurrency: 'USD',
+        },
+      },
+    };
     const serviceCrumbs = [
       { label: 'Home', href: '/' },
       { label: 'Services', href: '/' },
@@ -2430,6 +2461,10 @@ export default async function DynamicSlugPage({ params }: PageProps) {
 
     return (
       <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+        />
         <section className="border-b border-gray-200 bg-warm-white py-4">
           <div className="container mx-auto px-4">
             <Breadcrumbs crumbs={serviceCrumbs} />
