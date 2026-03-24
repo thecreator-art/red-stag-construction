@@ -31,6 +31,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${project.title} Gallery | Red Stag`,
     description: `${project.category} photos from ${project.title} in ${project.location}. Browse the full Red Stag project gallery.`,
+    alternates: {
+      canonical: `https://redstagcc.com/projects/${project.slug}`,
+    },
   };
 }
 

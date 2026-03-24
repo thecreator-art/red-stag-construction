@@ -93,7 +93,10 @@ export async function generateMetadata({ params }: PageProps) {
   const guide = costGuides.find(g => g.slug === slug);
   if (guide) return { 
     title: `${guide.title} | Red Stag Construction`, 
-    description: `Detailed 2026 cost breakdown for ${guide.title}. Find out what affects pricing and what to expect.` 
+    description: `Detailed 2026 cost breakdown for ${guide.title}. Find out what affects pricing and what to expect.`,
+    alternates: {
+      canonical: `https://redstagcc.com/cost-guides/${guide.slug}`,
+    },
   };
   return {
     title: "Cost Guide Not Found | Red Stag Construction",

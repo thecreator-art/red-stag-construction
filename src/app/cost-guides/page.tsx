@@ -4,7 +4,10 @@ import { TrustBadge } from "@/components/ui/TrustBadge";
 
 export const metadata = {
   title: "LA Construction Cost Guides | Red Stag Construction",
-  description: "Detailed 2026 cost guides for Los Angeles kitchen remodels, bathroom remodels, ADUs, and custom homes."
+  description: "Detailed 2026 cost guides for Los Angeles kitchen remodels, bathroom remodels, ADUs, and custom homes.",
+  alternates: {
+    canonical: 'https://redstagcc.com/cost-guides',
+  },
 };
 
 export default function CostGuidesIndex() {
