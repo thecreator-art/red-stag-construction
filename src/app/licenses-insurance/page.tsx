@@ -3,7 +3,10 @@ import { TrustBadge } from "@/components/ui/TrustBadge";
 
 export const metadata = {
   title: "Licenses & Insurance | Red Stag Construction",
-  description: "Verify our active California contractor license (#964664), liability insurance, workers compensation, and bonding status."
+  description: "Verify our active California contractor license (#964664), liability insurance, workers compensation, and bonding status.",
+  alternates: {
+    canonical: 'https://redstagcc.com/licenses-insurance',
+  },
 };
 
 export default function Licenses() {

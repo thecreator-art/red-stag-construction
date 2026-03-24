@@ -4,7 +4,10 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Our Process | Red Stag Construction",
-  description: "Discover our 5-phase design-build process from initial consultation to final closeout for construction projects in Los Angeles."
+  description: "Discover our 5-phase design-build process from initial consultation to final closeout for construction projects in Los Angeles.",
+  alternates: {
+    canonical: 'https://redstagcc.com/our-process',
+  },
 };
 
 export default function OurProcess() {

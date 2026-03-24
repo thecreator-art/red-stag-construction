@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/Button";
 export const metadata = {
   title: "Areas We Serve | Red Stag Construction Greater Los Angeles",
   description: "Red Stag Construction is a licensed general contractor building custom homes, ADUs, and remodeling in Beverly Hills, Bel Air, Malibu, and the entire LA area.",
+  alternates: {
+    canonical: 'https://redstagcc.com/areas-we-serve',
+  },
 };
 
 const topTierCities = [
