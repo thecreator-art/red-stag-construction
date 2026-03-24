@@ -4,6 +4,9 @@ import { ContactForm } from "@/components/forms/ContactForm";
 export const metadata = {
   title: "Contact Red Stag Construction | Free Estimate Los Angeles",
   description: "Contact Red Stag Construction for a free estimate on your custom home, remodel, or addition project in Los Angeles. Call (626) 652-2303.",
+  alternates: {
+    canonical: 'https://redstagcc.com/contact',
+  },
 };
 
 export default function Contact() {

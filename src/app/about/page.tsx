@@ -5,6 +5,9 @@ import Image from "next/image";
 export const metadata = {
   title: "About Red Stag Construction | Licensed LA General Contractor",
   description: "Red Stag Construction team: Built on Craft. Driven by Accountability. Learn about our leadership: Israel Aquino, Anthony Torsarkissian, and Zack Ward.",
+  alternates: {
+    canonical: 'https://redstagcc.com/about',
+  },
 };
 
 export default function About() {
