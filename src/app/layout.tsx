@@ -14,6 +14,28 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swa
 export const metadata: Metadata = {
   title: "General Contractor in Los Angeles, CA | Red Stag Construction",
   description: "Licensed general contractor in Los Angeles since 2011. Custom homes, ADUs, kitchen & bathroom remodels, home additions, hardscape & fencing. Serving Beverly Hills, Bel Air, Malibu & all of LA.",
+  openGraph: {
+    type: 'website',
+    siteName: 'Red Stag Construction',
+    locale: 'en_US',
+    url: 'https://redstagcc.com',
+    title: 'General Contractor in Los Angeles CA',
+    description:
+      'Licensed general contractor in Los Angeles since 2011. Custom homes ADUs kitchen and bathroom remodels home additions hardscape and fencing across Beverly Hills Bel Air Malibu and Greater Los Angeles',
+    images: [
+      {
+        url: 'https://redstagcc.com/images/og-default.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Red Stag Construction Los Angeles General Contractor',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@redstagcc',
+    creator: '@redstagcc',
+  },
 };
 
 export const viewport: Viewport = {

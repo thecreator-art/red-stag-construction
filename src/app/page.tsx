@@ -19,6 +19,12 @@ export const metadata = {
   alternates: {
     canonical: 'https://redstagcc.com',
   },
+  openGraph: {
+    title: 'General Contractor in Los Angeles, CA | Red Stag Construction',
+    description:
+      'Licensed GC in Los Angeles since 2011. Custom homes, ADUs, remodels, additions, hardscape, and fencing across Beverly Hills, Bel Air, and Malibu.',
+    url: 'https://redstagcc.com',
+  },
 };
 
 export default function HomePage() {
