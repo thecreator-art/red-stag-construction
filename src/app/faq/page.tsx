@@ -4,7 +4,10 @@ import { FAQAccordion } from "@/components/ui/FAQAccordion";
 
 export const metadata = {
   title: "Frequently Asked Questions | Red Stag Construction",
-  description: "Answers to common questions about Los Angeles construction, permits, costs, and hiring a general contractor."
+  description: "Answers to common questions about Los Angeles construction, permits, costs, and hiring a general contractor.",
+  alternates: {
+    canonical: 'https://redstagcc.com/faq',
+  },
 };
 
 export default function FAQ() {

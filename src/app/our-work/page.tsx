@@ -8,6 +8,9 @@ export const metadata = {
   title: "Gallery | Red Stag Construction Los Angeles",
   description:
     "Browse recent Red Stag Construction work across Los Angeles, from detached ADUs to full interior renovations and signature residential builds.",
+  alternates: {
+    canonical: 'https://redstagcc.com/our-work',
+  },
 };
 
 const instagramTiles = projectsData.flatMap((project) =>

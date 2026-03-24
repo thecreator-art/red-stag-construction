@@ -3,7 +3,10 @@ import { TrustBadge } from "@/components/ui/TrustBadge";
 
 export const metadata = {
   title: "Client Reviews & Testimonials | Red Stag Construction",
-  description: "Read reviews from our Los Angeles clients on Google, Yelp, Houzz, and Facebook."
+  description: "Read reviews from our Los Angeles clients on Google, Yelp, Houzz, and Facebook.",
+  alternates: {
+    canonical: 'https://redstagcc.com/reviews',
+  },
 };
 
 export default function Reviews() {
