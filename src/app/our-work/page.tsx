@@ -121,6 +121,7 @@ export default function OurWorkPage() {
                   fill
                   sizes={index === 0 ? "(max-width: 640px) 50vw, 33vw" : "(max-width: 640px) 50vw, 16vw"}
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  priority={index === 0}
                 />
                 <div className="pointer-events-none absolute inset-0 bg-[#152d45]/10 transition-colors duration-300 group-hover:bg-[#152d45]/25" />
               </a>

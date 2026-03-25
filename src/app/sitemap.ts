@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     createEntry('/about', 0.5, 'monthly'),
     createEntry('/contact', 0.5, 'monthly'),
     createEntry('/our-work', 0.5, 'monthly'),
+    createEntry('/cost-guides', 0.6, 'monthly'),
     createEntry('/areas-we-serve', 0.5, 'monthly'),
     createEntry('/faq', 0.5, 'monthly'),
     createEntry('/our-process', 0.5, 'monthly'),
