@@ -100,6 +100,7 @@ export const Footer = () => {
           <div className="flex space-x-6 mt-4 md:mt-0">
             <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+            <Link href="/sitemap.xml" className="hover:text-white transition-colors">Sitemap</Link>
           </div>
         </div>
       </div>
