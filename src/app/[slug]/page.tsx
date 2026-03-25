@@ -2166,6 +2166,11 @@ export default async function DynamicSlugPage({ params }: PageProps) {
       ].join(' ')
     );
     const readTimeMinutes = Math.max(1, Math.ceil(articleWordCount / 200));
+    const blogCrumbs = [
+      { label: 'Home', href: '/' },
+      { label: 'Blog', href: '/blog' },
+      { label: blog.title, href: `/${blog.slug}` },
+    ];
     const articleSchema = {
       '@context': 'https://schema.org',
       '@type': 'Article',
@@ -2196,6 +2201,11 @@ export default async function DynamicSlugPage({ params }: PageProps) {
             dangerouslySetInnerHTML={{ __html: JSON.stringify(blogFaqSchema) }}
           />
         ) : null}
+        <section className="border-b border-gray-200 bg-warm-white py-4">
+          <div className="container mx-auto max-w-6xl px-4">
+            <Breadcrumbs crumbs={blogCrumbs} />
+          </div>
+        </section>
         <div className="bg-warm-white">
           <section className="border-b border-gray-200 bg-white py-16 md:py-20">
             <div className="container mx-auto max-w-6xl px-4">

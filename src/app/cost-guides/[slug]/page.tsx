@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { ParallaxHero } from "@/components/ui/ParallaxHero";
 import Link from 'next/link';
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 
 const costGuides = [
   { 
@@ -129,6 +130,17 @@ export default async function CostGuidePage({ params }: PageProps) {
 
   return (
     <>
+      <section className="border-b border-gray-200 bg-warm-white py-4">
+        <div className="container mx-auto px-4">
+          <Breadcrumbs
+            crumbs={[
+              { label: 'Home', href: '/' },
+              { label: 'Cost Guides', href: '/cost-guides' },
+              { label: guide.title, href: `/cost-guides/${guide.slug}` },
+            ]}
+          />
+        </div>
+      </section>
       <ParallaxHero 
         imageSrc={guide.heroImage} 
         imageAlt={guide.title}

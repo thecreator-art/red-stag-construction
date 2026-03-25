@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import projectsData from "@/data/projects.json";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 
 type ProjectEntry = (typeof projectsData)[number];
 
@@ -69,6 +70,17 @@ export default async function ProjectPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(creativeWorkSchema) }}
       />
+      <section className="border-b border-gray-200 bg-warm-white py-4">
+        <div className="container mx-auto px-4">
+          <Breadcrumbs
+            crumbs={[
+              { label: 'Home', href: '/' },
+              { label: 'Our Work', href: '/our-work' },
+              { label: project.title, href: `/projects/${project.slug}` },
+            ]}
+          />
+        </div>
+      </section>
 
       <section className="border-b border-white/10 bg-navy-deep pb-20 pt-24 text-white md:pb-24 md:pt-32">
         <div className="container mx-auto max-w-6xl px-4 text-center">
