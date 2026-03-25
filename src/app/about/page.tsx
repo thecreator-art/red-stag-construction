@@ -15,7 +15,7 @@ export default function About() {
   return (
     <>
       <ParallaxHero 
-        imageSrc="/images/team/red-stag-construction-team-job-site-01.jpg" 
+        imageSrc="/images/hero/hero-main.jpg" 
         imageAlt="Red Stag Construction Company Team Los Angeles"
         h1Text="About Red Stag Construction — Licensed General Contractor in Los Angeles"
         h2Text="The team behind Los Angeles most demanding construction projects."
@@ -26,50 +26,97 @@ export default function About() {
       
       <TrustBadge />
 
-      <section className="py-24 bg-warm-white">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
+      <section className="bg-warm-white py-24">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl md:text-5xl font-serif font-bold text-text-dark mb-8">The Team Behind Your Project</h2>
           <p className="text-lg text-text-body mb-16 leading-relaxed">
-            Every project leaves Red Stag with the same attention to detail we would demand in our own home. Our leadership team brings decades of combined experience across the construction trade, engineering, and project development.
+            Red Stag was founded in 2011 around a simple standard: the builder who takes your call should still be accountable when the plans are stamped, the permits are issued, and the finish work is being checked at the very end. Our leadership team brings that accountability to every custom home, ADU, addition, and full-scale remodel we take on in Los Angeles.
           </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
-            <div className="bg-white border border-gray-200 overflow-hidden shadow-sm">
-              <div className="relative h-80 w-full">
-                <Image src="/images/team/israel.jpg" alt="Israel Aquino — Founder and General Contractor" fill sizes="33vw" priority className="object-cover object-top filter grayscale" />
+          <p className="mx-auto mb-16 max-w-3xl text-base leading-8 text-text-body md:text-lg">
+            Israel Aquino leads the company as founder and CEO, Anthony Torsarkissian keeps operations and business development moving, and Zack Ward drives the early-stage conversations that turn rough goals into scoped projects. Together they cover the full timeline from first meeting to final closeout.
+          </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-10 text-left md:grid-cols-3">
+            <div className="group overflow-hidden border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div className="relative h-72 w-full md:h-80">
+                <Image src="/images/team/israel.jpg" alt="Israel Aquino — Founder and General Contractor" fill sizes="(max-width: 768px) 100vw, 33vw" priority className="object-cover object-top filter grayscale transition-all duration-500 group-hover:grayscale-0" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-text-dark mb-1">Israel Aquino</h3>
                 <p className="text-sm font-bold text-accent-red uppercase tracking-wide mb-4">Founder, CEO & Prime Contractor</p>
                 <p className="text-text-body text-sm leading-relaxed">
-                  Israel grew up in the construction trade and brought that foundation to Los Angeles, where he became a licensed California contractor and founded Red Stag in 2011. His standard has never changed: every project leaves Red Stag with the same attention to detail he would demand in his own home.
+                  Israel founded Red Stag in 2011 and has spent the last 15 years building a reputation around direct accountability. He is the prime contractor clients trust when a project has real complexity, whether that means coordinating architects, solving structural issues early, or managing a high-end build with no room for sloppy execution.
                 </p>
+                <div className="mt-6 space-y-4 border-t border-gray-100 pt-5 text-sm leading-6 text-text-body">
+                  <div>
+                    <p className="font-bold uppercase tracking-[0.16em] text-accent-red">2011</p>
+                    <p>Licensed in California and launched Red Stag Construction as a design-build general contractor serving Los Angeles.</p>
+                  </div>
+                  <div>
+                    <p className="font-bold uppercase tracking-[0.16em] text-accent-red">2011-Present</p>
+                    <p>Has led projects of every size, from selective remodel scopes to full-property construction work with existing architect relationships already in place.</p>
+                  </div>
+                  <div>
+                    <p className="font-bold uppercase tracking-[0.16em] text-accent-red">Today</p>
+                    <p>Still sets the standard for how Red Stag communicates, scopes, and closes out jobs. <a href="mailto:israel@redstagcc.co" className="font-semibold text-accent-red underline decoration-accent-red underline-offset-4">israel@redstagcc.co</a></p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="bg-white border border-gray-200 overflow-hidden shadow-sm">
-              <div className="relative h-80 w-full">
-                <Image src="/images/team/anthony.jpg" alt="Anthony Torsarkissian — COO" fill sizes="33vw" priority className="object-cover object-top filter grayscale" />
+            <div className="group overflow-hidden border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div className="relative h-72 w-full md:h-80">
+                <Image src="/images/team/anthony.jpg" alt="Anthony Torsarkissian — COO" fill sizes="(max-width: 768px) 100vw, 33vw" priority className="object-cover object-top filter grayscale transition-all duration-500 group-hover:grayscale-0" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-text-dark mb-1">Anthony Torsarkissian</h3>
                 <p className="text-sm font-bold text-accent-red uppercase tracking-wide mb-4">COO & Prime Contractor</p>
                 <p className="text-text-body text-sm leading-relaxed">
-                  A second-generation contractor, Anthony brings operational depth and technical command to every Red Stag project. His background spans residential and commercial builds — giving him the systems thinking that keeps complex projects on schedule and on budget.
+                  Anthony joined Red Stag in 2022 and brought with him the instincts of someone who was mentored early inside a family-run construction business. He now runs the operational and business-development side of the company, making sure the back end of the job is as disciplined as what the client sees in the field.
                 </p>
+                <div className="mt-6 space-y-4 border-t border-gray-100 pt-5 text-sm leading-6 text-text-body">
+                  <div>
+                    <p className="font-bold uppercase tracking-[0.16em] text-accent-red">Early Foundation</p>
+                    <p>Learned construction management in a family business environment where schedules, crews, and budgets had to be controlled from day one.</p>
+                  </div>
+                  <div>
+                    <p className="font-bold uppercase tracking-[0.16em] text-accent-red">2022</p>
+                    <p>Joined Red Stag as COO and prime contractor, expanding the company&apos;s operational depth and business development capacity.</p>
+                  </div>
+                  <div>
+                    <p className="font-bold uppercase tracking-[0.16em] text-accent-red">Current Role</p>
+                    <p>Oversees systems, growth, and execution standards so projects keep moving without losing control of schedule or communication.</p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="bg-white border border-gray-200 overflow-hidden shadow-sm">
-              <div className="relative h-80 w-full">
-                <Image src="/images/team/zack.jpg" alt="Zack Ward — Head of Project Development" fill sizes="33vw" priority className="object-cover object-top filter grayscale" />
+            <div className="group overflow-hidden border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div className="relative h-72 w-full md:h-80">
+                <Image src="/images/team/zack.jpg" alt="Zack Ward — Head of Project Development" fill sizes="(max-width: 768px) 100vw, 33vw" priority className="object-cover object-top filter grayscale transition-all duration-500 group-hover:grayscale-0" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-text-dark mb-1">Zack Ward</h3>
                 <p className="text-sm font-bold text-accent-red uppercase tracking-wide mb-4">Head of Project Development</p>
                 <p className="text-text-body text-sm leading-relaxed">
-                  Zack brings a rare combination of creative and operational leadership to Red Stag. With a background spanning the construction trade and the entertainment industry — including VP of a Los Angeles film studio — he leads client engagement and project development with the same precision used in high-stakes production.
+                  Zack leads client engagement and project development, helping homeowners, investors, and referral partners turn first conversations into clearly defined next steps. He is also the point person for much of Red Stag&apos;s outreach to real estate agents and strategic partners.
                 </p>
+                <div className="mt-6 space-y-4 border-t border-gray-100 pt-5 text-sm leading-6 text-text-body">
+                  <div>
+                    <p className="font-bold uppercase tracking-[0.16em] text-accent-red">First Contact</p>
+                    <p>Guides early discovery calls, initial scope conversations, and project fit so clients know quickly what path makes sense.</p>
+                  </div>
+                  <div>
+                    <p className="font-bold uppercase tracking-[0.16em] text-accent-red">Project Development</p>
+                    <p>Works with the team to shape the early brief, align expectations, and keep communication clear before the project moves into production.</p>
+                  </div>
+                  <div>
+                    <p className="font-bold uppercase tracking-[0.16em] text-accent-red">Partner Outreach</p>
+                    <p>Supports referral relationships, including real estate agent outreach, so Red Stag stays connected to high-value opportunities across LA.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -117,7 +117,7 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
                   {reviews.map((review) => (
                     <article
                       key={`${groupIndex}-${review.id}`}
-                      className="group flex h-[320px] w-[320px] shrink-0 cursor-pointer flex-col justify-between border-t-4 border-accent-red bg-white p-8 shadow-[0_16px_40px_rgba(21,45,69,0.12)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(21,45,69,0.18)] md:w-[360px]"
+                      className="group flex h-[320px] w-[320px] shrink-0 cursor-pointer flex-col justify-between border-t-4 border-accent-red bg-white p-8 shadow-[0_16px_40px_rgba(15,43,68,0.12)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(15,43,68,0.18)] md:w-[360px]"
                     >
                       <div>
                         <div className="mb-6 flex items-start justify-between">

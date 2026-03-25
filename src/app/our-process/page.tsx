@@ -22,7 +22,7 @@ export default function OurProcess() {
   return (
     <>
       <ParallaxHero 
-        imageSrc="/images/hero-process.jpg" 
+        imageSrc="/images/projects/canyon-after.jpg" 
         imageAlt="Our Construction Process"
         h1Text="The Design-Build Process"
         h2Text="How we execute complex LA construction projects with total accountability."

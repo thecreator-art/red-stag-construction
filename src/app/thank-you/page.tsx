@@ -17,13 +17,13 @@ export default function ThankYou() {
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
         <div className="h-64 bg-navy-deep border border-gray-800 rounded flex items-center justify-center overflow-hidden relative">
-          <img src="/images/projects/kitchen-remodel-beverly-hills-after-01.jpg" alt="Kitchen Remodel" className="object-cover w-full h-full opacity-60" />
+          <img src="/images/gallery/woodrow-willson-drive/kitchen.jpg" alt="Kitchen remodel by Red Stag Construction" className="object-cover w-full h-full opacity-60" />
         </div>
         <div className="h-64 bg-navy-deep border border-gray-800 rounded flex items-center justify-center overflow-hidden relative">
-          <img src="/images/projects/bathroom-remodel-encino-after-01.jpg" alt="Bathroom Remodel" className="object-cover w-full h-full opacity-60" />
+          <img src="/images/gallery/franklin-ave/bathroom.jpg" alt="Bathroom remodel by Red Stag Construction" className="object-cover w-full h-full opacity-60" />
         </div>
         <div className="h-64 bg-navy-deep border border-gray-800 rounded flex items-center justify-center overflow-hidden relative">
-          <img src="/images/projects/adu-construction-studio-city-after-01.jpg" alt="ADU Construction" className="object-cover w-full h-full opacity-60" />
+          <img src="/images/gallery/toluca-adu/20211112-123615.jpg" alt="ADU construction by Red Stag Construction" className="object-cover w-full h-full opacity-60" />
         </div>
       </div>
       

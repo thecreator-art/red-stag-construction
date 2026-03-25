@@ -1,6 +1,6 @@
 export const SplitBreak = () => {
   return (
-    <section className="relative z-10 flex h-[160px] w-full items-center overflow-hidden bg-[#152D45] px-6 text-center shadow-2xl lg:h-[240px]">
+    <section className="relative z-10 flex h-[160px] w-full items-center overflow-hidden bg-[#0f2b44] px-6 text-center shadow-2xl lg:h-[240px]">
       <video
         className="absolute inset-0 h-full w-full object-cover"
         autoPlay
@@ -10,7 +10,7 @@ export const SplitBreak = () => {
       >
         <source src="/videos/blueprint-drawing-animation.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-[#152D45]/78" />
+      <div className="absolute inset-0 bg-[#0f2b44]/78" />
       <div className="relative mx-auto flex max-w-[22rem] flex-col items-center justify-center lg:max-w-5xl">
         <h2 className="mb-4 text-[2.4rem] font-serif font-bold leading-[0.95] text-white drop-shadow-lg sm:text-5xl lg:mb-8 lg:text-5xl">
           Designed here. Built right. Delivered on time.

@@ -13,7 +13,7 @@ export default function Licenses() {
   return (
     <>
       <ParallaxHero 
-        imageSrc="/images/hero-license.jpg" 
+        imageSrc="/images/projects/hillside-after.jpg" 
         imageAlt="Licensed Contractor Los Angeles"
         h1Text="Licenses & Insurance"
         h2Text="Fully licensed, bonded, and insured in the state of California."

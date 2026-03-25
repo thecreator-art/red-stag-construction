@@ -22,7 +22,7 @@ export default function CostGuidesIndex() {
   return (
     <>
       <ParallaxHero 
-        imageSrc="/images/hero-cost-guides.jpg" 
+        imageSrc="/images/hero/hero-main.jpg" 
         imageAlt="Construction Cost Guides Los Angeles 2026"
         h1Text="Los Angeles Construction Cost Guides"
         h2Text="Transparent, 2026-updated pricing data for your next project."

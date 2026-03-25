@@ -32,7 +32,7 @@ export default function AreasWeServe() {
   return (
     <>
       <ParallaxHero 
-        imageSrc="/images/hero-areas.jpg" 
+        imageSrc="/images/locations/city-overview.jpg" 
         imageAlt="General Contractor Service Areas Greater Los Angeles"
         h1Text="We Build Across Greater Los Angeles"
         h2Text="From the beaches to the San Fernando Valley."

@@ -31,7 +31,7 @@ export default function Reviews() {
   return (
     <>
       <ParallaxHero 
-        imageSrc="/images/hero-reviews.jpg" 
+        imageSrc="/images/projects/trousdale-after.jpg" 
         imageAlt="Client Reviews"
         h1Text="Client Reviews"
         h2Text="Don't just take our word for it."

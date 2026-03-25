@@ -232,7 +232,7 @@ export default function FAQ() {
   return (
     <>
       <ParallaxHero 
-        imageSrc="/images/hero-faq.jpg" 
+        imageSrc="/images/projects/studio-after.jpg" 
         imageAlt="FAQ Red Stag Construction"
         h1Text="Frequently Asked Questions"
         h2Text="Everything you need to know about building in Los Angeles."
