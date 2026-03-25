@@ -4,7 +4,6 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Analytics } from "@/components/layout/Analytics";
-import { StickyMobileHeader } from "@/components/layout/StickyMobileHeader";
 import { StickyBottomBar } from "@/components/layout/StickyBottomBar";
 import { ExitIntentPopup } from "@/components/ui/ExitIntentPopup";
 
@@ -61,10 +60,9 @@ export default function RootLayout({
       lang="en"
       className={`h-full antialiased ${playfair.variable} ${inter.variable}`}
     >
-      <body className="font-sans text-text-body bg-warm-white min-h-full flex flex-col items-stretch justify-start pb-14 pt-16 md:pb-0 md:pt-0">
+      <body className="font-sans text-text-body bg-warm-white min-h-full flex flex-col items-stretch justify-start pb-14 md:pb-0">
         <Analytics />
         <ExitIntentPopup />
-        <StickyMobileHeader />
         <StickyBottomBar />
         <Navbar />
         <main className="flex-grow">{children}</main>
