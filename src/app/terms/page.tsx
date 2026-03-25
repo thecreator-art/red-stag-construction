@@ -1,7 +1,7 @@
 export const metadata = {
-  title: 'Terms of Service | Red Stag Construction',
-  description: 'Review the Red Stag Construction terms of service for estimates, liability limits, licensing, and project documentation.',
-  robots: 'noindex',
+  title: 'Terms of Service | Red Stag Construction Los Angeles',
+  description:
+    'Review the Red Stag Construction terms of service covering estimates, liability limits, licensing, contracts, and project documentation in Los Angeles.',
 };
 export default function Terms() {
   return (

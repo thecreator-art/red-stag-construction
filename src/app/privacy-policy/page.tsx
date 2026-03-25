@@ -1,7 +1,7 @@
 export const metadata = {
-  title: 'Privacy Policy | Red Stag Construction',
-  description: 'Read the Red Stag Construction privacy policy covering contact forms, SMS communication, and customer data handling.',
-  robots: 'noindex',
+  title: 'Privacy Policy | Red Stag Construction Los Angeles',
+  description:
+    'Read the Red Stag Construction privacy policy covering contact forms, SMS communication, customer data handling, and website privacy practices in Los Angeles.',
 };
 export default function PrivacyPolicy() {
   return (
