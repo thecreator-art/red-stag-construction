@@ -165,6 +165,7 @@ export default async function ProjectPage({ params }: PageProps) {
                     src={relatedProject.coverImage}
                     alt={relatedProject.title}
                     fill
+                    priority={relatedProject.slug === relatedProjects[0]?.slug}
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
