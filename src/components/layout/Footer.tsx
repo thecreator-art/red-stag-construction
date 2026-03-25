@@ -171,17 +171,19 @@ export const Footer = () => {
             href="https://www.vaultio.co"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center justify-center gap-3 text-center text-sm text-gray-400 transition-colors hover:text-white md:flex-row"
+            className="flex flex-col items-center justify-center gap-2 text-center text-sm text-gray-400 transition-colors hover:text-white md:flex-row md:gap-3"
           >
             <span>Web Design and Digital Marketing by</span>
-            <Image
-              src="/images/footer/vaultio-logo.png"
-              alt="Vaultio"
-              width={34}
-              height={34}
-              className="h-8 w-8 object-contain"
-            />
-            <span className="font-semibold text-white">Vaultio</span>
+            <span className="flex items-center gap-1.5">
+              <Image
+                src="/images/footer/vaultio-logo.png"
+                alt="Vaultio"
+                width={48}
+                height={48}
+                className="h-11 w-11 object-contain"
+              />
+              <span className="font-semibold text-white">Vaultio</span>
+            </span>
           </a>
         </div>
       </div>
