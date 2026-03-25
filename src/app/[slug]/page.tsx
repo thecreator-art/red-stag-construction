@@ -687,6 +687,60 @@ const countWords = (value: string) => {
   return normalized ? normalized.split(' ').length : 0;
 };
 
+const locationSignals = [
+  'los angeles',
+  'beverly hills',
+  'bel air',
+  'studio city',
+  'sherman oaks',
+  'encino',
+  'malibu',
+  'pacific palisades',
+  'calabasas',
+  'santa monica',
+  'west hollywood',
+  'manhattan beach',
+  'silver lake',
+  'burbank',
+  'tarzana',
+  'woodland hills',
+  'granada hills',
+  'northridge',
+  'san fernando',
+  'brentwood',
+];
+
+const hasLocationSignal = (value: string) =>
+  locationSignals.some((signal) => value.toLowerCase().includes(signal));
+
+const buildBlogMetaTitle = (title: string) => {
+  const suffix = ' in Los Angeles';
+
+  if (hasLocationSignal(title)) {
+    return title.length <= 60 ? title : `${title.slice(0, 57).trimEnd()}...`;
+  }
+
+  const maxBaseLength = 60 - suffix.length;
+  const base = title.length > maxBaseLength ? title.slice(0, maxBaseLength).trimEnd() : title;
+  return `${base}${suffix}`;
+};
+
+const buildBlogMetaDescription = (keywordOrTitle: string) => {
+  const fallbackSentence =
+    'Red Stag Construction serves Greater Los Angeles including Beverly Hills Bel Air Studio City and Sherman Oaks.';
+  const baseDescription = `Read more about ${keywordOrTitle} and expert construction insights.`;
+
+  if (hasLocationSignal(baseDescription)) {
+    return baseDescription.length <= 160 ? baseDescription : `${baseDescription.slice(0, 157).trimEnd()}...`;
+  }
+
+  const maxBaseLength = 160 - 1 - fallbackSentence.length;
+  const trimmedBase =
+    baseDescription.length > maxBaseLength ? baseDescription.slice(0, maxBaseLength).trimEnd() : baseDescription;
+
+  return `${trimmedBase} ${fallbackSentence}`;
+};
+
 const normalizeReviewServiceType = (value?: string | null) => {
   const normalized = (value || '').toLowerCase().trim();
 
@@ -2092,8 +2146,8 @@ export async function generateMetadata({ params }: PageProps) {
   };
   const blog = blogsData.find(b => b.slug === slug);
   if (blog) return {
-    title: blog.title || 'Construction Blog',
-    description: `Read more about ${blog.keyword || 'building'} and expert construction insights.`,
+    title: buildBlogMetaTitle(blog.title || 'Construction Blog'),
+    description: buildBlogMetaDescription(blog.keyword || blog.title || 'building'),
     alternates: { canonical: `${BASE_URL}/${slug}` }
   };
   
