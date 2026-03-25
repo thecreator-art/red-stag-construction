@@ -152,12 +152,30 @@ export default function HomePage() {
       value: 10,
     },
   };
+  const heroImageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ImageObject',
+    url: 'https://redstagcc.com/images/projects/trousdale-after.jpg',
+    width: 1920,
+    height: 1080,
+    name: 'Beverly Hills Estate Renovation by Red Stag Construction Los Angeles',
+    description:
+      'Premium general contractor project in Beverly Hills California featuring custom exterior renovation pool deck and hardscaping by Red Stag Construction.',
+    author: {
+      '@type': 'Organization',
+      name: 'Red Stag Construction',
+    },
+  };
 
   return (
     <div className="w-full relative">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(heroImageSchema) }}
       />
       {/* SECTION 1 */}
       <ParallaxHero 

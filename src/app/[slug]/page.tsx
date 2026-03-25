@@ -2542,6 +2542,19 @@ export default async function DynamicSlugPage({ params }: PageProps) {
         },
       },
     };
+    const serviceImageSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'ImageObject',
+      url: `${BASE_URL}${config.heroImage}`,
+      width: 1920,
+      height: 1080,
+      name: `${serviceH1} by Red Stag Construction`,
+      description: `${config.serviceName} project image for Los Angeles homeowners featuring design-build planning, permit-ready scope, and field execution by Red Stag Construction.`,
+      author: {
+        '@type': 'Organization',
+        name: 'Red Stag Construction',
+      },
+    };
     const serviceCrumbs = [
       { label: 'Home', href: '/' },
       { label: 'Services', href: '/' },
@@ -2553,6 +2566,10 @@ export default async function DynamicSlugPage({ params }: PageProps) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceImageSchema) }}
         />
         <section className="border-b border-gray-200 bg-warm-white py-4">
           <div className="container mx-auto px-4">
