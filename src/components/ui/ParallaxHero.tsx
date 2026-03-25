@@ -153,7 +153,7 @@ export const ParallaxHero = ({
           src={imageSrc}
           alt={imageAlt}
           fill
-          priority
+          priority={true}
           sizes="100vw"
           className="object-cover object-center"
         />
