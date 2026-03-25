@@ -2125,7 +2125,22 @@ export default async function DynamicSlugPage({ params }: PageProps) {
     const dateModified = fs.existsSync(filePath) ? fs.statSync(filePath).mtime.toISOString().split('T')[0] : datePublished;
     const blogServiceLinks = getBlogServiceLinks(`${blog.title} ${blog.keyword} ${fileContent}`);
     const [primaryService, secondaryService] = blogServiceLinks;
-    const articleSections = parseBlogSections(blog, fileContent, blogServiceLinks).sections;
+    const parsedBlogSections = parseBlogSections(blog, fileContent, blogServiceLinks);
+    const articleSections = parsedBlogSections.sections;
+    const blogFaqSchema = parsedBlogSections.faqItems.length
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: parsedBlogSections.faqItems.map((item) => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: item.answer,
+            },
+          })),
+        }
+      : null;
     const tableOfContents = articleSections.map((section) => ({ id: section.id, title: section.title }));
     const relatedPosts = blogsData
       .filter((entry) => entry.slug !== blog.slug)
@@ -2175,6 +2190,12 @@ export default async function DynamicSlugPage({ params }: PageProps) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
         />
+        {blogFaqSchema ? (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(blogFaqSchema) }}
+          />
+        ) : null}
         <div className="bg-warm-white">
           <section className="border-b border-gray-200 bg-white py-16 md:py-20">
             <div className="container mx-auto max-w-6xl px-4">
