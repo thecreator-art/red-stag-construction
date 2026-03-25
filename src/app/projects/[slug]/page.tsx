@@ -136,7 +136,7 @@ export default async function ProjectPage({ params }: PageProps) {
                     src={image}
                     alt={`${project.title} photo ${index + 1}`}
                     fill
-                    priority={index < 2}
+                    priority={index === 0}
                     sizes={index === 0 ? "100vw" : "(max-width: 768px) 100vw, 50vw"}
                     className="object-cover"
                   />
