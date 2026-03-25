@@ -3,8 +3,9 @@ import { TrustBadge } from "@/components/ui/TrustBadge";
 import Image from "next/image";
 
 export const metadata = {
-  title: "About Red Stag Construction | Licensed General Contractor in Los Angeles",
-  description: "Meet Red Stag Construction, a licensed general contractor in Los Angeles. Learn about the leadership team behind our custom homes, ADUs, remodels, and additions.",
+  title: "About Red Stag | Los Angeles General Contractor",
+  description:
+    "Meet Red Stag Construction, a Los Angeles general contractor building custom homes, ADUs, remodels, and additions across Greater LA.",
   alternates: {
     canonical: 'https://redstagcc.com/about',
   },
