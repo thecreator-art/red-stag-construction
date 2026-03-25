@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { ContactForm } from '@/components/forms/ContactForm';
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { ParallaxHero } from '@/components/ui/ParallaxHero';
 
 export const metadata: Metadata = {
@@ -29,6 +30,17 @@ const relationshipParagraphs = [
 export default function ForRealEstateAgentsPage() {
   return (
     <>
+      <section className="border-b border-gray-200 bg-warm-white py-4">
+        <div className="container mx-auto px-4">
+          <Breadcrumbs
+            crumbs={[
+              { label: 'Home', href: '/' },
+              { label: 'Partners', href: '/for-real-estate-agents' },
+              { label: 'For Real Estate Agents', href: '/for-real-estate-agents' },
+            ]}
+          />
+        </div>
+      </section>
       <ParallaxHero
         imageSrc="/images/hero/hero-main.jpg"
         imageAlt="Real estate agent walking a pre-listing renovation with contractor"

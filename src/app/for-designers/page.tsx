@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { ContactForm } from '@/components/forms/ContactForm';
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { ParallaxHero } from '@/components/ui/ParallaxHero';
 
 export const metadata: Metadata = {
@@ -29,6 +30,17 @@ const processParagraphs = [
 export default function ForDesignersPage() {
   return (
     <>
+      <section className="border-b border-gray-200 bg-warm-white py-4">
+        <div className="container mx-auto px-4">
+          <Breadcrumbs
+            crumbs={[
+              { label: 'Home', href: '/' },
+              { label: 'Partners', href: '/for-designers' },
+              { label: 'For Interior Designers', href: '/for-designers' },
+            ]}
+          />
+        </div>
+      </section>
       <ParallaxHero
         imageSrc="/images/hero/hero-main.jpg"
         imageAlt="Designer reviewing finish samples on a high-end remodel"
