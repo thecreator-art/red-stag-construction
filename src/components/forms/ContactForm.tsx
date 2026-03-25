@@ -97,7 +97,7 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
         throw new Error('Internal Server Handshake Configuration Dropped');
       }
     } catch {
-      setErrorMsg('There was an error submitting your request to our system. Please try calling us directly at (626) 652-2303.');
+      setErrorMsg('There was an error submitting your request to our system. Please try calling us directly at');
       setIsSubmitting(false);
     }
   };
@@ -108,7 +108,11 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
       {/* Inline Persistent Error Delivery Mechanics */}
       {errorMsg && (
         <div className="p-4 mb-6 bg-red-900/40 border-l-4 border-accent-red text-white text-sm">
-          {errorMsg}
+          {errorMsg}{' '}
+          <a href="tel:6266522303" className="font-semibold underline hover:text-accent-red">
+            (626) 652-2303
+          </a>
+          .
         </div>
       )}
       

@@ -9,6 +9,7 @@ import matrixData from '@/data/matrix.json';
 import reviewsData from '@/data/reviews.json';
 import servicesData from '@/data/services.json';
 import { ContactForm } from '@/components/forms/ContactForm';
+import { BlogSidebarLeadForm } from '@/components/forms/BlogSidebarLeadForm';
 import { TrustBar } from '@/components/sections/TrustBar';
 import { ParallaxHero } from '@/components/ui/ParallaxHero';
 import { BeforeAfterSlider } from '@/components/ui/BeforeAfterSlider';
@@ -2452,43 +2453,7 @@ export default async function DynamicSlugPage({ params }: PageProps) {
 
                   <div className="border border-gray-200 bg-white p-6">
                     <h2 className="text-xl font-serif font-bold text-text-dark">Talk to Red Stag</h2>
-                    <form
-                      action={process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL || '/contact'}
-                      method="POST"
-                      className="mt-4 space-y-4"
-                    >
-                      <input type="hidden" name="source" value={blog.slug} />
-                      <div>
-                        <label htmlFor="blog-sidebar-name" className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-text-dark">
-                          Name
-                        </label>
-                        <input
-                          id="blog-sidebar-name"
-                          name="name"
-                          type="text"
-                          required
-                          className="w-full border border-gray-300 px-4 py-3 text-sm text-text-dark focus:border-accent-red focus:outline-none"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="blog-sidebar-phone" className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-text-dark">
-                          Phone
-                        </label>
-                        <input
-                          id="blog-sidebar-phone"
-                          name="phone"
-                          type="tel"
-                          required
-                          className="w-full border border-gray-300 px-4 py-3 text-sm text-text-dark focus:border-accent-red focus:outline-none"
-                        />
-                      </div>
-                      <button
-                        type="submit"
-                        className="w-full bg-accent-red px-4 py-3 text-sm font-bold uppercase tracking-[0.16em] text-white transition-opacity hover:opacity-90"
-                      >
-                        Send Message
-                      </button>
-                    </form>
+                    <BlogSidebarLeadForm source={blog.slug} />
                   </div>
                 </div>
               </aside>
@@ -2969,6 +2934,9 @@ export default async function DynamicSlugPage({ params }: PageProps) {
             <p className="mt-6 text-lg md:text-xl text-white/80">
               We handle planning, permits, scheduling, and field execution with one accountable team.
             </p>
+            <p className="mt-4 text-base font-medium uppercase tracking-[0.14em] text-white/70">
+              Our schedule fills 6-8 weeks out. The sooner we talk the sooner we build.
+            </p>
             <a href={PHONE_HREF} className="mt-8 block text-4xl font-bold text-white transition-opacity hover:opacity-90">
               {PHONE_NUMBER}
             </a>
@@ -3227,6 +3195,9 @@ export default async function DynamicSlugPage({ params }: PageProps) {
             </h2>
             <p className="mt-6 text-lg md:text-xl text-white/80">
               We handle design-build planning, permits, scheduling, and field execution under one accountable team.
+            </p>
+            <p className="mt-4 text-base font-medium uppercase tracking-[0.14em] text-white/70">
+              Our schedule fills 6-8 weeks out. The sooner we talk the sooner we build.
             </p>
             <a href={PHONE_HREF} className="mt-8 block text-4xl font-bold text-white transition-opacity hover:opacity-90">
               {PHONE_NUMBER}

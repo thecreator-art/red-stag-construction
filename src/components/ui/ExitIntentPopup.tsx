@@ -117,7 +117,7 @@ export const ExitIntentPopup = () => {
         throw new Error('Transmission Failed');
       }
     } catch {
-      setErrorMsg('Error contacting servers. Please call us directly at (626) 652-2303.');
+      setErrorMsg('Error contacting servers. Please call us directly at');
       setIsSubmitting(false);
     }
   };
@@ -148,7 +148,11 @@ export const ExitIntentPopup = () => {
         {/* Persistent Error State Dropdown */}
         {errorMsg && (
           <div className="mb-6 p-4 bg-red-900/40 border-l-4 border-accent-red text-white text-sm text-center">
-            {errorMsg}
+            {errorMsg}{' '}
+            <a href="tel:6266522303" className="font-semibold underline hover:text-accent-red">
+              (626) 652-2303
+            </a>
+            .
           </div>
         )}
 

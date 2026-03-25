@@ -70,9 +70,9 @@ export default function Reviews() {
             <h2 className="text-3xl font-serif font-bold text-white mb-8">Leave Us a Review</h2>
             <div className="flex flex-wrap justify-center gap-6">
               <a href="https://google.com" target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-white flex items-center justify-center rounded-full shadow-md text-white border border-gray-200 font-bold text-xl hover:bg-gray-50 transition-colors">G</a>
-              <a href="https://yelp.com" target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-white flex items-center justify-center rounded-full shadow-md text-white border border-gray-200 font-bold text-xl hover:bg-gray-50 transition-colors">Y</a>
-              <a href="https://houzz.com" target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-white flex items-center justify-center rounded-full shadow-md text-white border border-gray-200 font-bold text-xl hover:bg-gray-50 transition-colors">H</a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-white flex items-center justify-center rounded-full shadow-md text-white border border-gray-200 font-bold text-xl hover:bg-gray-50 transition-colors">F</a>
+              <a href="https://www.yelp.com/biz/red-stag-construction-los-angeles" target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-white flex items-center justify-center rounded-full shadow-md text-white border border-gray-200 font-bold text-xl hover:bg-gray-50 transition-colors">Y</a>
+              <a href="https://www.houzz.com/professionals/red-stag-construction" target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-white flex items-center justify-center rounded-full shadow-md text-white border border-gray-200 font-bold text-xl hover:bg-gray-50 transition-colors">H</a>
+              <a href="https://www.facebook.com/Redstagconstructioncompany" target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-white flex items-center justify-center rounded-full shadow-md text-white border border-gray-200 font-bold text-xl hover:bg-gray-50 transition-colors">F</a>
             </div>
           </div>
         </div>

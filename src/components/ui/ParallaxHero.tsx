@@ -136,7 +136,7 @@ export const ParallaxHero = ({
 
       router.push('/thank-you');
     } catch {
-      setErrorMsg('There was an error submitting your request. Please call (626) 652-2303.');
+      setErrorMsg('There was an error submitting your request. Please call');
       setIsSubmitting(false);
     }
   };
@@ -256,7 +256,13 @@ export const ParallaxHero = ({
             </div>
           </div>
           {errorMsg ? (
-            <p className="mt-3 text-sm font-medium text-accent-red">{errorMsg}</p>
+            <p className="mt-3 text-sm font-medium text-accent-red">
+              {errorMsg}{' '}
+              <a href="tel:6266522303" className="underline hover:text-[#990000]">
+                (626) 652-2303
+              </a>
+              .
+            </p>
           ) : null}
         </form>
       </div>
