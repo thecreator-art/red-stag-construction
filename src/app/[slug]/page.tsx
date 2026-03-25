@@ -2453,6 +2453,10 @@ export default async function DynamicSlugPage({ params }: PageProps) {
     const serviceAreaLinks = getServiceAreaLinks(config.matrixService);
     const relatedServices = getRelatedServices(config.relatedServices);
     const matchedReview = getRelevantReview(undefined, config.serviceName);
+    const serviceH1 =
+      service.slug === 'hardscape-contractor-los-angeles'
+        ? 'Hardscape Contractor in Los Angeles, CA'
+        : service.h1 || `${config.serviceName} in Los Angeles, CA`;
     const serviceSchema = {
       '@context': 'https://schema.org',
       '@type': 'Service',
@@ -2503,8 +2507,8 @@ export default async function DynamicSlugPage({ params }: PageProps) {
         </section>
         <ParallaxHero 
           imageSrc={config.heroImage}
-          imageAlt={service.h1 || config.serviceName}
-          h1Text={service.h1 || `${config.serviceName} in Los Angeles, CA`}
+          imageAlt={serviceH1}
+          h1Text={serviceH1}
           h2Text={config.heroSubline}
           ctaText="Get a Free Estimate"
           ctaHref="/contact"

@@ -3,8 +3,8 @@ import { TrustBadge } from "@/components/ui/TrustBadge";
 import Image from "next/image";
 
 export const metadata = {
-  title: "About Red Stag Construction | Licensed LA General Contractor",
-  description: "Red Stag Construction team: Built on Craft. Driven by Accountability. Learn about our leadership: Israel Aquino, Anthony Torsarkissian, and Zack Ward.",
+  title: "About Red Stag Construction | Licensed General Contractor in Los Angeles",
+  description: "Meet Red Stag Construction, a licensed general contractor in Los Angeles. Learn about the leadership team behind our custom homes, ADUs, remodels, and additions.",
   alternates: {
     canonical: 'https://redstagcc.com/about',
   },
@@ -16,7 +16,7 @@ export default function About() {
       <ParallaxHero 
         imageSrc="/images/team/red-stag-construction-team-job-site-01.jpg" 
         imageAlt="Red Stag Construction Company Team Los Angeles"
-        h1Text="Built on Craft. Driven by Accountability."
+        h1Text="About Red Stag Construction — Licensed General Contractor in Los Angeles"
         h2Text="The team behind Los Angeles most demanding construction projects."
         ctaText="Get a Free Estimate"
         ctaHref="/contact"

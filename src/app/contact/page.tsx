@@ -15,7 +15,7 @@ export default function Contact() {
       <ParallaxHero 
         imageSrc="/images/hero-contact.jpg" 
         imageAlt="Contact Red Stag Construction"
-        h1Text="Let's Talk About Your Project"
+        h1Text="Contact Red Stag Construction — Free Estimates in Los Angeles CA"
         h2Text="We respond to all inquiries within 2 hours during business hours."
         ctaText="Get a Free Estimate"
         ctaHref="/contact"
