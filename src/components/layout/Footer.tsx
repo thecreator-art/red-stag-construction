@@ -55,10 +55,10 @@ export const Footer = () => {
             <Link href="/" className="block mb-6">
               <Image
                 src="/images/logo/logo-light.png"
-                alt="Red Stag Construction"
-                width={210}
-                height={48}
-                className="h-10 w-auto object-contain md:h-12"
+                alt="Red Stag Construction Corporation"
+                width={290}
+                height={128}
+                className="h-14 w-auto object-contain md:h-16"
               />
             </Link>
             <p className="text-gray-400 mb-6 font-semibold">

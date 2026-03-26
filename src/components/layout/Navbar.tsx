@@ -149,9 +149,9 @@ export const Navbar = () => {
           <Link href="/" className="flex items-center" onClick={closeMobileMenu}>
             <img
               src="/images/logo/logo-light.png"
-              alt="Red Stag Construction"
+              alt="Red Stag Construction Corporation"
               className={`w-auto object-contain transition-[height] duration-300 ${
-                isScrolled ? 'h-8 md:h-9' : 'h-10 md:h-12'
+                isScrolled ? 'h-10 md:h-10' : 'h-12 md:h-14'
               }`}
             />
           </Link>
