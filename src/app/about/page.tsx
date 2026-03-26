@@ -60,7 +60,7 @@ export default function About() {
                   </div>
                   <div>
                     <p className="font-bold uppercase tracking-[0.16em] text-accent-red">Today</p>
-                    <p>Still sets the standard for how Red Stag communicates, scopes, and closes out jobs. <a href="mailto:israel@redstagcc.co" className="font-semibold text-accent-red underline decoration-accent-red underline-offset-4">israel@redstagcc.co</a></p>
+                    <p>Still sets the standard for how Red Stag communicates, scopes, and closes out jobs. <a href="mailto:israel@redstagcc.com" className="font-semibold text-accent-red underline decoration-accent-red underline-offset-4">israel@redstagcc.com</a></p>
                   </div>
                 </div>
               </div>
