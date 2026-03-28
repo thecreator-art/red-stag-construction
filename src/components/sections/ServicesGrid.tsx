@@ -27,7 +27,6 @@ export const ServicesGrid = ({ services, className = '' }: ServicesGridProps) =>
             src={service.imageSrc}
             alt={service.title}
             fill
-            priority={idx === 0}
             sizes="(max-width: 768px) 50vw, 20vw"
             className="object-cover transition-all duration-300 group-hover:scale-105"
           />
@@ -66,7 +65,6 @@ export const ServicesGrid = ({ services, className = '' }: ServicesGridProps) =>
             src="/images/brand/deer.png"
             alt="Red Stag icon"
             fill
-            priority
             sizes="112px"
             className="object-contain transition-all duration-300 group-hover:scale-105"
           />

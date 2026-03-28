@@ -1,15 +1,19 @@
+import dynamic from 'next/dynamic';
 import { ParallaxHero } from '@/components/ui/ParallaxHero';
 import { TrustBar } from '@/components/sections/TrustBar';
-import { ServicesGrid } from '@/components/sections/ServicesGrid';
 import { SplitBreak } from '@/components/sections/SplitBreak';
 import { WhyRedStag } from '@/components/sections/WhyRedStag';
-import { FeaturedProjects } from '@/components/sections/FeaturedProjects';
 import { SplitBreakCTA } from '@/components/sections/SplitBreakCTA';
-import { ProcessSection } from '@/components/sections/ProcessSection';
 import { TeamSection } from '@/components/sections/TeamSection';
-import { ReviewCarousel, Review } from '@/components/sections/ReviewCarousel';
-import { ServiceAreaMap } from '@/components/maps/ServiceAreaMap';
-import { FAQAccordion } from '@/components/ui/FAQAccordion';
+import type { Review } from '@/components/sections/ReviewCarousel';
+
+// Dynamically import heavy Client Components to defer JavaScript loading
+const ServicesGrid = dynamic(() => import('@/components/sections/ServicesGrid').then(mod => mod.ServicesGrid));
+const FeaturedProjects = dynamic(() => import('@/components/sections/FeaturedProjects').then(mod => mod.FeaturedProjects));
+const ProcessSection = dynamic(() => import('@/components/sections/ProcessSection').then(mod => mod.ProcessSection));
+const ReviewCarousel = dynamic(() => import('@/components/sections/ReviewCarousel').then(mod => mod.ReviewCarousel));
+const ServiceAreaMap = dynamic(() => import('@/components/maps/ServiceAreaMap').then(mod => mod.ServiceAreaMap));
+const FAQAccordion = dynamic(() => import('@/components/ui/FAQAccordion').then(mod => mod.FAQAccordion));
 
 export const metadata = {
   title: 'General Contractor in Los Angeles, CA | Red Stag Construction',
