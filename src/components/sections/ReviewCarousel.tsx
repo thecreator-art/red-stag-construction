@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 export interface Review {
@@ -17,8 +17,52 @@ interface ReviewCarouselProps {
 
 export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const firstGroupRef = useRef<HTMLDivElement>(null);
   const dragState = useRef({ isDragging: false, startX: 0, startScrollLeft: 0 });
   const [isPaused, setIsPaused] = useState(false);
+
+  // Seamless infinite loop native scrolling logic
+  useEffect(() => {
+    let animationFrameId: number;
+    let lastTime = performance.now();
+    const speed = 0.06; // Pixels per millisecond
+    const scrollNode = scrollRef.current;
+    
+    // Jump the scroll position immediately on mount to be in the "middle" 
+    // so users can immediately swipe left (backwards) infinitely.
+    if (scrollNode && firstGroupRef.current) {
+      scrollNode.scrollLeft = firstGroupRef.current.offsetWidth + 32;
+    }
+
+    const animateScroll = (time: number) => {
+      const delta = Math.min(time - lastTime, 50); // Cap extreme delta spikes
+      lastTime = time;
+
+      if (scrollNode && firstGroupRef.current) {
+        // Gap is 32px (gap-8 = 2rem)
+        const loopWidth = firstGroupRef.current.offsetWidth + 32;
+
+        // Apply auto-scroll if neither paused nor actively dragged by user
+        if (!isPaused && !dragState.current.isDragging) {
+          scrollNode.scrollLeft += delta * speed;
+        }
+
+        // Loop forward constraint (if they swiped past the middle)
+        if (scrollNode.scrollLeft >= loopWidth * 2) {
+          scrollNode.scrollLeft -= loopWidth;
+        } 
+        // Loop backward constraint (if they swiped aggressively left)
+        else if (scrollNode.scrollLeft <= loopWidth * 0.5) {
+          scrollNode.scrollLeft += loopWidth;
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(animateScroll);
+    };
+
+    animationFrameId = requestAnimationFrame(animateScroll);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isPaused]);
 
   if (!reviews || reviews.length === 0) return null;
 
@@ -47,10 +91,7 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
     if (platform === 'Houzz') {
       return (
         <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-          <path
-            fill="#4DBC15"
-            d="M5 2h5v8.15l9 2.54V22h-5v-7h-4v7H5V2Z"
-          />
+          <path fill="#4DBC15" d="M5 2h5v8.15l9 2.54V22h-5v-7h-4v7H5V2Z" />
         </svg>
       );
     }
@@ -99,7 +140,7 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
 
         <div
           ref={scrollRef}
-          className="relative z-[1] overflow-x-auto overflow-y-hidden scrollbar-none cursor-grab touch-pan-x"
+          className="relative z-[1] flex overflow-x-auto overflow-y-hidden scrollbar-none cursor-grab touch-pan-x select-none"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={() => setIsPaused(true)}
@@ -109,56 +150,48 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
           onPointerUp={handlePointerEnd}
           onPointerCancel={handlePointerEnd}
         >
-          <div
-            className={`flex w-max gap-8 will-change-transform ${isPaused ? 'paused' : ''}`}
-          >
-            <div className="ticker-track flex gap-8">
-              {[0, 1].map((groupIndex) => (
-                <div key={groupIndex} className="ticker-group flex gap-8">
-                  {reviews.map((review) => (
-                    <article
-                      key={`${groupIndex}-${review.id}`}
-                      className="group flex h-[320px] w-[320px] shrink-0 cursor-pointer flex-col justify-between border-t-4 border-accent-red bg-white p-8 shadow-[0_16px_40px_rgba(15,43,68,0.12)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(15,43,68,0.18)] md:w-[360px]"
-                    >
-                      <div>
-                        <div className="mb-6 flex items-start justify-between">
-                          <div className="flex items-center space-x-1 text-yellow-400">
-                            {[...Array(review.rating)].map((_, idx) => (
-                              <svg key={idx} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
-                                <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd" />
-                              </svg>
-                            ))}
-                          </div>
-                          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-md">
-                            {getPlatformIcon(review.platform)}
-                          </div>
+          <div className="flex w-max gap-8 px-4">
+            {/* Render 4 identical groups to guarantee infinite visual bleed in both directions */}
+            {[0, 1, 2, 3].map((groupIndex) => (
+              <div 
+                key={groupIndex} 
+                ref={groupIndex === 0 ? firstGroupRef : null}
+                className="ticker-group flex gap-8"
+              >
+                {reviews.map((review) => (
+                  <article
+                    key={`${groupIndex}-${review.id}`}
+                    className="group flex h-[320px] w-[320px] shrink-0 flex-col justify-between border-t-4 border-accent-red bg-white p-8 shadow-[0_16px_40px_rgba(15,43,68,0.12)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_44px_rgba(15,43,68,0.18)] md:w-[360px]"
+                  >
+                    <div>
+                      <div className="mb-6 flex items-start justify-between">
+                        <div className="flex items-center space-x-1 text-yellow-400">
+                          {[...Array(review.rating)].map((_, idx) => (
+                            <svg key={idx} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+                              <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd" />
+                            </svg>
+                          ))}
                         </div>
-                        <p className="line-clamp-6 font-serif italic leading-relaxed text-navy-deep transition-colors duration-300 group-hover:text-[#1A1A1A]">
-                          &ldquo;{review.text}&rdquo;
-                        </p>
+                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-md">
+                          {getPlatformIcon(review.platform)}
+                        </div>
                       </div>
-                      <div className="text-xs font-extrabold uppercase tracking-widest text-[#1A1A1A] opacity-80">
-                        {review.name}
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              ))}
-            </div>
+                      <p className="line-clamp-6 font-serif italic leading-relaxed text-navy-deep transition-colors duration-300 group-hover:text-[#1A1A1A]">
+                        &ldquo;{review.text}&rdquo;
+                      </p>
+                    </div>
+                    <div className="text-xs font-extrabold uppercase tracking-widest text-[#1A1A1A] opacity-80">
+                      {review.name}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
       <style jsx>{`
-        .ticker-track {
-          animation: reviewTicker 36s linear infinite;
-        }
-
-        .paused .ticker-track,
-        .paused.ticker-track {
-          animation-play-state: paused;
-        }
-
         .scrollbar-none {
           -ms-overflow-style: none;
           scrollbar-width: none;
@@ -166,16 +199,6 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
 
         .scrollbar-none::-webkit-scrollbar {
           display: none;
-        }
-
-        @keyframes reviewTicker {
-          from {
-            transform: translate3d(0, 0, 0);
-          }
-
-          to {
-            transform: translate3d(calc(-50% - 1rem), 0, 0);
-          }
         }
       `}</style>
     </section>
