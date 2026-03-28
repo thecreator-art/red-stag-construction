@@ -99,16 +99,18 @@ export const ParallaxHero = ({
     setFieldErrors({});
 
     const payload = {
-      fullName: formData.get('fullName'),
-      phone: formData.get('phone'),
-      email: formData.get('email'),
-      message: formData.get('message'),
+      fullName: String(formData.get('fullName') || ''),
+      phone: String(formData.get('phone') || ''),
+      email: String(formData.get('email') || ''),
+      message: String(formData.get('message') || ''),
       source: 'Homepage Quick Quote',
     };
 
     try {
       const webhookUrl = process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL
         || 'https://services.leadconnectorhq.com/hooks/9in8SPNBkkEtL4Iq1Xne/webhook-trigger/cc074b4f-2041-4991-a61d-99eb8ecb8df2';
+
+      console.log('ParallaxHero payload', payload);
 
       const response = await fetch(webhookUrl, {
         method: 'POST',

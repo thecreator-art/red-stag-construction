@@ -93,8 +93,8 @@ export const ExitIntentPopup = () => {
     setFieldErrors({});
 
     const payload = {
-      fullName: formData.get('fullName'),
-      phone: formData.get('phone'),
+      fullName: String(formData.get('fullName') || ''),
+      phone: String(formData.get('phone') || ''),
       formContext: 'Exit Intent Action - High Priority', // Meta Tracking Key
       source: 'Exit Popup Form',
     };
@@ -102,6 +102,8 @@ export const ExitIntentPopup = () => {
     try {
       const webhookUrl = process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL
         || 'https://services.leadconnectorhq.com/hooks/9in8SPNBkkEtL4Iq1Xne/webhook-trigger/cc074b4f-2041-4991-a61d-99eb8ecb8df2';
+
+      console.log('ExitIntentPopup payload', payload);
 
       const response = await fetch(webhookUrl, {
         method: 'POST',
