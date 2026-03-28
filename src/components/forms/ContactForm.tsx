@@ -63,7 +63,8 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
       phone: formData.get('phone'),
       projectType: formData.get('projectType'),
       city: formData.get('city'),
-      message: formData.get('message')
+      message: formData.get('message'),
+      source: 'Contact Page Form',
     };
 
     try {

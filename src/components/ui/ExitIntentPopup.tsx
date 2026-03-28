@@ -95,7 +95,8 @@ export const ExitIntentPopup = () => {
     const payload = {
       fullName: formData.get('fullName'),
       phone: formData.get('phone'),
-      formContext: 'Exit Intent Action - High Priority' // Meta Tracking Key
+      formContext: 'Exit Intent Action - High Priority', // Meta Tracking Key
+      source: 'Exit Popup Form',
     };
 
     try {

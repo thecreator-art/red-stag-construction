@@ -103,7 +103,7 @@ export const ParallaxHero = ({
       phone: formData.get('phone'),
       email: formData.get('email'),
       message: formData.get('message'),
-      source: 'hero_quick_quote',
+      source: 'Homepage Quick Quote',
     };
 
     try {
