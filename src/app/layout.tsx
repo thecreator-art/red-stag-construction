@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -51,6 +52,21 @@ export default function RootLayout({
       lang="en"
       className={`h-full antialiased ${playfair.variable} ${inter.variable}`}
     >
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-6BJ4K8SE7P"
+          strategy="afterInteractive"
+        />
+        <Script id="google-tag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = window.gtag || gtag;
+            gtag('js', new Date());
+            gtag('config', 'G-6BJ4K8SE7P');
+          `}
+        </Script>
+      </head>
       <body className="font-sans text-text-body bg-warm-white min-h-full flex flex-col items-stretch justify-start pb-14 md:pb-0">
         <Analytics />
         <ExitIntentPopup />
