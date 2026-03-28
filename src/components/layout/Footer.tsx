@@ -54,7 +54,7 @@ export const Footer = () => {
           <div>
             <Link href="/" className="block mb-6">
               <Image
-                src="/images/logo/logo-light.png"
+                src="/images/logo/logo-primary.png"
                 alt="Red Stag Construction Corporation"
                 width={290}
                 height={128}
