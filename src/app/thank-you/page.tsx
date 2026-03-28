@@ -34,7 +34,7 @@ export default function ThankYou() {
         <Link href="/about" className="bg-transparent border-2 border-white text-white px-8 py-4 rounded hover:bg-white hover:text-text-dark font-bold transition-colors">
           About Us
         </Link>
-        <a href="https://search.google.com/local/writereview?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4" target="_blank" rel="noopener noreferrer" className="bg-white text-text-dark px-8 py-4 rounded hover:bg-gray-200 font-bold transition-colors">
+        <a href="https://share.google/JZRazPBNyU6QSsA1x" target="_blank" rel="noopener noreferrer" className="bg-white text-text-dark px-8 py-4 rounded hover:bg-gray-200 font-bold transition-colors">
           Read Google Reviews
         </a>
       </div>

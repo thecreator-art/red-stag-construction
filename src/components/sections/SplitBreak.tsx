@@ -1,12 +1,40 @@
+ 'use client';
+
+import { useEffect, useRef } from 'react';
+
 export const SplitBreak = () => {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+
+    if (!video) {
+      return;
+    }
+
+    const restartVideo = () => {
+      video.currentTime = 0;
+      void video.play().catch(() => {});
+    };
+
+    void video.play().catch(() => {});
+    video.addEventListener('ended', restartVideo);
+
+    return () => {
+      video.removeEventListener('ended', restartVideo);
+    };
+  }, []);
+
   return (
     <section className="relative z-10 flex h-[160px] w-full items-center overflow-hidden bg-[#0f2b44] px-6 text-center shadow-2xl lg:h-[240px]">
       <video
+        ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
         autoPlay
         muted
         loop
         playsInline
+        preload="auto"
       >
         <source src="/videos/blueprint-drawing-animation.mp4" type="video/mp4" />
       </video>
