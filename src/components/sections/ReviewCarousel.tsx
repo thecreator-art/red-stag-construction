@@ -1,5 +1,6 @@
 'use client';
 import { useRef, useState } from 'react';
+import Image from 'next/image';
 
 export interface Review {
   id: string;
@@ -34,13 +35,13 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
     }
     if (platform === 'Yelp') {
       return (
-        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-          <path fill="#CC0000" d="M11.2 2.4c.35-.7 1.25-.7 1.6 0l1.15 4.45c.15.58-.17 1.18-.74 1.35-.15.04-.3.06-.45.04l-2.55-.24a1 1 0 0 1-.88-1.28l1.87-4.32Z" />
-          <path fill="#CC0000" d="M18.3 5.75c.7-.34 1.44.18 1.36.96l-.47 4.57a1 1 0 0 1-1.37.8l-2.39-.93a1 1 0 0 1-.39-1.61l3.26-3.8Z" />
-          <path fill="#CC0000" d="M17.2 14.9c.58-.15 1.18.17 1.35.74l1.3 4.4c.22.76-.42 1.43-1.18 1.24l-4.47-1.11a1 1 0 0 1-.54-1.61l2.6-3.28c.24-.2.52-.33.94-.38Z" />
-          <path fill="#CC0000" d="M9.3 16.05c.48.37.56 1.06.19 1.53l-2.73 3.7c-.46.63-1.44.45-1.65-.3l-1.2-4.42a1 1 0 0 1 .88-1.25l3.55-.28c.36-.03.69.07.96.32Z" />
-          <path fill="#CC0000" d="M7.62 9.52c.17.57-.15 1.18-.72 1.36l-4.22 1.38c-.74.25-1.43-.36-1.28-1.13l.9-4.52a1 1 0 0 1 1.57-.6l3.45 2.52c.15.24.24.48.3.99Z" />
-        </svg>
+        <Image 
+          src="/images/brand/yelp-icon.png" 
+          alt="Yelp" 
+          width={20} 
+          height={20} 
+          className="object-contain" 
+        />
       );
     }
     if (platform === 'Houzz') {
