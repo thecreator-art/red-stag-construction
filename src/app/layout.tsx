@@ -22,15 +22,6 @@ export const metadata: Metadata = {
     description:
       'Licensed general contractor in Los Angeles since 2011. Custom homes ADUs kitchen and bathroom remodels home additions hardscape and fencing across Beverly Hills Bel Air Malibu and Greater Los Angeles',
     images: [
-      // Manual asset required before launch:
-      // public/images/og-default.jpg
-      // Spec:
-      // - 1200x630px
-      // - #152D45 navy background
-      // - RED STAG CONSTRUCTION CORPORATION logo centered horizontally
-      // - "Designed here. Built right. Delivered on time." in white Playfair Display below the logo
-      // - "redstagcc.com" in small white Inter at the bottom
-      // Without this file the Open Graph image URL will return a 404 and social sharing previews will break.
       {
         url: 'https://redstagcc.com/images/og-default.jpg',
         width: 1200,
