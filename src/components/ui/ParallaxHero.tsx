@@ -107,10 +107,8 @@ export const ParallaxHero = ({
     };
 
     try {
-      const webhookUrl = process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL || '';
-      if (!webhookUrl) {
-        throw new Error('Missing webhook configuration');
-      }
+      const webhookUrl = process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL
+        || 'https://services.leadconnectorhq.com/hooks/9in8SPNBkkEtL4Iq1Xne/webhook-trigger/cc074b4f-2041-4991-a61d-99eb8ecb8df2';
 
       const response = await fetch(webhookUrl, {
         method: 'POST',
