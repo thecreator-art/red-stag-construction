@@ -34,20 +34,47 @@ export default function About() {
             Red Stag was founded in 2011 around a simple standard: the builder who takes your call should still be accountable when the plans are stamped, the permits are issued, and the finish work is being checked at the very end. Our leadership team brings that accountability to every custom home, ADU, addition, and full-scale remodel we take on in Los Angeles.
           </p>
           <p className="mx-auto mb-16 max-w-3xl text-base leading-8 text-text-body md:text-lg">
-            Israel Aquino leads the company as founder and CEO, Anthony Torsarkissian keeps operations and business development moving, and Zack Ward drives the early-stage conversations that turn rough goals into scoped projects. Together they cover the full timeline from first meeting to final closeout.
+            Elisa T. Aquino leads the company as CEO, Israel Aquino serves as Principal Contractor, Anthony Torsarkissian keeps operations and business development moving, and Zack Ward drives the early-stage conversations that turn rough goals into scoped projects. Together they cover the full timeline from first meeting to final closeout.
           </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-10 text-left md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-10 text-left md:grid-cols-2 lg:grid-cols-4">
+            <div className="group overflow-hidden border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div className="relative h-72 w-full md:h-80">
+                <Image src="/images/team/elisa.jpg" alt="Elisa T. Aquino — CEO" fill sizes="(max-width: 768px) 100vw, 33vw" priority className="object-cover object-top filter grayscale transition-all duration-500 group-hover:grayscale-0" />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-text-dark mb-1">Elisa T. Aquino</h3>
+                <p className="text-sm font-bold text-accent-red uppercase tracking-wide mb-4">CEO</p>
+                <p className="text-text-body text-sm leading-relaxed">
+                  Elisa oversees the strategic direction and operations of Red Stag Construction. Her leadership ensures that the company consistently delivers high-quality results while maintaining strong, transparent relationships with clients and partners.
+                </p>
+                <div className="mt-6 space-y-4 border-t border-gray-100 pt-5 text-sm leading-6 text-text-body">
+                  <div>
+                    <p className="font-bold uppercase tracking-[0.16em] text-accent-red">Leadership</p>
+                    <p>Guides the overarching strategy and ensures Red Stag&apos;s standards of excellence are met on every project.</p>
+                  </div>
+                  <div>
+                    <p className="font-bold uppercase tracking-[0.16em] text-accent-red">Operations</p>
+                    <p>Manages the high-level operations that keep the company running smoothly behind the scenes.</p>
+                  </div>
+                  <div>
+                    <p className="font-bold uppercase tracking-[0.16em] text-accent-red">Client Focus</p>
+                    <p>Dedicated to fostering strong client relationships and maintaining the company&apos;s reputation for integrity.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="group overflow-hidden border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
               <div className="relative h-72 w-full md:h-80">
                 <Image src="/images/team/israel.jpg" alt="Israel Aquino — Founder and General Contractor" fill sizes="(max-width: 768px) 100vw, 33vw" priority className="object-cover object-top filter grayscale transition-all duration-500 group-hover:grayscale-0" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-text-dark mb-1">Israel Aquino</h3>
-                <p className="text-sm font-bold text-accent-red uppercase tracking-wide mb-4">Founder, CEO & Prime Contractor</p>
+                <p className="text-sm font-bold text-accent-red uppercase tracking-wide mb-4">Principal Contractor</p>
                 <p className="text-text-body text-sm leading-relaxed">
-                  Israel founded Red Stag in 2011 and has spent the last 15 years building a reputation around direct accountability. He is the prime contractor clients trust when a project has real complexity, whether that means coordinating architects, solving structural issues early, or managing a high-end build with no room for sloppy execution.
+                  Israel founded Red Stag in 2011 and has spent the last 15 years building a reputation around direct accountability. He is the principal contractor clients trust when a project has real complexity, whether that means coordinating architects, solving structural issues early, or managing a high-end build with no room for sloppy execution.
                 </p>
                 <div className="mt-6 space-y-4 border-t border-gray-100 pt-5 text-sm leading-6 text-text-body">
                   <div>

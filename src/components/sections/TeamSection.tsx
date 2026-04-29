@@ -2,7 +2,8 @@ import Link from 'next/link';
 
 export const TeamSection = () => {
   const team = [
-    { name: 'Israel', title: 'Founder, CEO & Prime Contractor', bio: 'Israel manages the physical execution of every Red Stag job site. He oversees all structural work, framing, and on-site crews to guarantee the build meets local codes and our standard of quality.', photo: '/images/team/israel.jpg' },
+    { name: 'Elisa', title: 'CEO', bio: 'Elisa oversees the strategic direction and operations of Red Stag Construction, ensuring every project meets the highest standards of quality and client satisfaction.', photo: '/images/team/elisa.jpg' },
+    { name: 'Israel', title: 'Principal Contractor', bio: 'Israel manages the physical execution of every Red Stag job site. He oversees all structural work, framing, and on-site crews to guarantee the build meets local codes and our standard of quality.', photo: '/images/team/israel.jpg' },
     { name: 'Anthony', title: 'COO & Prime Contractor', bio: 'Anthony drives day-to-day logistics, vendor management, and material procurement. He keeps every project phased, scheduled, and moving forward on timeline without costly delays.', photo: '/images/team/anthony.jpg' },
     { name: 'Zack', title: 'Head of Project Development', bio: 'Zack leads initial client consultations, site evaluations, and pre-construction planning. He breaks down the raw numbers, assesses structural feasibility, and guides homeowners through the permitting process.', photo: '/images/team/zack.jpg' }
   ];
@@ -17,7 +18,7 @@ export const TeamSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {team.map((member, i) => (
             <div key={i} className="group mx-auto flex w-full max-w-sm cursor-pointer flex-col overflow-hidden rounded-sm bg-warm-white pb-6 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl md:max-w-none md:pb-8">
               <div className="relative mb-6 w-full overflow-hidden border-b-[6px] border-accent-red bg-gray-200 aspect-[5/4] sm:aspect-[4/5] md:mb-8 md:aspect-[3/4]">
