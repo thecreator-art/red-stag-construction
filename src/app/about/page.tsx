@@ -41,7 +41,7 @@ export default function About() {
           <div className="grid grid-cols-1 gap-10 text-left md:grid-cols-2 lg:grid-cols-4">
             <div className="group overflow-hidden border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
               <div className="relative h-72 w-full md:h-80">
-                <Image src="/images/team/elisa.jpg" alt="Elisa T. Aquino — CEO" fill sizes="(max-width: 768px) 100vw, 33vw" priority className="object-cover object-[50%_15%] filter grayscale transition-all duration-500 group-hover:grayscale-0" />
+                <Image src="/images/team/elisa.jpg" alt="Elisa T. Aquino — CEO" fill sizes="(max-width: 768px) 100vw, 33vw" priority className="object-cover object-[70%_15%] filter grayscale transition-all duration-500 group-hover:grayscale-0" />
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-text-dark mb-1">Elisa T. Aquino</h3>

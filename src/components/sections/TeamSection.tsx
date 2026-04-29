@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export const TeamSection = () => {
   const team = [
-    { name: 'Elisa', title: 'CEO', bio: 'Elisa oversees the strategic direction and operations of Red Stag Construction, ensuring every project meets the highest standards of quality and client satisfaction.', photo: '/images/team/elisa.jpg', position: 'object-[50%_15%]' },
+    { name: 'Elisa', title: 'CEO', bio: 'Elisa oversees the strategic direction and operations of Red Stag Construction, ensuring every project meets the highest standards of quality and client satisfaction.', photo: '/images/team/elisa.jpg', position: 'object-[70%_15%]' },
     { name: 'Israel', title: 'Principal Contractor', bio: 'Israel manages the physical execution of every Red Stag job site. He oversees all structural work, framing, and on-site crews to guarantee the build meets local codes and our standard of quality.', photo: '/images/team/israel.jpg', position: 'object-center' },
     { name: 'Anthony', title: 'COO & Prime Contractor', bio: 'Anthony drives day-to-day logistics, vendor management, and material procurement. He keeps every project phased, scheduled, and moving forward on timeline without costly delays.', photo: '/images/team/anthony.jpg', position: 'object-center' },
     { name: 'Zack', title: 'Head of Project Development', bio: 'Zack leads initial client consultations, site evaluations, and pre-construction planning. He breaks down the raw numbers, assesses structural feasibility, and guides homeowners through the permitting process.', photo: '/images/team/zack.jpg', position: 'object-center' }
