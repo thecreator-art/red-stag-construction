@@ -2,10 +2,10 @@ import Link from 'next/link';
 
 export const TeamSection = () => {
   const team = [
-    { name: 'Elisa', title: 'CEO', bio: 'Elisa oversees the strategic direction and operations of Red Stag Construction, ensuring every project meets the highest standards of quality and client satisfaction.', photo: '/images/team/elisa.jpg' },
-    { name: 'Israel', title: 'Principal Contractor', bio: 'Israel manages the physical execution of every Red Stag job site. He oversees all structural work, framing, and on-site crews to guarantee the build meets local codes and our standard of quality.', photo: '/images/team/israel.jpg' },
-    { name: 'Anthony', title: 'COO & Prime Contractor', bio: 'Anthony drives day-to-day logistics, vendor management, and material procurement. He keeps every project phased, scheduled, and moving forward on timeline without costly delays.', photo: '/images/team/anthony.jpg' },
-    { name: 'Zack', title: 'Head of Project Development', bio: 'Zack leads initial client consultations, site evaluations, and pre-construction planning. He breaks down the raw numbers, assesses structural feasibility, and guides homeowners through the permitting process.', photo: '/images/team/zack.jpg' }
+    { name: 'Elisa', title: 'CEO', bio: 'Elisa oversees the strategic direction and operations of Red Stag Construction, ensuring every project meets the highest standards of quality and client satisfaction.', photo: '/images/team/elisa.jpg', position: 'object-[50%_15%]' },
+    { name: 'Israel', title: 'Principal Contractor', bio: 'Israel manages the physical execution of every Red Stag job site. He oversees all structural work, framing, and on-site crews to guarantee the build meets local codes and our standard of quality.', photo: '/images/team/israel.jpg', position: 'object-center' },
+    { name: 'Anthony', title: 'COO & Prime Contractor', bio: 'Anthony drives day-to-day logistics, vendor management, and material procurement. He keeps every project phased, scheduled, and moving forward on timeline without costly delays.', photo: '/images/team/anthony.jpg', position: 'object-center' },
+    { name: 'Zack', title: 'Head of Project Development', bio: 'Zack leads initial client consultations, site evaluations, and pre-construction planning. He breaks down the raw numbers, assesses structural feasibility, and guides homeowners through the permitting process.', photo: '/images/team/zack.jpg', position: 'object-center' }
   ];
 
   return (
@@ -23,7 +23,7 @@ export const TeamSection = () => {
             <div key={i} className="group mx-auto flex w-full max-w-sm cursor-pointer flex-col overflow-hidden rounded-sm bg-warm-white pb-6 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl md:max-w-none md:pb-8">
               <div className="relative mb-6 w-full overflow-hidden border-b-[6px] border-accent-red bg-gray-200 aspect-[5/4] sm:aspect-[4/5] md:mb-8 md:aspect-[3/4]">
                 <div className="pointer-events-none absolute inset-0 z-10 bg-accent-red/20 opacity-0 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-100"></div>
-                <img src={member.photo} alt={member.name} className="relative z-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0 grayscale" />
+                <img src={member.photo} alt={member.name} className={`relative z-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 group-hover:grayscale-0 grayscale ${member.position}`} />
               </div>
               <h3 className="mb-2 px-6 text-xl font-bold uppercase tracking-[0.18em] text-[#111] transition-colors duration-300 group-hover:text-accent-red md:px-8 md:text-2xl md:tracking-widest">{member.name}</h3>
               <p className="mb-4 px-6 text-[11px] font-bold uppercase tracking-[0.18em] text-accent-red md:mb-6 md:px-8 md:text-xs md:tracking-[0.2em]">{member.title}</p>
