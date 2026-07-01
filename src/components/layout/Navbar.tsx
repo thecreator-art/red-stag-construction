@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/Button';
+import { SearchBox } from '../search/SearchBox';
 
 const services = [
   {
@@ -143,7 +144,7 @@ export const Navbar = () => {
       >
         <div
           className={`container mx-auto flex items-center justify-between px-4 transition-[height] duration-300 ${
-            isScrolled ? 'h-[60px]' : 'h-20'
+            isScrolled ? 'h-[72px]' : 'h-24 md:h-28'
           }`}
         >
           <Link href="/" className="flex items-center" onClick={closeMobileMenu}>
@@ -151,7 +152,7 @@ export const Navbar = () => {
               src="/images/logo/logo-primary.png"
               alt="Red Stag Construction Corporation"
               className={`w-auto object-contain transition-[height] duration-300 ${
-                isScrolled ? 'h-10 md:h-10' : 'h-12 md:h-14'
+                isScrolled ? 'h-14 md:h-16' : 'h-20 md:h-24'
               }`}
             />
           </Link>
@@ -273,6 +274,7 @@ export const Navbar = () => {
           </nav>
 
           <div className="flex items-center space-x-4">
+            <SearchBox variant="header" className="hidden lg:block" />
             <div className="hidden lg:flex flex-col items-end mr-4">
               <span className="text-xs text-gray-400">Call Us Anytime</span>
               <a href="tel:6266522303" className="font-bold text-accent-red hover:text-white transition-colors">(626) 652-2303</a>
@@ -301,10 +303,13 @@ export const Navbar = () => {
       {isOpen && (
         <div
           className={`fixed inset-0 z-40 bg-navy-deep lg:hidden ${
-            isScrolled ? 'pt-[60px]' : 'pt-20'
+            isScrolled ? 'pt-[72px]' : 'pt-24'
           }`}
         >
           <div className="flex h-full flex-col overflow-y-auto border-t border-white/10 px-5 py-6">
+            <div className="mb-4">
+              <SearchBox variant="inline" placeholder="Search the site…" onNavigate={closeMobileMenu} />
+            </div>
             <nav className="flex flex-col gap-2 text-lg font-semibold">
               <Link href="/" className="block min-h-11 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
                 Home

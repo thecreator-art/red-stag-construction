@@ -5,6 +5,7 @@ import { SplitBreak } from '@/components/sections/SplitBreak';
 import { WhyRedStag } from '@/components/sections/WhyRedStag';
 import { SplitBreakCTA } from '@/components/sections/SplitBreakCTA';
 import { TeamSection } from '@/components/sections/TeamSection';
+import { AsSeenIn } from '@/components/sections/AsSeenIn';
 import type { Review } from '@/components/sections/ReviewCarousel';
 
 // Dynamically import heavy Client Components to defer JavaScript loading
@@ -190,6 +191,9 @@ export default function HomePage() {
         ctaHref="/contact"
         phoneNumber="(626) 652-2303"
       />
+
+      {/* AS FEATURED IN — Architectural Digest */}
+      <AsSeenIn theme="light" />
 
       {/* SECTION 2 */}
       <TrustBar />
