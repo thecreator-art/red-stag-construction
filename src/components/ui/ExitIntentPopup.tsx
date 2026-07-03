@@ -18,10 +18,14 @@ export const ExitIntentPopup = () => {
     // Reject execution if session token verifies prior appearance
     if (sessionStorage.getItem('redstag_exit_intent') === 'true') return;
 
-    // Desktop Mouseleave bound detection
+    // Minimum on-page time before the popup is allowed to appear at all.
+    const POPUP_DELAY_MS = 60000;
+    let armed = false;
+
+    // Desktop Mouseleave bound detection — ignored until the delay has elapsed
     const handleMouseLeave = (e: MouseEvent) => {
-      // Fire exclusively if trajectory crosses the aggressive top 10px Y bounds
-      if (e.clientY < 10) {
+      // Fire exclusively if trajectory crosses the top 10px Y bounds, after arming
+      if (armed && e.clientY < 10) {
         triggerPopup();
       }
     };
@@ -34,12 +38,13 @@ export const ExitIntentPopup = () => {
 
     document.addEventListener('mouseleave', handleMouseLeave);
 
-    // Mobile specific 45-second attention retention threshold
+    // One-minute attention threshold for all devices
     const timer = setTimeout(() => {
+      armed = true;
       if (!sessionStorage.getItem('redstag_exit_intent')) {
         triggerPopup();
       }
-    }, 45000);
+    }, POPUP_DELAY_MS);
 
     return () => {
       document.removeEventListener('mouseleave', handleMouseLeave);
@@ -138,13 +143,18 @@ export const ExitIntentPopup = () => {
           </svg>
         </button>
 
-        <div className="flex justify-center mb-6">
-           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#B31217" className="w-12 h-12">
-             <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clipRule="evenodd" />
-           </svg>
+        <div className="flex justify-center mb-5">
+          <img
+            src="/images/logo/logo-primary.png"
+            alt="Red Stag Construction Corporation"
+            className="h-16 w-auto object-contain md:h-20"
+          />
         </div>
 
-        <h2 className="text-3xl font-serif font-bold text-center text-white mb-6 leading-tight">Get a Free Estimate Before You Go</h2>
+        <h2 className="text-3xl font-serif font-bold text-center text-white mb-3 leading-tight">Before You Go — Get a Free Estimate</h2>
+        <p className="mb-6 text-center text-sm leading-relaxed text-gray-300">
+          Design-build specialists serving Greater Los Angeles since 2011. Leave your name and number and our team will call you back — usually same day.
+        </p>
         
         {/* Persistent Error State Dropdown */}
         {errorMsg && (
@@ -162,23 +172,38 @@ export const ExitIntentPopup = () => {
           <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
 
           <div>
-            <input required type="text" name="fullName" aria-invalid={Boolean(fieldErrors.fullName)} onChange={() => clearFieldError('fullName')} placeholder="Full Name" className="w-full rounded-sm border border-gray-800 bg-navy-deep px-4 py-3 text-white transition-colors focus:border-accent-red focus:outline-none focus:ring-2 focus:ring-accent-red/20" />
+            <input required type="text" name="fullName" aria-invalid={Boolean(fieldErrors.fullName)} onChange={() => clearFieldError('fullName')} placeholder="Full Name" className="w-full rounded-sm border border-white/15 bg-white/5 px-4 py-3 text-white placeholder:text-gray-400 transition-colors focus:border-accent-red focus:outline-none focus:ring-2 focus:ring-accent-red/20" />
             {fieldErrors.fullName ? <p className="mt-2 text-sm text-accent-red">{fieldErrors.fullName}</p> : null}
           </div>
           <div>
-            <input required type="tel" name="phone" aria-invalid={Boolean(fieldErrors.phone)} onChange={() => clearFieldError('phone')} placeholder="Phone Number" className="w-full rounded-sm border border-gray-800 bg-navy-deep px-4 py-3 text-white transition-colors focus:border-accent-red focus:outline-none focus:ring-2 focus:ring-accent-red/20" />
+            <input required type="tel" name="phone" aria-invalid={Boolean(fieldErrors.phone)} onChange={() => clearFieldError('phone')} placeholder="Phone Number" className="w-full rounded-sm border border-white/15 bg-white/5 px-4 py-3 text-white placeholder:text-gray-400 transition-colors focus:border-accent-red focus:outline-none focus:ring-2 focus:ring-accent-red/20" />
             {fieldErrors.phone ? <p className="mt-2 text-sm text-accent-red">{fieldErrors.phone}</p> : null}
           </div>
-          
+
           <button disabled={isSubmitting} type="submit" className="relative z-[1] mt-2 flex w-full items-center justify-center bg-accent-red py-4 font-extrabold uppercase tracking-widest text-white shadow-[0_0_15px_rgba(179,18,23,0.3)] transition-all duration-200 hover:scale-[1.02] hover:bg-[#990000] hover:brightness-110 disabled:opacity-50">
             {isSubmitting ? (
               <span className="flex items-center">
                 <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                 Processing...
               </span>
-            ) : "Secure My Estimate"}
+            ) : "Get My Free Estimate"}
           </button>
         </form>
+
+        <p className="mt-5 text-center text-sm text-gray-300">
+          Prefer to talk now?{' '}
+          <a href="tel:6266522303" className="font-bold text-accent-red transition-colors hover:text-white">
+            (626) 652-2303
+          </a>
+        </p>
+
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 border-t border-white/10 pt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-gray-400">
+          <span>Licensed &amp; Insured</span>
+          <span aria-hidden="true" className="text-accent-red">&bull;</span>
+          <span>CSLB #964664</span>
+          <span aria-hidden="true" className="text-accent-red">&bull;</span>
+          <span>Building LA Since 2011</span>
+        </div>
       </div>
     </div>
   );
