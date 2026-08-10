@@ -8,8 +8,14 @@ import { useEffect } from 'react';
  * (h-14 / 56px), covering the "Get Estimate" CTA.
  *
  * Shadow DOM blocks global CSS, and a <style> appended into the shadow root does not
- * win against the widget's own positioning — verified in-browser. Setting the inline
- * value with `!important` on the widget's positioned elements does.
+ * win against the widget's own positioning — both verified in-browser.
+ *
+ * Setting the inline value is also not sufficient on its own: the widget carries a
+ * `transition: 0.2s` on these elements and re-renders repeatedly during the greeting
+ * prompt, so `bottom` stays visually pinned at 20px for tens of seconds even while the
+ * inline attribute already reads 76px !important. Measured on a production build: the
+ * bubble stole 5 of 11 tap points across the "Get Estimate" CTA for 24s+ straight.
+ * Clearing the transition makes the offset take effect immediately (0 of 11 stolen).
  *
  * Selectors are verified against the widget's live DOM. If the vendor renames them
  * this no-ops rather than breaking anything.
@@ -43,11 +49,16 @@ export const ChatWidgetOffset = () => {
       const wantsOffset = mobile.matches;
       elements.forEach((el) => {
         if (wantsOffset) {
+          // Transition must be cleared or `bottom` never visually settles.
+          if (el.style.getPropertyValue('transition') !== 'none') {
+            el.style.setProperty('transition', 'none', 'important');
+          }
           if (el.style.getPropertyValue('bottom') !== OFFSET) {
             el.style.setProperty('bottom', OFFSET, 'important');
           }
         } else if (el.style.getPropertyPriority('bottom') === 'important') {
           el.style.removeProperty('bottom');
+          el.style.removeProperty('transition');
         }
       });
       return true;
