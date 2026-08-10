@@ -27,8 +27,8 @@ export const SplitBreakCTA = () => {
         </div>
 
         <div className="flex flex-col items-center gap-4 md:flex-row md:gap-6">
-          <a href="tel:6266522303" className="block text-3xl font-extrabold tracking-wider text-white transition-colors hover:text-accent-red md:text-4xl">
-            (626) 652-2303
+          <a href="tel:3239224235" className="block text-3xl font-extrabold tracking-wider text-white transition-colors hover:text-accent-red md:text-4xl">
+            (323) 922-4235
           </a>
 
           <Link href="/contact" className="rounded-sm border border-accent-red/50 bg-accent-red px-10 py-4 text-sm font-extrabold uppercase tracking-widest text-white shadow-2xl transition-colors duration-300 hover:-translate-y-1 hover:bg-[#990000] hover:shadow-[0_0_25px_rgba(179,18,23,0.5)]">

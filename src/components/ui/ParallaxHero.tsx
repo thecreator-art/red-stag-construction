@@ -258,8 +258,8 @@ export const ParallaxHero = ({
           {errorMsg ? (
             <p className="mt-3 text-sm font-medium text-accent-red">
               {errorMsg}{' '}
-              <a href="tel:6266522303" className="underline hover:text-[#990000]">
-                (626) 652-2303
+              <a href="tel:3239224235" className="underline hover:text-[#990000]">
+                (323) 922-4235
               </a>
               .
             </p>

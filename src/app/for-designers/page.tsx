@@ -48,7 +48,7 @@ export default function ForDesignersPage() {
         h2Text="We source the materials you specified, lock in lead times before demo starts, and do not make field decisions that alter the design without approval."
         ctaText="Start a Designer Partnership"
         ctaHref="#partner-form"
-        phoneNumber="(626) 652-2303"
+        phoneNumber="(323) 922-4235"
       />
 
       <section className="bg-warm-grey py-20 md:py-24">

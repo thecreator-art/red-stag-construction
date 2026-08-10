@@ -131,7 +131,8 @@ export const ExitIntentPopup = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-navy-deep/80 p-4 backdrop-blur-sm">
+    // z sits above the GoHighLevel chat widget (z-index 99999999) so the modal is not covered.
+    <div className="fixed inset-0 z-[100000000] flex items-center justify-center bg-navy-deep/80 p-4 backdrop-blur-sm">
       <div className="relative z-[1] w-full max-w-lg animate-in zoom-in-95 rounded-sm border-t-4 border-accent-red bg-navy-deep p-8 shadow-2xl duration-300">
         
         <button 
@@ -160,8 +161,8 @@ export const ExitIntentPopup = () => {
         {errorMsg && (
           <div className="mb-6 p-4 bg-red-900/40 border-l-4 border-accent-red text-white text-sm text-center">
             {errorMsg}{' '}
-            <a href="tel:6266522303" className="font-semibold underline hover:text-accent-red">
-              (626) 652-2303
+            <a href="tel:3239224235" className="font-semibold underline hover:text-accent-red">
+              (323) 922-4235
             </a>
             .
           </div>
@@ -192,8 +193,8 @@ export const ExitIntentPopup = () => {
 
         <p className="mt-5 text-center text-sm text-gray-300">
           Prefer to talk now?{' '}
-          <a href="tel:6266522303" className="font-bold text-accent-red transition-colors hover:text-white">
-            (626) 652-2303
+          <a href="tel:3239224235" className="font-bold text-accent-red transition-colors hover:text-white">
+            (323) 922-4235
           </a>
         </p>
 

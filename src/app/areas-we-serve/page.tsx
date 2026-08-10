@@ -38,7 +38,7 @@ export default function AreasWeServe() {
         h2Text="From the beaches to the San Fernando Valley."
         ctaText="Get a Free Estimate"
         ctaHref="/contact"
-        phoneNumber="(626) 652-2303"
+        phoneNumber="(323) 922-4235"
       />
 
       <section className="py-24 bg-warm-white">

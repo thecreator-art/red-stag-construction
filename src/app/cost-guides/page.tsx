@@ -28,7 +28,7 @@ export default function CostGuidesIndex() {
         h2Text="Transparent, 2026-updated pricing data for your next project."
         ctaText="Get a Custom Estimate"
         ctaHref="/contact"
-        phoneNumber="(626) 652-2303"
+        phoneNumber="(323) 922-4235"
       />
       <TrustBadge />
       

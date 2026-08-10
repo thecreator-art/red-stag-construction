@@ -11,8 +11,8 @@ export const StickyMobileHeader = () => {
       </Link>
 
       {/* Center: Immediate Direct Phone Protocol */}
-      <a href="tel:6266522303" className="flex min-h-11 items-center font-extrabold tracking-widest text-white text-xs">
-        (626) 652-2303
+      <a href="tel:3239224235" className="flex min-h-11 items-center font-extrabold tracking-widest text-white text-xs">
+        (323) 922-4235
       </a>
 
       {/* Right: Pathing CTA Block */}

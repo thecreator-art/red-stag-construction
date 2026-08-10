@@ -140,10 +140,10 @@ export default function OurWorkPage() {
             read on scope, sequencing, and what the build will take.
           </p>
           <a
-            href="tel:6266522303"
+            href="tel:3239224235"
             className="mt-8 block text-4xl font-bold text-white transition-opacity hover:opacity-90"
           >
-            (626) 652-2303
+            (323) 922-4235
           </a>
           <Link
             href="/contact"

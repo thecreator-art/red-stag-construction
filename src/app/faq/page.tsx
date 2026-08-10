@@ -238,7 +238,7 @@ export default function FAQ() {
         h2Text="Everything you need to know about building in Los Angeles."
         ctaText="Have More Questions?"
         ctaHref="/contact"
-        phoneNumber="(626) 652-2303"
+        phoneNumber="(323) 922-4235"
       />
       <TrustBadge />
       

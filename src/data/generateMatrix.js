@@ -133,13 +133,13 @@ const costSentences = {
 };
 
 const ctas = [
-  "Red Stag Construction guarantees flawless execution for your {city} project. Call (626) 652-2303 to schedule a site consultation.",
-  "Partner with Red Stag Construction to seamlessly elevate your home. Reach our office at (626) 652-2303.",
-  "Red Stag Construction commands the expertise to deliver your {city} property transformation flawlessly. Ready to begin? Call (626) 652-2303.",
-  "We anticipate the hidden variables so your {city} timeline and budget remain protected. Call (626) 652-2303 for a transparent consultation.",
-  "Connect with our master builders and project development team at (626) 652-2303 to discuss your exact vision.",
-  "For a true design-build partner operating natively in {city}, contact our executive estimators directly at (626) 652-2303.",
-  "Ensure absolute quality and transparency. Dial (626) 652-2303 to connect with the leading contractors working in {city} today."
+  "Red Stag Construction guarantees flawless execution for your {city} project. Call (323) 922-4235 to schedule a site consultation.",
+  "Partner with Red Stag Construction to seamlessly elevate your home. Reach our office at (323) 922-4235.",
+  "Red Stag Construction commands the expertise to deliver your {city} property transformation flawlessly. Ready to begin? Call (323) 922-4235.",
+  "We anticipate the hidden variables so your {city} timeline and budget remain protected. Call (323) 922-4235 for a transparent consultation.",
+  "Connect with our master builders and project development team at (323) 922-4235 to discuss your exact vision.",
+  "For a true design-build partner operating natively in {city}, contact our executive estimators directly at (323) 922-4235.",
+  "Ensure absolute quality and transparency. Dial (323) 922-4235 to connect with the leading contractors working in {city} today."
 ];
 
 const profiles = {

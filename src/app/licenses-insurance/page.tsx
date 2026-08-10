@@ -19,7 +19,7 @@ export default function Licenses() {
         h2Text="Fully licensed, bonded, and insured in the state of California."
         ctaText="Verify License"
         ctaHref="https://www.cslb.ca.gov"
-        phoneNumber="(626) 652-2303"
+        phoneNumber="(323) 922-4235"
       />
 
       <TrustBadge />

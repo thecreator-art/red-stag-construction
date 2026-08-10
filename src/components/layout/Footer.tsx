@@ -30,10 +30,10 @@ export const Footer = () => {
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <a
-                    href="tel:6266522303"
+                    href="tel:3239224235"
                     className="inline-flex min-h-11 items-center justify-center rounded-sm border border-white/20 px-6 py-3 text-sm font-bold uppercase tracking-[0.18em] text-white transition-all duration-200 hover:border-accent-red hover:text-accent-red"
                   >
-                    Call (626) 652-2303
+                    Call (323) 922-4235
                   </a>
                   <Link
                     href="/contact"
@@ -114,7 +114,7 @@ export const Footer = () => {
             <div className="space-y-4 text-sm font-semibold">
               <p className="flex flex-col">
                 <span className="text-gray-500 mb-1">Phone</span>
-                <a href="tel:6266522303" className="text-white hover:text-accent-red text-lg transition-colors">(626) 652-2303</a>
+                <a href="tel:3239224235" className="text-white hover:text-accent-red text-lg transition-colors">(323) 922-4235</a>
               </p>
               <p className="flex flex-col">
                 <span className="text-gray-500 mb-1">Email</span>

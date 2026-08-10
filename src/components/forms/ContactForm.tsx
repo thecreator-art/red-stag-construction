@@ -110,8 +110,8 @@ export const ContactForm = ({ className = '' }: { className?: string }) => {
       {errorMsg && (
         <div className="p-4 mb-6 bg-red-900/40 border-l-4 border-accent-red text-white text-sm">
           {errorMsg}{' '}
-          <a href="tel:6266522303" className="font-semibold underline hover:text-accent-red">
-            (626) 652-2303
+          <a href="tel:3239224235" className="font-semibold underline hover:text-accent-red">
+            (323) 922-4235
           </a>
           .
         </div>

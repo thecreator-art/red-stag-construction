@@ -23,7 +23,7 @@ export default function About() {
         h2Text="The team behind Los Angeles most demanding construction projects."
         ctaText="Get a Free Estimate"
         ctaHref="/contact"
-        phoneNumber="(626) 652-2303"
+        phoneNumber="(323) 922-4235"
       />
       
       <TrustBadge />

@@ -109,7 +109,7 @@ export default function HomePage() {
     '@type': ['LocalBusiness', 'GeneralContractor'],
     name: 'Red Stag Construction',
     url: 'https://redstagcc.com',
-    telephone: '(626) 652-2303',
+    telephone: '(323) 922-4235',
     email: 'support@redstagcc.com',
     slogan: 'Designed here. Built right. Delivered on time.',
     foundingDate: '2011',
@@ -189,7 +189,7 @@ export default function HomePage() {
         h2Text="Design-Build Specialists — Custom Homes, ADUs, Kitchen and Bathroom Remodels, and High-End Construction Across Greater Los Angeles"
         ctaText="Get a Free Estimate"
         ctaHref="/contact"
-        phoneNumber="(626) 652-2303"
+        phoneNumber="(323) 922-4235"
       />
 
       {/* AS FEATURED IN — Architectural Digest */}

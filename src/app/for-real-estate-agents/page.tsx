@@ -48,7 +48,7 @@ export default function ForRealEstateAgentsPage() {
         h2Text="We help Los Angeles agents use pre-listing renovation to lift buyer confidence, strengthen the sale price, and get properties market-ready on a real timeline."
         ctaText="Request a Walkthrough"
         ctaHref="#partner-form"
-        phoneNumber="(626) 652-2303"
+        phoneNumber="(323) 922-4235"
       />
 
       <section className="bg-white py-20 md:py-24">

@@ -32,7 +32,7 @@ allCities.forEach((city, idx) => {
       title: serviceTitle.replace('{city}', city.name),
       service: serviceName,
       city: city.name,
-      intro: `A general contracting project in ${city.name} is not just another renovation project—it represents a significant investment in your property's long-term value. Homeowners in ${city.name} expect premium finish levels and a builder who understands local codes perfectly. From overseeing major seismic retrofits to managing complex tear-downs, our oversight prevents costly redesigns mid-construction. Red Stag Construction brings our design-build expertise to every project we manage in the area. Call (626) 652-2303 to schedule your site visit.`
+      intro: `A general contracting project in ${city.name} is not just another renovation project—it represents a significant investment in your property's long-term value. Homeowners in ${city.name} expect premium finish levels and a builder who understands local codes perfectly. From overseeing major seismic retrofits to managing complex tear-downs, our oversight prevents costly redesigns mid-construction. Red Stag Construction brings our design-build expertise to every project we manage in the area. Call (323) 922-4235 to schedule your site visit.`
     });
     count++;
   }

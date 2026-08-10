@@ -136,7 +136,7 @@ ${JSON.stringify(schema, null, 2)}
 </script>
 
 ---
-*Ready to start your project? Contact the design-build experts at Red Stag Construction today at (626) 652-2303 for a comprehensive site evaluation and estimate.*
+*Ready to start your project? Contact the design-build experts at Red Stag Construction today at (323) 922-4235 for a comprehensive site evaluation and estimate.*
 `;
 
   fs.writeFileSync(path.join(blogsDir, `${topic.slug}.mdx`), mdContent);

@@ -277,7 +277,7 @@ export const Navbar = () => {
             <SearchBox variant="header" className="hidden lg:block" />
             <div className="hidden lg:flex flex-col items-end mr-4">
               <span className="text-xs text-gray-400">Call Us Anytime</span>
-              <a href="tel:6266522303" className="font-bold text-accent-red hover:text-white transition-colors">(626) 652-2303</a>
+              <a href="tel:3239224235" className="font-bold text-accent-red hover:text-white transition-colors">(323) 922-4235</a>
             </div>
             <Button href="/contact" variant="primary" className="hidden md:inline-flex">
               Get an Estimate
@@ -404,8 +404,8 @@ export const Navbar = () => {
             </nav>
 
             <div className="mt-auto border-t border-white/10 pt-6">
-              <a href="tel:6266522303" className="mb-5 block text-center text-2xl font-extrabold tracking-wide text-white">
-                (626) 652-2303
+              <a href="tel:3239224235" className="mb-5 block text-center text-2xl font-extrabold tracking-wide text-white">
+                (323) 922-4235
               </a>
               <Link
                 href="/contact"

@@ -80,8 +80,8 @@ export const BlogSidebarLeadForm = ({ source }: { source: string }) => {
       {errorMsg ? (
         <p className="text-sm text-accent-red">
           {errorMsg}{' '}
-          <a href="tel:6266522303" className="font-semibold underline hover:text-[#990000]">
-            (626) 652-2303
+          <a href="tel:3239224235" className="font-semibold underline hover:text-[#990000]">
+            (323) 922-4235
           </a>
           .
         </p>

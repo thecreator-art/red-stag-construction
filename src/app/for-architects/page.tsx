@@ -48,7 +48,7 @@ export default function ForArchitectsPage() {
         h2Text="We read structural drawings, flag constructability issues early, and manage permits through LADBS and independent city departments so architects do not have to babysit the build."
         ctaText="Start the Conversation"
         ctaHref="#partner-form"
-        phoneNumber="(626) 652-2303"
+        phoneNumber="(323) 922-4235"
       />
 
       <section className="bg-white py-20 md:py-24">

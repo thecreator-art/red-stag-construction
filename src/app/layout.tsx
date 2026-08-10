@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Analytics } from "@/components/layout/Analytics";
 import { StickyBottomBar } from "@/components/layout/StickyBottomBar";
+import { ChatWidgetOffset } from "@/components/layout/ChatWidgetOffset";
 import { ExitIntentPopup } from "@/components/ui/ExitIntentPopup";
 
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-serif", display: "swap" });
@@ -74,6 +75,16 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />
+
+        {/* GoHighLevel chat widget (also serves A2P verification) */}
+        <Script
+          src="https://widgets.leadconnectorhq.com/loader.js"
+          data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
+          data-widget-id="6a7a471e9f377fcb653bc568"
+          data-source="WEB_USER"
+          strategy="afterInteractive"
+        />
+        <ChatWidgetOffset />
       </body>
     </html>
   );

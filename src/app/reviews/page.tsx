@@ -37,7 +37,7 @@ export default function Reviews() {
         h2Text="Don't just take our word for it."
         ctaText="View Portfolio"
         ctaHref="/our-work"
-        phoneNumber="(626) 652-2303"
+        phoneNumber="(323) 922-4235"
       />
       <TrustBadge />
       

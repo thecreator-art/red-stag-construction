@@ -12,7 +12,7 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-const PHONE_NUMBER = "(626) 652-2303";
+const PHONE_NUMBER = "(323) 922-4235";
 
 export function generateStaticParams() {
   return projectsData.map((project) => ({ slug: project.slug }));
@@ -113,7 +113,7 @@ export default async function ProjectPage({ params }: PageProps) {
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/40">Need pricing?</p>
               <a
-                href="tel:6266522303"
+                href="tel:3239224235"
                 className="mt-3 inline-block text-xl font-semibold text-white transition-opacity hover:opacity-80"
               >
                 {PHONE_NUMBER}
@@ -194,7 +194,7 @@ export default async function ProjectPage({ params }: PageProps) {
             clear read on what the work will actually take.
           </p>
           <a
-            href="tel:6266522303"
+            href="tel:3239224235"
             className="mt-8 block text-4xl font-bold text-white transition-opacity hover:opacity-90"
           >
             {PHONE_NUMBER}

@@ -18,8 +18,8 @@ import { Button } from '@/components/ui/Button';
 import { FAQAccordion } from '@/components/ui/FAQAccordion';
 import { TrustBadge } from '@/components/ui/TrustBadge';
 
-const PHONE_NUMBER = '(626) 652-2303';
-const PHONE_HREF = 'tel:6266522303';
+const PHONE_NUMBER = '(323) 922-4235';
+const PHONE_HREF = 'tel:3239224235';
 const CONTACT_EMAIL = 'support@redstagcc.com';
 const BASE_URL = 'https://redstagcc.com';
 
@@ -2485,7 +2485,7 @@ export default async function DynamicSlugPage({ params }: PageProps) {
         '@type': 'LocalBusiness',
         name: 'Red Stag Construction',
         url: BASE_URL,
-        telephone: '626-652-2303',
+        telephone: '(323) 922-4235',
         address: {
           '@type': 'PostalAddress',
           streetAddress: '3211 Cahuenga Blvd W Ste 207',

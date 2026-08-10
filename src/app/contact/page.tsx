@@ -3,7 +3,7 @@ import { ContactForm } from "@/components/forms/ContactForm";
 
 export const metadata = {
   title: "Contact Red Stag Construction | Free Estimate Los Angeles",
-  description: "Contact Red Stag Construction for a free estimate on your custom home, remodel, or addition project in Los Angeles. Call (626) 652-2303.",
+  description: "Contact Red Stag Construction for a free estimate on your custom home, remodel, or addition project in Los Angeles. Call (323) 922-4235.",
   alternates: {
     canonical: 'https://redstagcc.com/contact',
   },
@@ -19,7 +19,7 @@ export default function Contact() {
         h2Text="We respond to all inquiries within 2 hours during business hours."
         ctaText="Get a Free Estimate"
         ctaHref="/contact"
-        phoneNumber="(626) 652-2303"
+        phoneNumber="(323) 922-4235"
       />
 
       <section className="bg-warm-white py-24 relative overflow-hidden">
@@ -40,7 +40,7 @@ export default function Contact() {
               <div className="space-y-10">
                 <div>
                   <h3 className="text-accent-red font-bold uppercase tracking-widest text-sm mb-2">Phone Directory</h3>
-                  <a href="tel:6266522303" className="block text-3xl font-bold hover:text-accent-red transition-colors">(626) 652-2303</a>
+                  <a href="tel:3239224235" className="block text-3xl font-bold hover:text-accent-red transition-colors">(323) 922-4235</a>
                   <p className="text-gray-400 text-sm mt-2">Mon - Fri: 9:00 AM - 6:00 PM<br/>Sat: 9:00 AM - 3:00 PM</p>
                 </div>
 

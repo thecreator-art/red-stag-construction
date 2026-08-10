@@ -28,7 +28,7 @@ export default function OurProcess() {
         h2Text="How we execute complex LA construction projects with total accountability."
         ctaText="Start Your Process"
         ctaHref="/contact"
-        phoneNumber="(626) 652-2303"
+        phoneNumber="(323) 922-4235"
       />
       
       <TrustBadge />

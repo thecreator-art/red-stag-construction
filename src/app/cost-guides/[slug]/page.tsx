@@ -148,7 +148,7 @@ export default async function CostGuidePage({ params }: PageProps) {
         h2Text={guide.h2}
         ctaText="Get a Custom Estimate"
         ctaHref="/contact"
-        phoneNumber="(626) 652-2303"
+        phoneNumber="(323) 922-4235"
       />
       
       <section className="bg-white py-24">
