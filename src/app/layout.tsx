@@ -37,6 +37,10 @@ export const metadata: Metadata = {
     site: '@redstagcc',
     creator: '@redstagcc',
   },
+  other: {
+    // Pinterest domain verification
+    'p:domain_verify': '870e5d384ec35fec08947e8777861f0a',
+  },
 };
 
 export const viewport: Viewport = {
