@@ -1,0 +1,113 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Place",
+  "@id": "https://redstagcc.com/#geo-silo",
+  "name": "Red Stag Construction — 3211 Cahuenga Boulevard West, STE 207, Los Angeles, CA 90068",
+  "url": "https://redstagcc.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "3211 Cahuenga Boulevard West, STE 207",
+    "addressLocality": "Los Angeles",
+    "addressRegion": "CA",
+    "postalCode": "90068",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 34.1294,
+    "longitude": -118.3533
+  },
+  "hasMap": "https://www.google.com/maps?cid=1546060090964512284",
+  "potentialAction": [
+    {
+      "@type": "TravelAction",
+      "name": "Drive from Universal Studios Hollywood, Universal City, CA to Red Stag Construction Headquarters",
+      "fromLocation": {
+        "@type": "Place",
+        "name": "Universal Studios Hollywood, Universal City, CA"
+      },
+      "toLocation": {
+        "@type": "Place",
+        "name": "3211 Cahuenga Boulevard West, STE 207, Los Angeles, CA 90068",
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 34.1294,
+          "longitude": -118.3533
+        }
+      },
+      "target": "https://www.google.com/maps/dir/?api=1&origin=Universal%20Studios%20Hollywood%2C%20Universal%20City%2C%20CA&destination=3211%20Cahuenga%20Boulevard%20West%2C%20STE%20207%2C%20Los%20Angeles%2C%20CA%2090068&travelmode=driving"
+    },
+    {
+      "@type": "TravelAction",
+      "name": "Drive from Downtown Burbank, Burbank, CA to Red Stag Construction Headquarters",
+      "fromLocation": {
+        "@type": "Place",
+        "name": "Downtown Burbank, Burbank, CA"
+      },
+      "toLocation": {
+        "@type": "Place",
+        "name": "3211 Cahuenga Boulevard West, STE 207, Los Angeles, CA 90068",
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 34.1294,
+          "longitude": -118.3533
+        }
+      },
+      "target": "https://www.google.com/maps/dir/?api=1&origin=Downtown%20Burbank%2C%20Burbank%2C%20CA&destination=3211%20Cahuenga%20Boulevard%20West%2C%20STE%20207%2C%20Los%20Angeles%2C%20CA%2090068&travelmode=driving"
+    },
+    {
+      "@type": "TravelAction",
+      "name": "Drive from The Americana at Brand, Glendale, CA to Red Stag Construction Headquarters",
+      "fromLocation": {
+        "@type": "Place",
+        "name": "The Americana at Brand, Glendale, CA"
+      },
+      "toLocation": {
+        "@type": "Place",
+        "name": "3211 Cahuenga Boulevard West, STE 207, Los Angeles, CA 90068",
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 34.1294,
+          "longitude": -118.3533
+        }
+      },
+      "target": "https://www.google.com/maps/dir/?api=1&origin=The%20Americana%20at%20Brand%2C%20Glendale%2C%20CA&destination=3211%20Cahuenga%20Boulevard%20West%2C%20STE%20207%2C%20Los%20Angeles%2C%20CA%2090068&travelmode=driving"
+    },
+    {
+      "@type": "TravelAction",
+      "name": "Drive from Pasadena City Hall, Pasadena, CA to Red Stag Construction Headquarters",
+      "fromLocation": {
+        "@type": "Place",
+        "name": "Pasadena City Hall, Pasadena, CA"
+      },
+      "toLocation": {
+        "@type": "Place",
+        "name": "3211 Cahuenga Boulevard West, STE 207, Los Angeles, CA 90068",
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 34.1294,
+          "longitude": -118.3533
+        }
+      },
+      "target": "https://www.google.com/maps/dir/?api=1&origin=Pasadena%20City%20Hall%2C%20Pasadena%2C%20CA&destination=3211%20Cahuenga%20Boulevard%20West%2C%20STE%20207%2C%20Los%20Angeles%2C%20CA%2090068&travelmode=driving"
+    },
+    {
+      "@type": "TravelAction",
+      "name": "Drive from Sherman Oaks Galleria, Sherman Oaks, CA to Red Stag Construction Headquarters",
+      "fromLocation": {
+        "@type": "Place",
+        "name": "Sherman Oaks Galleria, Sherman Oaks, CA"
+      },
+      "toLocation": {
+        "@type": "Place",
+        "name": "3211 Cahuenga Boulevard West, STE 207, Los Angeles, CA 90068",
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 34.1294,
+          "longitude": -118.3533
+        }
+      },
+      "target": "https://www.google.com/maps/dir/?api=1&origin=Sherman%20Oaks%20Galleria%2C%20Sherman%20Oaks%2C%20CA&destination=3211%20Cahuenga%20Boulevard%20West%2C%20STE%20207%2C%20Los%20Angeles%2C%20CA%2090068&travelmode=driving"
+    }
+  ]
+}

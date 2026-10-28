@@ -1886,6 +1886,9 @@ const cityReferenceMap: Record<string, string> = {
   'Granada Hills': 'larger suburban lots, older homes, and retrofit-aware family remodeling',
   'Northridge': 'post-earthquake structural awareness, older homes, and CSUN-adjacent demand',
   'San Fernando': 'the City of San Fernando permit office, compact lots, and bilingual field communication',
+  'Glendale': 'the City of Glendale Building & Safety Division, Rossmoyne historic districts, and Verdugo hillside lots',
+  'Pasadena': 'City of Pasadena historic preservation review, Craftsman and Spanish Revival architecture, and hillside engineering',
+  'Universal City': 'Cahuenga Pass hillside access, studio-corridor sound insulation, and LADBS structural review',
 };
 
 const tierMultipliers: Record<1 | 2 | 3 | 4 | 5, number> = {
@@ -2488,7 +2491,7 @@ export default async function DynamicSlugPage({ params }: PageProps) {
         telephone: '(323) 922-4235',
         address: {
           '@type': 'PostalAddress',
-          streetAddress: '3211 Cahuenga Blvd W Ste 207',
+          streetAddress: '3211 Cahuenga Boulevard West, STE 207',
           addressLocality: 'Los Angeles',
           addressRegion: 'CA',
           postalCode: '90068',
@@ -2600,10 +2603,10 @@ export default async function DynamicSlugPage({ params }: PageProps) {
                 </thead>
                 <tbody className="bg-white text-sm md:text-base text-text-body">
                   <tr>
-                    <td className="bg-warm-white px-5 py-4 font-bold text-text-dark border-b border-gray-200">Typical project size</td>
-                    <td className="px-5 py-4 border-b border-gray-200">{config.costGuide.basic.typicalProjectSize}</td>
-                    <td className="px-5 py-4 border-b border-gray-200">{config.costGuide.mid.typicalProjectSize}</td>
-                    <td className="px-5 py-4 border-b border-gray-200">{config.costGuide.premium.typicalProjectSize}</td>
+                    <td data-label="Scope" className="bg-warm-white px-5 py-4 font-bold text-text-dark border-b border-gray-200">Typical project size</td>
+                    <td data-label="Basic Scope" className="px-5 py-4 border-b border-gray-200">{config.costGuide.basic.typicalProjectSize}</td>
+                    <td data-label="Mid-Range" className="px-5 py-4 border-b border-gray-200">{config.costGuide.mid.typicalProjectSize}</td>
+                    <td data-label="Premium" className="px-5 py-4 border-b border-gray-200">{config.costGuide.premium.typicalProjectSize}</td>
                   </tr>
                   <tr>
                     <td className="bg-warm-white px-5 py-4 font-bold text-text-dark border-b border-gray-200">Cost range</td>
@@ -2879,6 +2882,39 @@ export default async function DynamicSlugPage({ params }: PageProps) {
                   <h3 className="text-xl font-serif font-bold text-text-dark">Custom Home Build</h3>
                   <p className="mt-3 text-2xl font-bold text-accent-red">{tierPricing.customHome}</p>
                 </div>
+              </div>
+              <div className="mt-8 overflow-x-auto border border-gray-200 bg-white" id="location-cost-table">
+                <table className="min-w-full border-collapse">
+                  <thead>
+                    <tr className="bg-navy-deep text-left text-white">
+                      <th className="px-4 py-3 text-xs font-bold uppercase tracking-wider">Project Type in {location.city}</th>
+                      <th className="px-4 py-3 text-xs font-bold uppercase tracking-wider">2026 {location.city} Budget Range</th>
+                      <th className="px-4 py-3 text-xs font-bold uppercase tracking-wider">Typical Permit &amp; Build Window</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-sm text-text-body">
+                    <tr className="border-b border-gray-200">
+                      <td data-label="Project Type" className="px-4 py-3 font-bold text-text-dark">Custom Kitchen Remodel</td>
+                      <td data-label="2026 Budget Range" className="px-4 py-3 font-semibold text-accent-red">{tierPricing.kitchen}</td>
+                      <td data-label="Permit & Build Window" className="px-4 py-3">6–10 Weeks + Plan Check</td>
+                    </tr>
+                    <tr className="border-b border-gray-200 bg-warm-white">
+                      <td data-label="Project Type" className="px-4 py-3 font-bold text-text-dark">Luxury Bathroom Remodel</td>
+                      <td data-label="2026 Budget Range" className="px-4 py-3 font-semibold text-accent-red">{tierPricing.bathroom}</td>
+                      <td data-label="Permit & Build Window" className="px-4 py-3">5–8 Weeks + Waterproofing Inspection</td>
+                    </tr>
+                    <tr className="border-b border-gray-200">
+                      <td data-label="Project Type" className="px-4 py-3 font-bold text-text-dark">ADU Construction &amp; Garage Conversion</td>
+                      <td data-label="2026 Budget Range" className="px-4 py-3 font-semibold text-accent-red">{tierPricing.adu}</td>
+                      <td data-label="Permit & Build Window" className="px-4 py-3">4–7 Months Turnkey</td>
+                    </tr>
+                    <tr>
+                      <td data-label="Project Type" className="px-4 py-3 font-bold text-text-dark">Custom Home Build &amp; Major Additions</td>
+                      <td data-label="2026 Budget Range" className="px-4 py-3 font-semibold text-accent-red">{tierPricing.customHome}</td>
+                      <td data-label="Permit & Build Window" className="px-4 py-3">8–14 Months Design-Build</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
               <p className="mt-8 text-lg leading-8 text-text-body">
                 These tier ranges are not generic internet numbers. They reflect the way labor, consultant requirements, permit fees, access, and finish level behave in this part of the Los Angeles market. We use them as an early planning tool, then tighten the budget once the site, approvals, and exact scope are defined.

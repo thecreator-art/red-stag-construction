@@ -52,7 +52,7 @@ export default function Contact() {
                 <div>
                   <h3 className="text-accent-red font-bold uppercase tracking-widest text-sm mb-2">Corporate Office</h3>
                   <address className="not-italic text-lg text-gray-300">
-                    3211 Cahuenga Blvd W Ste 207<br />
+                    3211 Cahuenga Boulevard West, STE 207<br />
                     Los Angeles, CA 90068
                   </address>
                 </div>

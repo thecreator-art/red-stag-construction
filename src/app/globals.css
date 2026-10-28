@@ -86,3 +86,7 @@
     }
   }
 }
+
+/* vaultio-mobile-stacked-tables */
+@media (max-width: 680px) { table, thead, tbody, th, td, tr { display: block !important; width: 100% !important; box-sizing: border-box !important; } thead tr { position: absolute !important; top: -9999px !important; left: -9999px !important; } tbody tr { margin-bottom: 12px !important; border: 1px solid rgba(128,128,128,0.25) !important; border-radius: 10px !important; padding: 10px 12px !important; } tbody td { border: none !important; border-bottom: 1px solid rgba(128,128,128,0.12) !important; padding: 6px 0 !important; text-align: left !important; white-space: normal !important; word-break: break-word !important; } tbody td:last-child { border-bottom: none !important; } tbody td[data-label]::before { content: attr(data-label) ": "; font-weight: 700 !important; opacity: 0.75 !important; } }
+/* /vaultio-mobile-stacked-tables */

@@ -118,5 +118,23 @@
     "city": "San Fernando",
     "tier": 3,
     "intro": "Building or remodeling in San Fernando operates on a rigorous standard. The residential market here requires a general contractor who natively understands both the architectural expectations and the city's specific building department intricacies. Whether you are dealing with challenging hillside ordinances, strict HOA design reviews, or coastal commission overlays depending on your exact lot, Red Stag Construction has the experience to bypass the typical learning curve. For homeowners planning a major kitchen remodel, a ground-up ADU, or a completely new custom residence, our design-build model ensures execution without compromise. License #964664. Call (323) 922-4235 to schedule a site visit in San Fernando."
+  },
+  {
+    "slug": "general-contractor-glendale",
+    "city": "Glendale",
+    "tier": 3,
+    "intro": "Building or remodeling in Glendale requires navigating the independent City of Glendale Building & Safety Division alongside hillside overlay rules in Rossmoyne, Verdugo Woodlands, and Chevy Chase Canyon. Whether you are planning a custom kitchen remodel, a detached ADU conversion, a structural home addition, or hillside hardscaping, Red Stag Construction brings in-house architectural planning, structural engineering, and licensed field execution under one contract. License #964664. Call (323) 922-4235 to schedule a site evaluation in Glendale."
+  },
+  {
+    "slug": "general-contractor-pasadena",
+    "city": "Pasadena",
+    "tier": 2,
+    "intro": "Residential construction in Pasadena demands respect for historic Craftsman, Spanish Colonial Revival, and mid-century architecture combined with the City of Pasadena Planning & Community Development review process. From historic-district additions in Bungalow Heaven and Madison Heights to luxury estate renovations in Linda Vista and San Rafael, Red Stag Construction manages design, engineering, permitting, and master carpentry under one roof. License #964664. Call (323) 922-4235 to schedule a consultation in Pasadena."
+  },
+  {
+    "slug": "general-contractor-universal-city",
+    "city": "Universal City",
+    "tier": 3,
+    "intro": "Located minutes from Red Stag Construction's headquarters at 3211 Cahuenga Boulevard West, STE 207, Universal City and the adjacent Cahuenga Pass, Toluca Lake, and Hollywood Manor enclaves require tight hillside and studio-corridor logistics. Our licensed design-build team coordinates structural remodeling, kitchen and bathroom renovations, ADU construction, and sound-insulated window upgrades from initial drawings through final inspection. License #964664. Call (323) 922-4235."
   }
 ]

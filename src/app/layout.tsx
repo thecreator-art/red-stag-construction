@@ -13,7 +13,7 @@ const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-serif"
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "General Contractor in Los Angeles, CA | Red Stag Construction",
+  title: "Construction Company & General Contractor in Los Angeles, CA | Red Stag Construction",
   description: "Licensed general contractor in Los Angeles since 2011. Custom homes, ADUs, kitchen & bathroom remodels, home additions, hardscape & fencing. Serving Beverly Hills, Bel Air, Malibu & all of LA.",
   openGraph: {
     type: 'website',
@@ -57,7 +57,7 @@ export default function RootLayout({
       lang="en"
       className={`h-full antialiased ${playfair.variable} ${inter.variable}`}
     >
-      <head>
+      <head>{/* vaultio-geo-mobile */}<meta name="geo.region" content="US-CA" /><meta name="geo.placename" content="Los Angeles, CA 90068" /><meta name="geo.position" content="34.1294;-118.3533" /><meta name="ICBM" content="34.1294, -118.3533" /><link rel="alternate" type="application/rss+xml" title="Red Stag Construction Verified Citations" href="https://redstagcc.com/citations-feed.xml" /><script type="application/ld+json" id="vaultio-geo-image-schema" dangerouslySetInnerHTML={{ __html: "{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"name\":\"Red Stag Construction — 3211 Cahuenga Boulevard West, STE 207, Los Angeles, CA 90068\",\"contentUrl\":\"https://redstagcc.com/images/projects/trousdale-after.jpg\",\"url\":\"https://redstagcc.com\",\"contentLocation\":{\"@type\":\"Place\",\"name\":\"3211 Cahuenga Boulevard West, STE 207, Los Angeles, CA 90068\",\"address\":{\"@type\":\"PostalAddress\",\"streetAddress\":\"3211 Cahuenga Boulevard West, STE 207\",\"addressLocality\":\"Los Angeles\",\"addressRegion\":\"CA\",\"postalCode\":\"90068\",\"addressCountry\":\"US\"},\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":34.1294,\"longitude\":-118.3533}}}" }} /><script id="vaultio-table-labels" dangerouslySetInnerHTML={{ __html: "(function(){function L(){document.querySelectorAll(\"table\").forEach(function(t){var h=[].map.call(t.querySelectorAll(\"thead th, tr:first-child th\"),function(x){return x.textContent.trim()});if(!h.length)return;t.querySelectorAll(\"tbody tr\").forEach(function(r){[].forEach.call(r.children,function(c,i){if(c.tagName===\"TD\"&&!c.hasAttribute(\"data-label\")&&h[i])c.setAttribute(\"data-label\",h[i])})})})}if(document.readyState===\"loading\")document.addEventListener(\"DOMContentLoaded\",L);else L();new MutationObserver(L).observe(document.documentElement,{childList:true,subtree:true})})();" }} />{/* /vaultio-geo-mobile */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-6BJ4K8SE7P"
           strategy="afterInteractive"

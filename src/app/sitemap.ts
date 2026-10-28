@@ -31,6 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     createEntry('/faq', 0.5, 'monthly'),
     createEntry('/our-process', 0.5, 'monthly'),
     createEntry('/reviews', 0.5, 'monthly'),
+    createEntry('/review', 0.7, 'monthly'),
     createEntry('/licenses-insurance', 0.5, 'monthly'),
     createEntry('/blog', 0.5, 'monthly'),
     createEntry('/for-architects', 0.4, 'monthly'),

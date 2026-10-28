@@ -17,14 +17,14 @@ const ServiceAreaMap = dynamic(() => import('@/components/maps/ServiceAreaMap').
 const FAQAccordion = dynamic(() => import('@/components/ui/FAQAccordion').then(mod => mod.FAQAccordion));
 
 export const metadata = {
-  title: 'General Contractor in Los Angeles, CA | Red Stag Construction',
+  title: 'Construction Company & General Contractor in Los Angeles, CA | Red Stag Construction',
   description:
     'Licensed GC in Los Angeles since 2011. Custom homes, ADUs, remodels, additions, hardscape, and fencing across Beverly Hills, Bel Air, and Malibu.',
   alternates: {
     canonical: 'https://redstagcc.com',
   },
   openGraph: {
-    title: 'General Contractor in Los Angeles, CA | Red Stag Construction',
+    title: 'Construction Company & General Contractor in Los Angeles, CA | Red Stag Construction',
     description:
       'Licensed GC in Los Angeles since 2011. Custom homes, ADUs, remodels, additions, hardscape, and fencing across Beverly Hills, Bel Air, and Malibu.',
     url: 'https://redstagcc.com',
@@ -70,6 +70,9 @@ export default function HomePage() {
     { name: 'Tarzana', slug: '/general-contractor-tarzana' },
     { name: 'Woodland Hills', slug: '/general-contractor-woodland-hills' },
     { name: 'Burbank', slug: '/general-contractor-burbank' },
+    { name: 'Glendale', slug: '/general-contractor-glendale' },
+    { name: 'Pasadena', slug: '/general-contractor-pasadena' },
+    { name: 'Universal City', slug: '/general-contractor-universal-city' },
     { name: 'Granada Hills', slug: '/general-contractor-granada-hills' },
     { name: 'Northridge', slug: '/general-contractor-northridge' },
     { name: 'San Fernando', slug: '/general-contractor-san-fernando' }
@@ -115,7 +118,7 @@ export default function HomePage() {
     foundingDate: '2011',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '3211 Cahuenga Blvd W Ste 207',
+      streetAddress: '3211 Cahuenga Boulevard West, STE 207',
       addressLocality: 'Los Angeles',
       addressRegion: 'CA',
       postalCode: '90068',
@@ -136,12 +139,16 @@ export default function HomePage() {
     currenciesAccepted: 'USD',
     paymentAccepted: 'Cash Check Credit Card',
     sameAs: [
-      'https://www.yelp.com/biz/red-stag-construction-los-angeles',
-      'https://www.houzz.com/professionals/red-stag-construction',
-      'https://www.facebook.com/Redstagconstructioncompany',
-      'https://www.instagram.com/redstagcc',
-      'https://www.linkedin.com/in/israel-aquino-59333259',
-    ],
+      "https://www.google.com/maps?cid=1546060090964512284",
+      "https://maps.google.com/?cid=1546060090964512284",
+      "https://www.n49.com/biz/7500616/red-stag-construction-ca-los-angeles-3211-cahuenga-boulevard-west-ste-207/",
+      "https://www.cslb.ca.gov/OnlineServices/CheckLicenseII/LicenseDetail.aspx?LicNum=964664",
+      "https://www.instagram.com/redstagcc/",
+      "https://www.facebook.com/Redstagconstructioncompany/",
+      "https://www.yelp.com/biz/red-stag-construction-los-angeles",
+      "https://www.bing.com/maps?q=Red+Stag+Construction+3211+Cahuenga+Boulevard+West+STE+207+Los+Angeles+CA+90068",
+      "https://maps.apple.com/?q=Red+Stag+Construction&address=3211+Cahuenga+Boulevard+West+STE+207,Los+Angeles,CA,90068"
+],
     hasCredential: {
       '@type': 'EducationalOccupationalCredential',
       credentialCategory: 'Contractor License',
@@ -185,7 +192,7 @@ export default function HomePage() {
       <ParallaxHero 
         imageSrc="/images/projects/trousdale-after.jpg"
         imageAlt="Modern custom home construction project in Los Angeles"
-        h1Text="General Contractor in Los Angeles, CA"
+        h1Text="Construction Company & General Contractor in Los Angeles, CA"
         h2Text="Design-Build Specialists — Custom Homes, ADUs, Kitchen and Bathroom Remodels, and High-End Construction Across Greater Los Angeles"
         ctaText="Get a Free Estimate"
         ctaHref="/contact"
@@ -221,6 +228,72 @@ export default function HomePage() {
 
       {/* SECTION 10 */}
       <ProcessSection />
+
+      
+      {/* SECTION: 2026 LOS ANGELES CONSTRUCTION & REMODELING PRICING TABLE */}
+      <section className="w-full bg-white py-20 px-6 md:px-12 border-t border-gray-200" id="cost-benchmarks">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-4 mb-4">
+            <span className="w-14 h-0.5 bg-accent-red"></span>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#111]">
+              2026 Los Angeles Construction &amp; Remodeling Cost Benchmarks
+            </h2>
+          </div>
+          <p className="text-base md:text-lg text-gray-600 mb-8 max-w-4xl">
+            Written design-build pricing benchmarks from our headquarters at 3211 Cahuenga Boulevard West, STE 207, Los Angeles, CA 90068 (CSLB License #964664) across Los Angeles, Burbank, Glendale, Pasadena, Universal City, Encino, Sherman Oaks, and Beverly Hills.
+          </p>
+          <div className="overflow-x-auto border border-gray-200 rounded-sm">
+            <table className="min-w-full border-collapse">
+              <thead>
+                <tr className="bg-navy-deep text-left text-white">
+                  <th className="px-5 py-4 text-xs font-bold uppercase tracking-wider">Construction Scope</th>
+                  <th className="px-5 py-4 text-xs font-bold uppercase tracking-wider">2026 Los Angeles Cost Range</th>
+                  <th className="px-5 py-4 text-xs font-bold uppercase tracking-wider">Typical Timeline</th>
+                  <th className="px-5 py-4 text-xs font-bold uppercase tracking-wider">Permits &amp; Engineering Included</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white text-sm md:text-base text-gray-700">
+                <tr className="border-b border-gray-200">
+                  <td data-label="Construction Scope" className="px-5 py-4 font-bold text-[#111]">Custom Kitchen Remodeling</td>
+                  <td data-label="2026 Los Angeles Cost Range" className="px-5 py-4 font-semibold text-accent-red">$65,000 – $175,000+</td>
+                  <td data-label="Typical Timeline" className="px-5 py-4">6 – 10 Weeks</td>
+                  <td data-label="Permits & Engineering Included" className="px-5 py-4">3D layout design, custom cabinetry, quartz/stone slabs, MEP rough-in &amp; LADBS permits</td>
+                </tr>
+                <tr className="border-b border-gray-200 bg-gray-50">
+                  <td data-label="Construction Scope" className="px-5 py-4 font-bold text-[#111]">Luxury Primary Bathroom Remodel</td>
+                  <td data-label="2026 Los Angeles Cost Range" className="px-5 py-4 font-semibold text-accent-red">$42,000 – $115,000+</td>
+                  <td data-label="Typical Timeline" className="px-5 py-4">5 – 8 Weeks</td>
+                  <td data-label="Permits & Engineering Included" className="px-5 py-4">Hot-mop waterproofing, curbless frameless glass shower, custom vanity, tile &amp; plumbing permits</td>
+                </tr>
+                <tr className="border-b border-gray-200">
+                  <td data-label="Construction Scope" className="px-5 py-4 font-bold text-[#111]">ADU Construction &amp; Garage Conversion</td>
+                  <td data-label="2026 Los Angeles Cost Range" className="px-5 py-4 font-semibold text-accent-red">$185,000 – $425,000+</td>
+                  <td data-label="Typical Timeline" className="px-5 py-4">4 – 7 Months</td>
+                  <td data-label="Permits & Engineering Included" className="px-5 py-4">Architectural plans, Title 24 energy calcs, structural engineering, utility trenching &amp; Certificate of Occupancy</td>
+                </tr>
+                <tr className="border-b border-gray-200 bg-gray-50">
+                  <td data-label="Construction Scope" className="px-5 py-4 font-bold text-[#111]">Home Addition &amp; Second-Story Build</td>
+                  <td data-label="2026 Los Angeles Cost Range" className="px-5 py-4 font-semibold text-accent-red">$220,000 – $550,000+</td>
+                  <td data-label="Typical Timeline" className="px-5 py-4">4 – 8 Months</td>
+                  <td data-label="Permits & Engineering Included" className="px-5 py-4">Seismic foundation tie-ins, structural steel framing, roofline integration, HVAC &amp; full city plan check</td>
+                </tr>
+                <tr className="border-b border-gray-200">
+                  <td data-label="Construction Scope" className="px-5 py-4 font-bold text-[#111]">Ground-Up Custom Home Build</td>
+                  <td data-label="2026 Los Angeles Cost Range" className="px-5 py-4 font-semibold text-accent-red">$450 – $850+ / sq ft</td>
+                  <td data-label="Typical Timeline" className="px-5 py-4">10 – 16 Months</td>
+                  <td data-label="Permits & Engineering Included" className="px-5 py-4">Soils/geotechnical reports, hillside caissons, architectural engineering, turnkey interior &amp; exterior build</td>
+                </tr>
+                <tr>
+                  <td data-label="Construction Scope" className="px-5 py-4 font-bold text-[#111]">Hardscaping, Fencing &amp; Window Replacement</td>
+                  <td data-label="2026 Los Angeles Cost Range" className="px-5 py-4 font-semibold text-accent-red">$18,000 – $125,000+</td>
+                  <td data-label="Typical Timeline" className="px-5 py-4">2 – 6 Weeks</td>
+                  <td data-label="Permits & Engineering Included" className="px-5 py-4">Retaining walls, pavers, hardwood/steel automated gates, and Title 24 full-frame window installation</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
 
       {/* SECTION 11 */}
       <section className="w-full border-y border-white/10 bg-navy-deep px-6 py-24 md:px-12 md:py-28">
