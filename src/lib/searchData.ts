@@ -44,6 +44,7 @@ const staticPages: SearchDoc[] = [
   { title: 'Reviews', url: '/reviews', type: 'Page', description: 'What Los Angeles homeowners say about building with Red Stag Construction.', keywords: 'reviews testimonials ratings' },
   { title: 'Areas We Serve', url: '/areas-we-serve', type: 'Page', description: 'Neighborhoods and cities across Los Angeles County served by Red Stag Construction.', keywords: 'areas service area coverage cities' },
   { title: 'Cost Guides', url: '/cost-guides', type: 'Page', description: 'Detailed 2026 pricing guides for remodels, ADUs, additions, and custom builds in LA.', keywords: 'cost pricing budget estimate guides' },
+  { title: '2026 Los Angeles Construction & Remodeling Cost Benchmarks', url: '/pricing', type: 'Page', description: 'Written design-build pricing benchmarks for Los Angeles construction and remodeling.', keywords: 'pricing cost benchmarks estimate budget table' },
   { title: 'Blog', url: '/blog', type: 'Page', description: 'Construction, remodeling, and permitting insights for Los Angeles homeowners.', keywords: 'blog articles news insights' },
   { title: 'FAQ', url: '/faq', type: 'Page', description: 'Answers to common questions about permits, timelines, budgets, and working with Red Stag.', keywords: 'faq questions answers help' },
   { title: 'Contact Us', url: '/contact', type: 'Page', description: 'Request a free, no-obligation estimate for your Los Angeles construction project.', keywords: 'contact estimate quote phone email' },
