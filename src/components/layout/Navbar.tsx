@@ -270,6 +270,7 @@ export const Navbar = () => {
 
             <Link href="/about" className="hover:text-accent-red transition-colors">About</Link>
             <Link href="/faq" className="hover:text-accent-red transition-colors">FAQ</Link>
+            <Link href="/pricing" className="hover:text-accent-red transition-colors">Pricing</Link>
             <Link href="/blog" className="hover:text-accent-red transition-colors">Blog</Link>
           </nav>
 
@@ -397,6 +398,9 @@ export const Navbar = () => {
               </Link>
               <Link href="/faq" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
                 FAQ
+              </Link>
+              <Link href="/pricing" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
+                Pricing
               </Link>
               <Link href="/blog" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
                 Blog
