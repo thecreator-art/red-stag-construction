@@ -7,6 +7,17 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.redstagcc.com"
+        }
+      ],
+      "destination": "https://redstagcc.com/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         {
