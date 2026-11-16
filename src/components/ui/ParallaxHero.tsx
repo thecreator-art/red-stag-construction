@@ -1,7 +1,7 @@
-'use client';
-import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+
+// Static markup. The quick quote form is submitted by src/scripts/site.ts
+// (form[data-lead-form]) and the background drift by [data-parallax].
 
 export interface ParallaxHeroProps {
   imageSrc: string;
@@ -19,134 +19,15 @@ export const ParallaxHero = ({
   imageAlt,
   h1Text,
   h2Text,
-  ctaText,
-  ctaHref,
   phoneNumber,
   className = ''
 }: ParallaxHeroProps) => {
-  const router = useRouter();
-  const bgRef = useRef<HTMLDivElement>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    // Highly optimized passive scroll capturing window.scrollY without triggering React render cycles.
-    const handleScroll = () => {
-      if (bgRef.current) {
-        // Apply transform exclusively to the DOM node
-        bgRef.current.style.transform = `translateY(${window.scrollY * 0.5}px)`;
-      }
-    };
-
-    // Attach passive listener safely to the browser window
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    // Explicitly pulse the initial state payload against hydration
-    handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  const validateFieldValues = (formData: FormData) => {
-    const nextErrors: Record<string, string> = {};
-    const requiredFields = [
-      { key: 'fullName', label: 'Name' },
-      { key: 'phone', label: 'Phone Number' },
-      { key: 'email', label: 'Email' },
-      { key: 'message', label: 'Project Details' },
-    ];
-
-    requiredFields.forEach(({ key, label }) => {
-      if (!String(formData.get(key) || '').trim()) {
-        nextErrors[key] = `${label} is required.`;
-      }
-    });
-
-    return nextErrors;
-  };
-
-  const clearFieldError = (field: string) => {
-    setFieldErrors((current) => {
-      if (!current[field]) return current;
-      const next = { ...current };
-      delete next[field];
-      return next;
-    });
-  };
-
-  const handleQuickQuoteSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setErrorMsg('');
-
-    const formData = new FormData(e.currentTarget);
-
-    if (formData.get('_honey')) {
-      setIsSubmitting(false);
-      return;
-    }
-
-    const nextErrors = validateFieldValues(formData);
-    if (Object.keys(nextErrors).length > 0) {
-      setFieldErrors(nextErrors);
-      setIsSubmitting(false);
-      return;
-    }
-
-    setFieldErrors({});
-
-    const payload = {
-      fullName: String(formData.get('fullName') || ''),
-      phone: String(formData.get('phone') || ''),
-      email: String(formData.get('email') || ''),
-      message: String(formData.get('message') || ''),
-      source: 'Homepage Quick Quote',
-    };
-
-    try {
-      const webhookUrl = process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL
-        || 'https://services.leadconnectorhq.com/hooks/9in8SPNBkkEtL4Iq1Xne/webhook-trigger/cc074b4f-2041-4991-a61d-99eb8ecb8df2';
-
-      console.log('ParallaxHero payload', payload);
-
-      const response = await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error('Lead submission failed');
-      }
-
-      const gtag = typeof window !== 'undefined'
-        ? (window as Window & { gtag?: (...args: unknown[]) => void }).gtag
-        : undefined;
-
-      if (gtag) {
-        gtag('event', 'contact_form_submitted', {
-          service_type: 'Quick Quote',
-          city: 'Los Angeles',
-          page_location: window.location.href,
-        });
-      }
-
-      router.push('/thank-you');
-    } catch {
-      setErrorMsg('There was an error submitting your request. Please call');
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <section className={`relative flex min-h-[760px] w-full items-center justify-center overflow-hidden md:min-h-[860px] ${className}`}>
       
       {/* Background Image Container mapped directly to the passive scroll ref */}
       <div 
-        ref={bgRef}
+        data-parallax
         className="pointer-events-none absolute top-0 left-0 w-full h-[120%] -z-20 origin-top will-change-transform"
       >
         <Image
@@ -184,7 +65,9 @@ export const ParallaxHero = ({
         </h2>
 
         <form
-          onSubmit={handleQuickQuoteSubmit}
+          data-lead-form
+          data-extra='{"source":"Homepage Quick Quote"}'
+          data-gtag-service="Quick Quote"
           className="relative z-20 mb-8 w-full max-w-6xl rounded-sm border border-white/25 bg-white/95 px-4 py-3 text-left shadow-[0_18px_50px_rgba(10,24,38,0.28)] backdrop-blur-sm md:px-5 md:py-4"
         >
           <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
@@ -202,68 +85,58 @@ export const ParallaxHero = ({
                     required
                     type="text"
                     name="fullName"
-                    aria-invalid={Boolean(fieldErrors.fullName)}
-                    onChange={() => clearFieldError('fullName')}
+                    data-label="Name"
                     placeholder="Name"
                     className="h-12 min-w-0 w-full rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-base text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red focus:ring-2 focus:ring-accent-red/20"
                   />
-                  {fieldErrors.fullName ? <p className="mt-1 text-xs font-medium text-accent-red">{fieldErrors.fullName}</p> : null}
+                  <p data-error-for="fullName" hidden className="mt-1 text-xs font-medium text-accent-red" />
                 </div>
                 <div>
                   <input
                     required
                     type="tel"
                     name="phone"
-                    aria-invalid={Boolean(fieldErrors.phone)}
-                    onChange={() => clearFieldError('phone')}
+                    data-label="Phone Number"
                     placeholder="Number"
                     className="h-12 min-w-0 w-full rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-base text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red focus:ring-2 focus:ring-accent-red/20"
                   />
-                  {fieldErrors.phone ? <p className="mt-1 text-xs font-medium text-accent-red">{fieldErrors.phone}</p> : null}
+                  <p data-error-for="phone" hidden className="mt-1 text-xs font-medium text-accent-red" />
                 </div>
                 <div>
                   <input
                     required
                     type="email"
                     name="email"
-                    aria-invalid={Boolean(fieldErrors.email)}
-                    onChange={() => clearFieldError('email')}
+                    data-label="Email"
                     placeholder="Email"
                     className="h-12 min-w-0 w-full rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-base text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red focus:ring-2 focus:ring-accent-red/20"
                   />
-                  {fieldErrors.email ? <p className="mt-1 text-xs font-medium text-accent-red">{fieldErrors.email}</p> : null}
+                  <p data-error-for="email" hidden className="mt-1 text-xs font-medium text-accent-red" />
                 </div>
                 <div>
                   <input
                     required
                     type="text"
                     name="message"
-                    aria-invalid={Boolean(fieldErrors.message)}
-                    onChange={() => clearFieldError('message')}
+                    data-label="Project Details"
                     placeholder="Project details"
                     className="h-12 min-w-0 w-full rounded-sm border border-[#d9d1c5] bg-[#F8F6F2] px-4 text-base text-[#1A1A1A] outline-none transition-colors placeholder:text-[#6B7280] focus:border-accent-red focus:ring-2 focus:ring-accent-red/20"
                   />
-                  {fieldErrors.message ? <p className="mt-1 text-xs font-medium text-accent-red">{fieldErrors.message}</p> : null}
+                  <p data-error-for="message" hidden className="mt-1 text-xs font-medium text-accent-red" />
                 </div>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="cta min-w-[170px]"
-                >
-                  {isSubmitting ? 'Sending...' : 'Get Estimate'}
+                <button type="submit" data-sending-label="Sending..." className="cta min-w-[170px]">
+                  Get Estimate
                 </button>
               </div>
             </div>
           </div>
-          {errorMsg ? (
-            <p className="mt-3 text-sm font-medium text-accent-red">
-              {errorMsg}{' '}
-              <a href="tel:3239224235" className="underline hover:text-[#990000]">
-                (323) 922-4235
-              </a>
-              .
-            </p>
-          ) : null}
+          <p data-form-error hidden className="mt-3 text-sm font-medium text-accent-red">
+            There was an error submitting your request. Please call{' '}
+            <a href="tel:3239224235" className="underline hover:text-[#990000]">
+              (323) 922-4235
+            </a>
+            .
+          </p>
         </form>
       </div>
       

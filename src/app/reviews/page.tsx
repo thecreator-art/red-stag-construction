@@ -45,20 +45,20 @@ export default function Reviews() {
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="flex flex-wrap gap-4 mb-12 justify-center">
              <span className="px-6 py-2 bg-navy-deep text-white font-bold rounded cursor-pointer">All Services</span>
-             <span className="px-6 py-2 bg-white text-gray-300 border border-gray-200 font-bold rounded cursor-pointer shadow-sm">Kitchens</span>
-             <span className="px-6 py-2 bg-white text-gray-300 border border-gray-200 font-bold rounded cursor-pointer shadow-sm">Bathrooms</span>
-             <span className="px-6 py-2 bg-white text-gray-300 border border-gray-200 font-bold rounded cursor-pointer shadow-sm">ADUs</span>
+             <span className="px-6 py-2 bg-white text-text-body border border-gray-200 font-bold rounded cursor-pointer shadow-sm">Kitchens</span>
+             <span className="px-6 py-2 bg-white text-text-body border border-gray-200 font-bold rounded cursor-pointer shadow-sm">Bathrooms</span>
+             <span className="px-6 py-2 bg-white text-text-body border border-gray-200 font-bold rounded cursor-pointer shadow-sm">ADUs</span>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {reviews.map((r, i) => (
               <div key={i} className="bg-white p-8 shadow-sm border-t-4 border-accent-red flex flex-col h-full rounded">
                 <div className="flex justify-between items-center mb-4">
-                  <span className="font-bold text-white">{r.name}</span>
+                  <span className="font-bold text-text-dark">{r.name}</span>
                   <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{r.site}</span>
                 </div>
                 <div className="text-accent-red mb-4 text-xl tracking-widest">★★★★★</div>
-                <p className="text-gray-300 flex-grow italic mb-4">&ldquo;{r.text}&rdquo;</p>
+                <p className="text-text-body flex-grow italic mb-4">&ldquo;{r.text}&rdquo;</p>
                 <div className="pt-4 border-t border-gray-100 text-xs font-bold text-accent-red uppercase">
                   Service: {r.service}
                 </div>
@@ -69,10 +69,10 @@ export default function Reviews() {
           <div className="mt-24 border-t border-gray-200 pt-16 text-center">
             <h2 className="text-3xl font-serif font-bold text-white mb-8">Leave Us a Review</h2>
             <div className="flex flex-wrap justify-center gap-6">
-              <a href="https://google.com" target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-white flex items-center justify-center rounded-full shadow-md text-white border border-gray-200 font-bold text-xl hover:bg-gray-50 transition-colors">G</a>
-              <a href="https://www.yelp.com/biz/red-stag-construction-los-angeles" target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-white flex items-center justify-center rounded-full shadow-md text-white border border-gray-200 font-bold text-xl hover:bg-gray-50 transition-colors">Y</a>
-              <a href="https://www.google.com/maps?cid=1546060090964512284" target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-white flex items-center justify-center rounded-full shadow-md text-white border border-gray-200 font-bold text-xl hover:bg-gray-50 transition-colors">H</a>
-              <a href="https://www.facebook.com/Redstagconstructioncompany" target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-white flex items-center justify-center rounded-full shadow-md text-white border border-gray-200 font-bold text-xl hover:bg-gray-50 transition-colors">F</a>
+              <a href="https://google.com" target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-white flex items-center justify-center rounded-full shadow-md text-navy-deep border border-gray-200 font-bold text-xl hover:bg-gray-50 transition-colors">G</a>
+              <a href="https://www.yelp.com/biz/red-stag-construction-los-angeles" target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-white flex items-center justify-center rounded-full shadow-md text-navy-deep border border-gray-200 font-bold text-xl hover:bg-gray-50 transition-colors">Y</a>
+              <a href="https://www.google.com/maps?cid=1546060090964512284" target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-white flex items-center justify-center rounded-full shadow-md text-navy-deep border border-gray-200 font-bold text-xl hover:bg-gray-50 transition-colors">H</a>
+              <a href="https://www.facebook.com/Redstagconstructioncompany" target="_blank" rel="noopener noreferrer" className="w-16 h-16 bg-white flex items-center justify-center rounded-full shadow-md text-navy-deep border border-gray-200 font-bold text-xl hover:bg-gray-50 transition-colors">F</a>
             </div>
           </div>
         </div>

@@ -1,0 +1,140 @@
+---
+import { createElement } from 'react';
+import { renderStatic } from '../lib/renderStatic';
+import '../styles.css';
+import interUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import playfairUrl from '@fontsource-variable/playfair-display/files/playfair-display-latin-wght-normal.woff2?url';
+import playfairItalicUrl from '@fontsource-variable/playfair-display/files/playfair-display-latin-wght-italic.woff2?url';
+import { Navbar } from '../components/layout/Navbar';
+import { Footer } from '../components/layout/Footer';
+import { StickyBottomBar } from '../components/layout/StickyBottomBar';
+import { ExitIntentPopup } from '../components/ui/ExitIntentPopup';
+
+interface PageMeta {
+  title?: string;
+  description?: string;
+  robots?: { index?: boolean; follow?: boolean } | string;
+  alternates?: { canonical?: string };
+  openGraph?: Record<string, any>;
+  other?: Record<string, string>;
+}
+
+interface Props {
+  meta?: PageMeta;
+}
+
+const SITE = 'https://redstagcc.com';
+const DEFAULT_TITLE = 'Construction Company & General Contractor in Los Angeles, CA | Red Stag Construction';
+const DEFAULT_DESCRIPTION =
+  'Licensed general contractor in Los Angeles since 2011. Custom homes, ADUs, kitchen & bathroom remodels, home additions, hardscape & fencing. Serving Beverly Hills, Bel Air, Malibu & all of LA.';
+const DEFAULT_OG_IMAGE = `${SITE}/images/og-default.jpg`;
+
+const { meta = {} } = Astro.props;
+const title = meta.title || DEFAULT_TITLE;
+const description = meta.description || DEFAULT_DESCRIPTION;
+const pagePath = Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '').replace(/\/$/, '');
+const canonical = meta.alternates?.canonical || `${SITE}${pagePath}`;
+const og = meta.openGraph || {};
+const ogImage = og.images?.[0]?.url || og.images?.[0] || DEFAULT_OG_IMAGE;
+const robots =
+  typeof meta.robots === 'string'
+    ? meta.robots
+    : meta.robots
+      ? `${meta.robots.index === false ? 'noindex' : 'index'}, ${meta.robots.follow === false ? 'nofollow' : 'follow'}`
+      : null;
+
+const geoImageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ImageObject',
+  name: 'Red Stag Construction — 3211 Cahuenga Boulevard West, STE 207, Los Angeles, CA 90068',
+  contentUrl: `${SITE}/images/projects/trousdale-after.jpg`,
+  url: SITE,
+  contentLocation: {
+    '@type': 'Place',
+    name: '3211 Cahuenga Boulevard West, STE 207, Los Angeles, CA 90068',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '3211 Cahuenga Boulevard West, STE 207',
+      addressLocality: 'Los Angeles',
+      addressRegion: 'CA',
+      postalCode: '90068',
+      addressCountry: 'US',
+    },
+    geo: { '@type': 'GeoCoordinates', latitude: 34.1294, longitude: -118.3533 },
+  },
+};
+
+// Self-hosted variable fonts with metric-matched fallbacks, so text does not
+// shift when the web fonts arrive.
+const fontCss = `
+@font-face{font-family:"Inter Variable";font-style:normal;font-display:swap;font-weight:100 900;src:url(${interUrl}) format("woff2-variations")}
+@font-face{font-family:"Playfair Display Variable";font-style:normal;font-display:swap;font-weight:400 900;src:url(${playfairUrl}) format("woff2-variations")}
+@font-face{font-family:"Playfair Display Variable";font-style:italic;font-display:swap;font-weight:400 900;src:url(${playfairItalicUrl}) format("woff2-variations")}
+@font-face{font-family:"Inter Fallback";src:local(Arial);ascent-override:90.44%;descent-override:22.52%;line-gap-override:0%;size-adjust:107.12%}
+@font-face{font-family:"Playfair Display Fallback";src:local("Times New Roman");ascent-override:97.25%;descent-override:22.56%;line-gap-override:0%;size-adjust:111.26%}
+`.trim();
+
+// Site chrome is shared React markup, rendered once per page at build time.
+const navHtml = renderStatic(createElement(Navbar));
+const footerHtml = renderStatic(createElement(Footer));
+const stickyBarHtml = renderStatic(createElement(StickyBottomBar));
+const popupHtml = renderStatic(createElement(ExitIntentPopup));
+---
+
+<!doctype html>
+<html lang="en" class="h-full antialiased">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {robots && <meta name="robots" content={robots} />}
+    <meta name="theme-color" content="#0F0F0F" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <link rel="preload" href={interUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={playfairUrl} as="font" type="font/woff2" crossorigin />
+    <style is:inline set:html={fontCss}></style>
+
+    <meta property="og:type" content={og.type || 'website'} />
+    <meta property="og:site_name" content="Red Stag Construction" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content={og.url || canonical} />
+    <meta property="og:title" content={og.title || title} />
+    <meta property="og:description" content={og.description || description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Red Stag Construction Los Angeles General Contractor" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@redstagcc" />
+    <meta name="twitter:creator" content="@redstagcc" />
+    <meta name="twitter:title" content={og.title || title} />
+    <meta name="twitter:description" content={og.description || description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="p:domain_verify" content="870e5d384ec35fec08947e8777861f0a" />
+    {Object.entries(meta.other || {}).map(([name, content]) => <meta name={name} content={content} />)}
+
+    <meta name="geo.region" content="US-CA" />
+    <meta name="geo.placename" content="Los Angeles, CA 90068" />
+    <meta name="geo.position" content="34.1294;-118.3533" />
+    <meta name="ICBM" content="34.1294, -118.3533" />
+    <link rel="alternate" type="application/rss+xml" title="Red Stag Construction Verified Citations" href={`${SITE}/citations-feed.xml`} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(geoImageSchema)}></script>
+  </head>
+  <body class="font-sans text-text-body bg-warm-white min-h-full flex flex-col items-stretch justify-start pb-14 md:pb-0">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-white focus:px-4 focus:py-2 focus:text-navy-deep">Skip to content</a>
+    <Fragment set:html={popupHtml} />
+    <Fragment set:html={stickyBarHtml} />
+    <Fragment set:html={navHtml} />
+    <main id="main" class="flex-grow"><slot /></main>
+    <Fragment set:html={footerHtml} />
+    <script>
+      import '../scripts/site.ts';
+    </script>
+  </body>
+</html>

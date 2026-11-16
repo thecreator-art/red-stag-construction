@@ -1,56 +1,8 @@
-'use client';
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+// Static markup. Submitted by src/scripts/site.ts (form[data-lead-form]).
 
 export const BlogSidebarLeadForm = ({ source }: { source: string }) => {
-  const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-    setErrorMsg('');
-
-    const formData = new FormData(event.currentTarget);
-
-    if (formData.get('_honey')) {
-      setIsSubmitting(false);
-      return;
-    }
-
-    const payload = {
-      source,
-      fullName: formData.get('name'),
-      phone: formData.get('phone'),
-    };
-
-    try {
-      const webhookUrl = process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL || '';
-      if (!webhookUrl) {
-        throw new Error('Missing GHL webhook configuration');
-      }
-
-      const response = await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error('Sidebar lead form submission failed');
-      }
-
-      router.push('/thank-you');
-    } catch {
-      setErrorMsg('There was an error sending your request. Please call us directly at');
-      setIsSubmitting(false);
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+    <form data-lead-form className="mt-4 space-y-4">
       <input type="hidden" name="source" value={source} />
       <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
       <div>
@@ -59,7 +11,8 @@ export const BlogSidebarLeadForm = ({ source }: { source: string }) => {
         </label>
         <input
           id="blog-sidebar-name"
-          name="name"
+          name="fullName"
+          data-label="Name"
           type="text"
           required
           className="w-full border border-gray-300 px-4 py-3 text-sm text-text-dark focus:border-accent-red focus:outline-none"
@@ -77,21 +30,15 @@ export const BlogSidebarLeadForm = ({ source }: { source: string }) => {
           className="w-full border border-gray-300 px-4 py-3 text-sm text-text-dark focus:border-accent-red focus:outline-none"
         />
       </div>
-      {errorMsg ? (
-        <p className="text-sm text-accent-red">
-          {errorMsg}{' '}
-          <a href="tel:3239224235" className="font-semibold underline hover:text-[#990000]">
-            (323) 922-4235
-          </a>
-          .
-        </p>
-      ) : null}
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="cta cta-block cta-sm"
-      >
-        {isSubmitting ? 'Sending...' : 'Send Message'}
+      <p data-form-error hidden className="text-sm text-accent-red">
+        There was an error sending your request. Please call us directly at{' '}
+        <a href="tel:3239224235" className="font-semibold underline hover:text-[#990000]">
+          (323) 922-4235
+        </a>
+        .
+      </p>
+      <button type="submit" data-sending-label="Sending..." className="cta cta-block cta-sm">
+        Send Message
       </button>
     </form>
   );

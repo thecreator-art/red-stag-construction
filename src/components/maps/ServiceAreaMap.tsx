@@ -1,5 +1,3 @@
-'use client';
-
 export const ServiceAreaMap = () => {
   return (
     <div className="relative z-0 h-[500px] w-full overflow-hidden rounded-sm border-4 border-white shadow-2xl md:h-[600px]">

@@ -1,0 +1,50 @@
+---
+// Every page in src/app/**/page.tsx is rendered here to static HTML.
+// The page modules keep their original shape: a default component plus
+// `metadata` or `generateMetadata`, and `generateStaticParams` for [slug].
+import { createElement } from 'react';
+import { renderStatic } from '../lib/renderStatic';
+import Base from '../layouts/Base.astro';
+
+type PageModule = {
+  default: (props: any) => any;
+  metadata?: Record<string, any>;
+  generateMetadata?: (props: any) => Promise<Record<string, any>>;
+  generateStaticParams?: () => Promise<{ slug: string }[]> | { slug: string }[];
+};
+
+export async function getStaticPaths() {
+  const pages = import.meta.glob<PageModule>('../app/**/page.tsx');
+  const paths = [];
+
+  for (const [file, load] of Object.entries(pages)) {
+    const route = file.replace('../app', '').replace(/\/page\.tsx$/, '');
+
+    if (route.includes('[slug]')) {
+      const mod = await load();
+      const params = (await mod.generateStaticParams?.()) ?? [];
+      for (const { slug } of params) {
+        paths.push({ params: { path: route.replace('[slug]', slug).slice(1) }, props: { file, slug } });
+      }
+    } else {
+      paths.push({ params: { path: route.slice(1) || undefined }, props: { file } });
+    }
+  }
+
+  return paths;
+}
+
+const { file, slug } = Astro.props as { file: string; slug?: string };
+const pages = import.meta.glob<PageModule>('../app/**/page.tsx');
+const mod = await pages[file]();
+
+const pageProps = { params: Promise.resolve({ slug }), searchParams: Promise.resolve({}) };
+const meta = mod.generateMetadata ? await mod.generateMetadata(pageProps) : mod.metadata;
+
+// Async page components are awaited directly; plain ones go through React.
+const isAsync = mod.default.constructor.name === 'AsyncFunction';
+const element = isAsync ? await mod.default(pageProps) : createElement(mod.default, pageProps);
+const html = renderStatic(element);
+---
+
+<Base meta={meta}><Fragment set:html={html} /></Base>

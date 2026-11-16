@@ -1,0 +1,30 @@
+---
+import { createElement } from 'react';
+import { renderStatic } from '../lib/renderStatic';
+import Base from '../layouts/Base.astro';
+import { SearchBox } from '../components/search/SearchBox';
+
+const meta = {
+  title: 'Search | Red Stag Construction',
+  description: 'Search services, service areas, projects, cost guides, and articles across Red Stag Construction.',
+  robots: { index: false, follow: true },
+  alternates: { canonical: 'https://redstagcc.com/search' },
+};
+const searchBox = renderStatic(
+  createElement(SearchBox, { variant: 'inline', placeholder: 'Search services, areas, guides…' })
+);
+---
+
+<Base meta={meta}>
+  <section class="bg-warm-white" data-search-page>
+    <div class="container mx-auto max-w-4xl px-4 py-16 md:py-24">
+      <h1 class="font-serif text-3xl font-bold text-text-dark md:text-5xl">Search</h1>
+      <p class="mt-3 text-text-body">Find services, service areas, projects, cost guides, and articles.</p>
+      <div class="mt-8"><Fragment set:html={searchBox} /></div>
+      <p data-search-summary class="mt-8 text-sm font-semibold uppercase tracking-wider text-text-body">
+        Enter a search term above to get started.
+      </p>
+      <div data-search-list class="mt-4 divide-y divide-gray-200 border-y border-gray-200"></div>
+    </div>
+  </section>
+</Base>

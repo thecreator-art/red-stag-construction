@@ -7,23 +7,10 @@ import locationsData from '@/data/locations.json';
 import matrixData from '@/data/matrix.json';
 import projectsData from '@/data/projects.json';
 import servicesData from '@/data/services.json';
+import { rankDocs } from './searchRank';
 
-export type SearchDocType =
-  | 'Service'
-  | 'Service Area'
-  | 'Project'
-  | 'Cost Guide'
-  | 'Article'
-  | 'Page';
-
-export interface SearchDoc {
-  title: string;
-  url: string;
-  type: SearchDocType;
-  description: string;
-  /** Extra terms to match against (city, keyword, etc.). */
-  keywords: string;
-}
+export type { SearchDoc, SearchDocType } from './searchRank';
+import type { SearchDoc } from './searchRank';
 
 const clean = (value: unknown, max = 160): string => {
   if (typeof value !== 'string') return '';
@@ -128,37 +115,6 @@ export const SEARCH_DOCS: SearchDoc[] = [
   ...blogDocs,
 ].filter((d) => d.title && d.url);
 
-/**
- * Ranked, case-insensitive search across titles, descriptions, and keywords.
- * Returns the best matches first, capped at `limit`.
- */
 export function searchDocs(query: string, limit = 40): SearchDoc[] {
-  const q = query.trim().toLowerCase();
-  if (!q) return [];
-
-  const terms = q.split(/\s+/).filter(Boolean);
-
-  const scored = SEARCH_DOCS.map((doc) => {
-    const title = doc.title.toLowerCase();
-    const keywords = doc.keywords.toLowerCase();
-    const description = doc.description.toLowerCase();
-    const haystack = `${title} ${keywords} ${description}`;
-
-    let score = 0;
-    for (const term of terms) {
-      if (!haystack.includes(term)) return { doc, score: -1 }; // every term must appear
-      if (title === term) score += 100;
-      if (title.startsWith(term)) score += 40;
-      if (title.includes(term)) score += 25;
-      if (keywords.includes(term)) score += 10;
-      if (description.includes(term)) score += 4;
-    }
-    // Whole-phrase bonus.
-    if (title.includes(q)) score += 30;
-    return { doc, score };
-  })
-    .filter((entry) => entry.score > 0)
-    .sort((a, b) => b.score - a.score);
-
-  return scored.slice(0, limit).map((entry) => entry.doc);
+  return rankDocs(SEARCH_DOCS, query, limit);
 }

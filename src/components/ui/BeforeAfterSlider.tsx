@@ -1,6 +1,3 @@
-'use client';
-
-import { useRef, useState } from 'react';
 import Image from 'next/image';
 
 export interface BeforeAfterSliderProps {
@@ -12,6 +9,8 @@ export interface BeforeAfterSliderProps {
   altText?: string;
 }
 
+// Static markup driven by one CSS variable (--pos). Dragging is handled by
+// src/scripts/site.ts ([data-ba]). Without JavaScript it rests at 50%.
 export const BeforeAfterSlider = ({
   beforeImage,
   afterImage,
@@ -20,79 +19,28 @@ export const BeforeAfterSlider = ({
   className = '',
   altText = 'Before and After Project Comparison',
 }: BeforeAfterSliderProps) => {
-  const [sliderPosition, setSliderPosition] = useState(50);
-  const interactionLayerRef = useRef<HTMLDivElement>(null);
-  const isDraggingRef = useRef(false);
-  const activePointerIdRef = useRef<number | null>(null);
-
-  const updateSliderPosition = (clientX: number, rect: DOMRect) => {
-    const percentage = ((clientX - rect.left) / rect.width) * 100;
-    const clampedPercentage = Math.min(100, Math.max(0, percentage));
-    setSliderPosition(clampedPercentage);
-  };
-
-  const setCursor = (cursor: 'grab' | 'grabbing') => {
-    if (interactionLayerRef.current) {
-      interactionLayerRef.current.style.cursor = cursor;
-    }
-  };
-
-  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-
-    isDraggingRef.current = true;
-    activePointerIdRef.current = event.pointerId;
-    event.currentTarget.setPointerCapture(event.pointerId);
-    setCursor('grabbing');
-    updateSliderPosition(event.clientX, rect);
-  };
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDraggingRef.current || activePointerIdRef.current !== event.pointerId) {
-      return;
-    }
-
-    const rect = event.currentTarget.getBoundingClientRect();
-    updateSliderPosition(event.clientX, rect);
-  };
-
-  const handlePointerEnd = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (activePointerIdRef.current !== event.pointerId) {
-      return;
-    }
-
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
-
-    isDraggingRef.current = false;
-    activePointerIdRef.current = null;
-    setCursor('grab');
-  };
-
   return (
-    <div className={`relative aspect-[3/2] w-full overflow-hidden bg-navy-deep ${className}`}>
+    <div
+      data-ba
+      className={`relative aspect-[3/2] w-full overflow-hidden bg-navy-deep ${className}`}
+      style={{ ['--pos' as string]: '50%' }}
+    >
       <Image
         src={afterImage}
-        alt={altText}
+        alt={`${altText} (after)`}
         fill
-        priority
         sizes="(max-width: 768px) 100vw, 50vw"
         className="pointer-events-none object-cover"
       />
 
       <div
         className="pointer-events-none absolute inset-0 overflow-hidden"
-        style={{
-          clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`,
-          willChange: 'clip-path',
-        }}
+        style={{ clipPath: 'inset(0 calc(100% - var(--pos)) 0 0)' }}
       >
         <Image
           src={beforeImage}
-          alt={altText}
+          alt={`${altText} (before)`}
           fill
-          priority
           sizes="(max-width: 768px) 100vw, 50vw"
           className="pointer-events-none object-cover"
         />
@@ -100,14 +48,14 @@ export const BeforeAfterSlider = ({
 
       <div
         className="pointer-events-none absolute inset-y-0 z-20 w-px -translate-x-1/2 bg-accent-red shadow-[0_0_14px_rgba(0,0,0,0.45)]"
-        style={{ left: `${sliderPosition}%` }}
+        style={{ left: 'var(--pos)' }}
       />
 
       <div
         className="pointer-events-none absolute top-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-accent-red bg-navy-deep text-white shadow-xl"
-        style={{ left: `${sliderPosition}%` }}
+        style={{ left: 'var(--pos)' }}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-6 w-6">
           <path d="M8 5v14l-6-7 6-7zM16 5v14l6-7-6-7z" />
         </svg>
       </div>
@@ -120,13 +68,14 @@ export const BeforeAfterSlider = ({
       </div>
 
       <div
-        ref={interactionLayerRef}
-        className="absolute inset-0 z-40 cursor-grab touch-none"
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerEnd}
-        onPointerCancel={handlePointerEnd}
+        data-ba-handle
+        role="slider"
+        tabIndex={0}
         aria-label="Before and after image comparison slider"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={50}
+        className="absolute inset-0 z-40 cursor-grab touch-pan-y"
       />
     </div>
   );

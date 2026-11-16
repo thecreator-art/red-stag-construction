@@ -11,13 +11,26 @@
   --color-text-body: #3D3D3D;
   --color-white: #FFFFFF;
 
-  --font-sans: var(--font-inter), Arial, sans-serif;
-  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-sans: "Inter Variable", "Inter Fallback", Arial, sans-serif;
+  --font-serif: "Playfair Display Variable", "Playfair Display Fallback", Georgia, serif;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
   }
 
   body {
@@ -38,7 +51,7 @@
   }
   
   h3 {
-    color: var(--color-accent-red);
+    color: var(--accent-text, var(--color-accent-red));
   }
 
   a,
@@ -226,3 +239,45 @@
 /* vaultio-mobile-stacked-tables */
 @media (max-width: 680px) { table, thead, tbody, th, td, tr { display: block !important; width: 100% !important; box-sizing: border-box !important; } thead tr { position: absolute !important; top: -9999px !important; left: -9999px !important; } tbody tr { margin-bottom: 12px !important; border: 1px solid rgba(128,128,128,0.25) !important; border-radius: 10px !important; padding: 10px 12px !important; } tbody td { border: none !important; border-bottom: 1px solid rgba(128,128,128,0.12) !important; padding: 6px 0 !important; text-align: left !important; white-space: normal !important; word-break: break-word !important; } tbody td:last-child { border-bottom: none !important; } tbody td[data-label]::before { content: attr(data-label) ": "; font-weight: 700 !important; opacity: 0.75 !important; } }
 /* /vaultio-mobile-stacked-tables */
+
+/* ---------------------------------------------------------------
+   Contrast. Brand red (#CC0000) and mid greys fail WCAG AA on navy.
+   Dark containers switch red text to a lighter red and muted text to
+   a lighter grey; light containers switch them back. Custom properties
+   inherit from the nearest container, so nesting works either way.
+   --------------------------------------------------------------- */
+:root,
+.bg-white,
+.bg-warm-white,
+.bg-warm-grey,
+.bg-white\/95,
+.bg-gray-50,
+.bg-gray-100,
+.bg-\[\#F5F0E8\],
+.bg-\[\#F0EDE8\],
+.bg-\[\#F8F6F2\] {
+  --accent-text: #c00000;
+  --muted-text: #4a5565;
+}
+
+footer,
+.bg-navy-deep,
+.bg-navy-light,
+.bg-black,
+.bg-\[\#0f2b44\],
+.bg-navy-deep\/40,
+.bg-navy-deep\/50,
+.bg-navy-deep\/75,
+.bg-navy-deep\/80 {
+  --accent-text: #ff7575;
+  --muted-text: #a9b1bd;
+}
+
+.text-accent-red {
+  color: var(--accent-text);
+}
+
+.text-gray-400,
+.text-gray-500 {
+  color: var(--muted-text);
+}

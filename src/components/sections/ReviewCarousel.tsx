@@ -1,6 +1,6 @@
-'use client';
-import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
+// Static markup. The reviews are repeated four times so the strip can loop.
+// Auto-scroll and drag are handled by src/scripts/site.ts ([data-ticker]);
+// without JavaScript it is a normal horizontally scrollable row.
 
 export interface Review {
   id: string;
@@ -16,54 +16,6 @@ interface ReviewCarouselProps {
 }
 
 export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const firstGroupRef = useRef<HTMLDivElement>(null);
-  const dragState = useRef({ isDragging: false, startX: 0, startScrollLeft: 0 });
-  const [isPaused, setIsPaused] = useState(false);
-
-  // Seamless infinite loop native scrolling logic
-  useEffect(() => {
-    let animationFrameId: number;
-    let lastTime = performance.now();
-    const speed = 0.06; // Pixels per millisecond
-    const scrollNode = scrollRef.current;
-    
-    // Jump the scroll position immediately on mount to be in the "middle" 
-    // so users can immediately swipe left (backwards) infinitely.
-    if (scrollNode && firstGroupRef.current) {
-      scrollNode.scrollLeft = firstGroupRef.current.offsetWidth + 32;
-    }
-
-    const animateScroll = (time: number) => {
-      const delta = Math.min(time - lastTime, 50); // Cap extreme delta spikes
-      lastTime = time;
-
-      if (scrollNode && firstGroupRef.current) {
-        // Gap is 32px (gap-8 = 2rem)
-        const loopWidth = firstGroupRef.current.offsetWidth + 32;
-
-        // Apply auto-scroll if neither paused nor actively dragged by user
-        if (!isPaused && !dragState.current.isDragging) {
-          scrollNode.scrollLeft += delta * speed;
-        }
-
-        // Loop forward constraint (if they swiped past the middle)
-        if (scrollNode.scrollLeft >= loopWidth * 2) {
-          scrollNode.scrollLeft -= loopWidth;
-        } 
-        // Loop backward constraint (if they swiped aggressively left)
-        else if (scrollNode.scrollLeft <= loopWidth * 0.5) {
-          scrollNode.scrollLeft += loopWidth;
-        }
-      }
-
-      animationFrameId = requestAnimationFrame(animateScroll);
-    };
-
-    animationFrameId = requestAnimationFrame(animateScroll);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [isPaused]);
-
   if (!reviews || reviews.length === 0) return null;
 
   const getPlatformIcon = (platform: string) => {
@@ -79,13 +31,7 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
     }
     if (platform === 'Yelp') {
       return (
-        <Image 
-          src="/images/brand/yelp-icon.png" 
-          alt="Yelp" 
-          width={20} 
-          height={20} 
-          className="object-contain" 
-        />
+        <img src="/images/brand/yelp-icon.png" alt="Yelp" width={20} height={20} className="object-contain" />
       );
     }
     if (platform === 'Houzz') {
@@ -98,39 +44,6 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
     return null;
   };
 
-  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    const node = scrollRef.current;
-    if (!node) return;
-
-    dragState.current = {
-      isDragging: true,
-      startX: event.clientX,
-      startScrollLeft: node.scrollLeft,
-    };
-
-    setIsPaused(true);
-    node.setPointerCapture(event.pointerId);
-  };
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    const node = scrollRef.current;
-    if (!node || !dragState.current.isDragging) return;
-
-    const distance = event.clientX - dragState.current.startX;
-    node.scrollLeft = dragState.current.startScrollLeft - distance;
-  };
-
-  const handlePointerEnd = (event: React.PointerEvent<HTMLDivElement>) => {
-    const node = scrollRef.current;
-    if (!node) return;
-
-    dragState.current.isDragging = false;
-    if (node.hasPointerCapture(event.pointerId)) {
-      node.releasePointerCapture(event.pointerId);
-    }
-    setIsPaused(false);
-  };
-
   return (
     <section className={`relative w-full overflow-hidden bg-[#F0EDE8] px-6 py-20 md:px-12 ${className}`}>
       <div className="mx-auto max-w-7xl">
@@ -139,23 +52,16 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
         </div>
 
         <div
-          ref={scrollRef}
-          className="relative z-[1] flex overflow-x-auto overflow-y-hidden scrollbar-none cursor-grab touch-pan-x select-none"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onTouchStart={() => setIsPaused(true)}
-          onTouchEnd={() => setIsPaused(false)}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerEnd}
-          onPointerCancel={handlePointerEnd}
+          data-ticker
+          className="scrollbar-none relative z-[1] flex cursor-grab touch-pan-x select-none overflow-x-auto overflow-y-hidden"
         >
           <div className="flex w-max gap-8 px-4">
             {/* Render 4 identical groups to guarantee infinite visual bleed in both directions */}
             {[0, 1, 2, 3].map((groupIndex) => (
               <div 
-                key={groupIndex} 
-                ref={groupIndex === 0 ? firstGroupRef : null}
+                key={groupIndex}
+                data-ticker-group
+                aria-hidden={groupIndex === 0 ? undefined : true}
                 className="ticker-group flex gap-8"
               >
                 {reviews.map((review) => (
@@ -191,16 +97,6 @@ export const ReviewCarousel = ({ reviews, className = '' }: ReviewCarouselProps)
         </div>
       </div>
 
-      <style jsx>{`
-        .scrollbar-none {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-
-        .scrollbar-none::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </section>
   );
 };

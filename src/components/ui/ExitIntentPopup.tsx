@@ -1,142 +1,16 @@
-'use client';
-import { useState, useEffect } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+// Static markup, hidden by default. Shown after one minute on the page (and on
+// exit intent after that) by src/scripts/site.ts ([data-exit-popup]).
 
 export const ExitIntentPopup = () => {
-  const pathname = usePathname();
-  const router = useRouter();
-  
-  const [isVisible, setIsVisible] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    // Suppress specifically tracking the thank you conversion route
-    if (pathname === '/thank-you') return;
-
-    // Reject execution if session token verifies prior appearance
-    if (sessionStorage.getItem('redstag_exit_intent') === 'true') return;
-
-    // Minimum on-page time before the popup is allowed to appear at all.
-    const POPUP_DELAY_MS = 60000;
-    let armed = false;
-
-    // Desktop Mouseleave bound detection — ignored until the delay has elapsed
-    const handleMouseLeave = (e: MouseEvent) => {
-      // Fire exclusively if trajectory crosses the top 10px Y bounds, after arming
-      if (armed && e.clientY < 10) {
-        triggerPopup();
-      }
-    };
-
-    const triggerPopup = () => {
-      setIsVisible(true);
-      sessionStorage.setItem('redstag_exit_intent', 'true');
-      document.removeEventListener('mouseleave', handleMouseLeave);
-    };
-
-    document.addEventListener('mouseleave', handleMouseLeave);
-
-    // One-minute attention threshold for all devices
-    const timer = setTimeout(() => {
-      armed = true;
-      if (!sessionStorage.getItem('redstag_exit_intent')) {
-        triggerPopup();
-      }
-    }, POPUP_DELAY_MS);
-
-    return () => {
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      clearTimeout(timer);
-    };
-  }, [pathname]);
-
-  const validateFieldValues = (formData: FormData) => {
-    const nextErrors: Record<string, string> = {};
-
-    if (!String(formData.get('fullName') || '').trim()) {
-      nextErrors.fullName = 'Full Name is required.';
-    }
-
-    if (!String(formData.get('phone') || '').trim()) {
-      nextErrors.phone = 'Phone Number is required.';
-    }
-
-    return nextErrors;
-  };
-
-  const clearFieldError = (field: string) => {
-    setFieldErrors((current) => {
-      if (!current[field]) return current;
-      const next = { ...current };
-      delete next[field];
-      return next;
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setErrorMsg('');
-
-    const formData = new FormData(e.currentTarget);
-    
-    // Explicit Honeypot Validation handling silent failures against bots
-    if (formData.get('_honey')) {
-      setIsSubmitting(false);
-      return; 
-    }
-
-    const nextErrors = validateFieldValues(formData);
-    if (Object.keys(nextErrors).length > 0) {
-      setFieldErrors(nextErrors);
-      setIsSubmitting(false);
-      return;
-    }
-
-    setFieldErrors({});
-
-    const payload = {
-      fullName: String(formData.get('fullName') || ''),
-      phone: String(formData.get('phone') || ''),
-      formContext: 'Exit Intent Action - High Priority', // Meta Tracking Key
-      source: 'Exit Popup Form',
-    };
-
-    try {
-      const webhookUrl = process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL
-        || 'https://services.leadconnectorhq.com/hooks/9in8SPNBkkEtL4Iq1Xne/webhook-trigger/cc074b4f-2041-4991-a61d-99eb8ecb8df2';
-
-      console.log('ExitIntentPopup payload', payload);
-
-      const response = await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      if (response.ok) {
-        setIsVisible(false);
-        router.push('/thank-you');
-      } else {
-        throw new Error('Transmission Failed');
-      }
-    } catch {
-      setErrorMsg('Error contacting servers. Please call us directly at');
-      setIsSubmitting(false);
-    }
-  };
-
-  if (!isVisible) return null;
-
   return (
     // z sits above the GoHighLevel chat widget (z-index 99999999) so the modal is not covered.
-    <div className="fixed inset-0 z-[100000000] flex items-center justify-center bg-navy-deep/80 p-4 backdrop-blur-sm">
-      <div className="relative z-[1] w-full max-w-lg animate-in zoom-in-95 rounded-sm border-t-4 border-accent-red bg-navy-deep p-8 shadow-2xl duration-300">
+    <div data-exit-popup hidden role="dialog" aria-modal="true" aria-labelledby="exit-popup-title" className="fixed inset-0 z-[100000000] flex items-center justify-center bg-navy-deep/80 p-4 backdrop-blur-sm">
+      <div className="relative z-[1] w-full max-w-lg rounded-sm border-t-4 border-accent-red bg-navy-deep p-8 shadow-2xl duration-300">
         
-        <button 
-          onClick={() => setIsVisible(false)}
+        <button
+          type="button"
+          data-exit-close
+          aria-label="Close"
           className="absolute top-4 right-4 z-[2] text-gray-500 transition-colors hover:text-white"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
@@ -152,42 +26,33 @@ export const ExitIntentPopup = () => {
           />
         </div>
 
-        <h2 className="text-3xl font-serif font-bold text-center text-white mb-3 leading-tight">Before You Go — Get a Free Estimate</h2>
+        <h2 id="exit-popup-title" className="text-3xl font-serif font-bold text-center text-white mb-3 leading-tight">Before You Go — Get a Free Estimate</h2>
         <p className="mb-6 text-center text-sm leading-relaxed text-gray-300">
           Design-build specialists serving Greater Los Angeles since 2011. Leave your name and number and our team will call you back — usually same day.
         </p>
         
-        {/* Persistent Error State Dropdown */}
-        {errorMsg && (
-          <div className="mb-6 p-4 bg-red-900/40 border-l-4 border-accent-red text-white text-sm text-center">
-            {errorMsg}{' '}
+        <form data-lead-form data-extra='{"formContext":"Exit Intent Action - High Priority","source":"Exit Popup Form"}' className="relative z-[1] space-y-4">
+          <div data-form-error hidden className="p-4 bg-red-900/40 border-l-4 border-accent-red text-white text-sm text-center">
+            Error contacting servers. Please call us directly at{' '}
             <a href="tel:3239224235" className="font-semibold underline hover:text-accent-red">
               (323) 922-4235
             </a>
             .
           </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="relative z-[1] space-y-4">
           {/* Honeypot Security Payload */}
           <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
 
           <div>
-            <input required type="text" name="fullName" aria-invalid={Boolean(fieldErrors.fullName)} onChange={() => clearFieldError('fullName')} placeholder="Full Name" className="w-full rounded-sm border border-white/15 bg-white/5 px-4 py-3 text-white placeholder:text-gray-400 transition-colors focus:border-accent-red focus:outline-none focus:ring-2 focus:ring-accent-red/20" />
-            {fieldErrors.fullName ? <p className="mt-2 text-sm text-accent-red">{fieldErrors.fullName}</p> : null}
+            <input required type="text" name="fullName" data-label="Full Name" aria-label="Full Name" placeholder="Full Name" className="w-full rounded-sm border border-white/15 bg-white/5 px-4 py-3 text-white placeholder:text-gray-400 transition-colors focus:border-accent-red focus:outline-none focus:ring-2 focus:ring-accent-red/20" />
+            <p data-error-for="fullName" hidden className="mt-2 text-sm text-accent-red" />
           </div>
           <div>
-            <input required type="tel" name="phone" aria-invalid={Boolean(fieldErrors.phone)} onChange={() => clearFieldError('phone')} placeholder="Phone Number" className="w-full rounded-sm border border-white/15 bg-white/5 px-4 py-3 text-white placeholder:text-gray-400 transition-colors focus:border-accent-red focus:outline-none focus:ring-2 focus:ring-accent-red/20" />
-            {fieldErrors.phone ? <p className="mt-2 text-sm text-accent-red">{fieldErrors.phone}</p> : null}
+            <input required type="tel" name="phone" data-label="Phone Number" aria-label="Phone Number" placeholder="Phone Number" className="w-full rounded-sm border border-white/15 bg-white/5 px-4 py-3 text-white placeholder:text-gray-400 transition-colors focus:border-accent-red focus:outline-none focus:ring-2 focus:ring-accent-red/20" />
+            <p data-error-for="phone" hidden className="mt-2 text-sm text-accent-red" />
           </div>
 
-          <button disabled={isSubmitting} type="submit" className="cta cta-block mt-2">
-            {isSubmitting ? (
-              <span className="flex items-center">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                Processing...
-              </span>
-            ) : "Get My Free Estimate"}
+          <button type="submit" data-sending-label="Processing..." className="cta cta-block mt-2">
+            Get My Free Estimate
           </button>
         </form>
 

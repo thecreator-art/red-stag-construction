@@ -103,15 +103,15 @@ export default async function ProjectPage({ params }: PageProps) {
 
           <div className="mt-12 grid grid-cols-1 gap-5 border-t border-white/10 pt-8 text-left md:grid-cols-3">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/40">Location</p>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/70">Location</p>
               <p className="mt-3 text-xl font-semibold text-white">{project.location}</p>
             </div>
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/40">Project Type</p>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/70">Project Type</p>
               <p className="mt-3 text-xl font-semibold text-white">{project.category}</p>
             </div>
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/40">Need pricing?</p>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/70">Need pricing?</p>
               <a
                 href="tel:3239224235"
                 className="mt-3 inline-block text-xl font-semibold text-white transition-opacity hover:opacity-80"

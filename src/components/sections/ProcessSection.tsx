@@ -1,6 +1,3 @@
-'use client';
-import { motion } from 'framer-motion';
-
 export const ProcessSection = () => {
   const steps = [
     { num: '01', title: 'Consult', desc: 'We walk the property, analyze the structural realities, and discuss your exact vision and budget boundaries.' },
@@ -22,12 +19,8 @@ export const ProcessSection = () => {
           <div className="hidden lg:block absolute top-[60px] left-[15%] right-[15%] h-[2px] bg-gray-200 z-0 border-t border-dashed border-gray-300"></div>
 
           {steps.map((step, i) => (
-            <motion.div 
-              key={i} 
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.7, delay: i * 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
+            <div
+              key={i}
               className="relative z-10 flex flex-col items-center md:items-start lg:items-center text-center md:text-left lg:text-center group"
             >
               <div className="mb-6 inline-block border-b-2 border-accent-red pb-2 leading-none">
@@ -35,7 +28,7 @@ export const ProcessSection = () => {
               </div>
               <h3 className="text-2xl font-bold uppercase tracking-widest text-[#111] mb-5">{step.title}</h3>
               <p className="text-gray-600 leading-relaxed max-w-sm font-serif">{step.desc}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

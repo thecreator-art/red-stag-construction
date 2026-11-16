@@ -1,9 +1,9 @@
-'use client';
-
-import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/Button';
 import { SearchBox } from '../search/SearchBox';
+
+// Static markup. Open/closed and scrolled states are data attributes toggled
+// by src/scripts/site.ts ([data-nav]); Tailwind group-data variants do the rest.
 
 const services = [
   {
@@ -86,96 +86,36 @@ const cities = [
   { name: 'San Fernando', slug: '/general-contractor-san-fernando' }
 ];
 
-type DesktopMenu = 'services' | 'areas' | null;
-
 export const Navbar = () => {
-  const navbarRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-  const [mobileAreasOpen, setMobileAreasOpen] = useState(false);
-  const [activeDesktopMenu, setActiveDesktopMenu] = useState<DesktopMenu>(null);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 24);
-      setActiveDesktopMenu(null);
-      setMobileServicesOpen(false);
-      setMobileAreasOpen(false);
-    };
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (!navbarRef.current?.contains(event.target as Node)) {
-        setActiveDesktopMenu(null);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
-
-  const closeMobileMenu = () => {
-    setIsOpen(false);
-    setMobileServicesOpen(false);
-    setMobileAreasOpen(false);
-    setActiveDesktopMenu(null);
-  };
-
-  const toggleDesktopMenu = (menu: Exclude<DesktopMenu, null>) => {
-    setActiveDesktopMenu((current) => (current === menu ? null : menu));
-  };
-
   return (
-    <div
-      ref={navbarRef}
-      className="sticky top-0 z-50 w-full"
-    >
+    <div data-nav className="group/nav sticky top-0 z-50 w-full">
       <header
-        className={`w-full border-b border-white/10 bg-navy-deep text-white transition-[height,box-shadow] duration-300 ${
-          isScrolled ? 'shadow-[0_12px_30px_rgba(10,24,38,0.22)]' : ''
-        }`}
+        className="w-full border-b border-white/10 bg-navy-deep text-white transition-[height,box-shadow] duration-300 group-data-[scrolled]/nav:shadow-[0_12px_30px_rgba(10,24,38,0.22)]"
       >
         <div
-          className={`container mx-auto flex items-center justify-between px-4 transition-[height] duration-300 ${
-            isScrolled ? 'h-[72px]' : 'h-24 md:h-28'
-          }`}
+          className="container mx-auto flex h-24 items-center justify-between px-4 transition-[height] duration-300 md:h-28 group-data-[scrolled]/nav:h-[72px]"
         >
-          <Link href="/" className="flex shrink-0 items-center" onClick={closeMobileMenu}>
+          <Link href="/" className="flex shrink-0 items-center">
             <img
               src="/images/logo/logo-primary.png"
               alt="Red Stag Construction Corporation"
-              className={`w-auto object-contain transition-[height] duration-300 ${
-                isScrolled ? 'h-14 md:h-16' : 'h-20 md:h-24'
-              }`}
+              width={290}
+              height={128}
+              sizes="(max-width: 767px) 190px, 220px"
+              data-priority="eager"
+              className="h-20 w-auto object-contain transition-[height] duration-300 md:h-24 group-data-[scrolled]/nav:h-14 md:group-data-[scrolled]/nav:h-16"
             />
           </Link>
 
           <nav className="hidden xl:flex items-center space-x-6 whitespace-nowrap text-sm font-semibold tracking-wide 2xl:space-x-8">
             <Link href="/" className="hover:text-accent-red transition-colors">Home</Link>
 
-            <div className="relative">
+            <div className="group/menu relative" data-menu>
               <button
                 type="button"
+                data-menu-toggle
                 className="flex min-h-11 items-center gap-2 transition-colors hover:text-accent-red"
-                onClick={() => toggleDesktopMenu('services')}
-                aria-expanded={activeDesktopMenu === 'services'}
+                aria-expanded="false"
               >
                 Services
                 <svg
@@ -183,24 +123,17 @@ export const Navbar = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  className={`h-4 w-4 transition-transform duration-200 ${
-                    activeDesktopMenu === 'services' ? 'rotate-180' : ''
-                  }`}
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform duration-200 group-data-[open]/menu:rotate-180"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m6 9 6 6 6-6" />
                 </svg>
               </button>
               <div
-                className={`absolute left-0 top-full pt-4 ${
-                  activeDesktopMenu === 'services' ? 'pointer-events-auto' : 'pointer-events-none'
-                }`}
+                className="absolute left-0 top-full pt-4 pointer-events-none group-data-[open]/menu:pointer-events-auto"
               >
                 <div
-                  className={`w-[920px] max-w-[calc(100vw-2rem)] rounded-sm border border-white/10 bg-navy-deep p-8 shadow-[0_18px_50px_rgba(10,24,38,0.35)] transition-all duration-200 ${
-                    activeDesktopMenu === 'services'
-                      ? 'visible translate-y-0 opacity-100 pointer-events-auto'
-                      : 'invisible -translate-y-2 opacity-0 pointer-events-none'
-                  }`}
+                  className="w-[920px] max-w-[calc(100vw-2rem)] whitespace-normal rounded-sm border border-white/10 bg-navy-deep p-8 shadow-[0_18px_50px_rgba(10,24,38,0.35)] transition-all duration-200 invisible -translate-y-2 opacity-0 pointer-events-none group-data-[open]/menu:visible group-data-[open]/menu:translate-y-0 group-data-[open]/menu:opacity-100 group-data-[open]/menu:pointer-events-auto"
                 >
                   <div className="grid grid-cols-[minmax(0,1fr)_280px] gap-8">
                     <div className="grid grid-cols-3 gap-4">
@@ -220,7 +153,7 @@ export const Navbar = () => {
                         <h3 className="font-serif text-3xl font-bold text-white">Start Your Project</h3>
                         <p className="mt-3 text-sm text-gray-400">Free consultations. No obligation.</p>
                       </div>
-                      <Button href="/contact" variant="primary" className="mt-8 w-full">
+                      <Button href="/contact" variant="primary" className="cta-sm mt-8 w-full">
                         Get a Free Estimate
                       </Button>
                     </div>
@@ -231,12 +164,12 @@ export const Navbar = () => {
 
             <Link href="/our-work" className="hover:text-accent-red transition-colors">Our Work</Link>
 
-            <div className="relative">
+            <div className="group/menu relative" data-menu>
               <button
                 type="button"
+                data-menu-toggle
                 className="flex min-h-11 items-center gap-2 transition-colors hover:text-accent-red"
-                onClick={() => toggleDesktopMenu('areas')}
-                aria-expanded={activeDesktopMenu === 'areas'}
+                aria-expanded="false"
               >
                 Areas We Serve
                 <svg
@@ -244,24 +177,17 @@ export const Navbar = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  className={`h-4 w-4 transition-transform duration-200 ${
-                    activeDesktopMenu === 'areas' ? 'rotate-180' : ''
-                  }`}
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform duration-200 group-data-[open]/menu:rotate-180"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m6 9 6 6 6-6" />
                 </svg>
               </button>
               <div
-                className={`absolute left-1/2 top-full -translate-x-1/2 pt-4 ${
-                  activeDesktopMenu === 'areas' ? 'pointer-events-auto' : 'pointer-events-none'
-                }`}
+                className="absolute left-1/2 top-full -translate-x-1/2 pt-4 pointer-events-none group-data-[open]/menu:pointer-events-auto"
               >
                 <div
-                  className={`w-[760px] rounded-sm border border-white/10 bg-navy-deep p-8 shadow-[0_18px_50px_rgba(10,24,38,0.35)] transition-all duration-200 ${
-                    activeDesktopMenu === 'areas'
-                      ? 'visible translate-y-0 opacity-100 pointer-events-auto'
-                      : 'invisible -translate-y-2 opacity-0 pointer-events-none'
-                  }`}
+                  className="w-[760px] whitespace-normal rounded-sm border border-white/10 bg-navy-deep p-8 shadow-[0_18px_50px_rgba(10,24,38,0.35)] transition-all duration-200 invisible -translate-y-2 opacity-0 pointer-events-none group-data-[open]/menu:visible group-data-[open]/menu:translate-y-0 group-data-[open]/menu:opacity-100 group-data-[open]/menu:pointer-events-auto"
                 >
                   <div className="grid grid-cols-4 gap-x-8 gap-y-4">
                     {cities.map((city) => (
@@ -294,125 +220,93 @@ export const Navbar = () => {
               Get an Estimate
             </Button>
             <button
+              type="button"
+              data-nav-toggle
               className="min-h-11 min-w-11 p-2 text-white xl:hidden"
-              onClick={() => setIsOpen((current) => !current)}
-              aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              aria-expanded={isOpen}
+              aria-label="Open navigation menu"
+              aria-expanded="false"
+              aria-controls="mobile-menu"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8">
-                {isOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18 18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" className="h-8 w-8">
+                <path className="group-data-[menu-open]/nav:hidden" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <path className="hidden group-data-[menu-open]/nav:block" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18 18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
         </div>
       </header>
 
-      {isOpen && (
         <div
-          className={`fixed inset-0 z-40 bg-navy-deep xl:hidden ${
-            isScrolled ? 'pt-[72px]' : 'pt-24'
-          }`}
+          id="mobile-menu"
+          hidden
+          className="fixed inset-0 z-40 bg-navy-deep pt-24 xl:hidden group-data-[scrolled]/nav:pt-[72px]"
         >
           <div className="flex h-full flex-col overflow-y-auto border-t border-white/10 px-5 py-6">
             <div className="mb-4">
-              <SearchBox variant="inline" placeholder="Search the site…" onNavigate={closeMobileMenu} />
+              <SearchBox variant="inline" placeholder="Search the site…" />
             </div>
             <nav className="flex flex-col gap-2 text-lg font-semibold">
-              <Link href="/" className="block min-h-11 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
+              <Link href="/" className="block min-h-11 px-3 py-3 text-white transition-colors hover:text-accent-red">
                 Home
               </Link>
 
-              <div className="border-t border-white/10 pt-2">
-                <button
-                  className="flex min-h-11 w-full items-center justify-between px-3 py-3 text-left text-white transition-colors hover:text-accent-red"
-                  onClick={() => {
-                    setMobileServicesOpen((current) => !current);
-                    setMobileAreasOpen(false);
-                  }}
-                  aria-expanded={mobileServicesOpen}
-                >
+              <details name="mobile-nav" className="group/sub border-t border-white/10 pt-2">
+                <summary className="flex min-h-11 w-full cursor-pointer list-none items-center justify-between px-3 py-3 text-left text-white transition-colors hover:text-accent-red [&::-webkit-details-marker]:hidden">
                   <span>Services</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    className={`h-5 w-5 transition-transform duration-200 ${mobileServicesOpen ? 'rotate-180' : ''}`}
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" className="h-5 w-5 transition-transform duration-200 group-open/sub:rotate-180">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m6 9 6 6 6-6" />
                   </svg>
-                </button>
-                {mobileServicesOpen && (
+                </summary>
                   <div className="space-y-2 px-3 pb-2">
                     {services.map((service) => (
                       <Link
                         key={service.slug}
                         href={service.slug}
                         className="block min-h-11 rounded-sm border border-white/10 bg-white/5 px-4 py-3 transition-all duration-200 hover:border-accent-red hover:bg-white/8"
-                        onClick={closeMobileMenu}
+                       
                       >
                         <span className="block font-sans text-sm font-bold text-white">{service.name}</span>
                         <span className="mt-1 block text-xs text-gray-400">{service.description}</span>
                       </Link>
                     ))}
                   </div>
-                )}
-              </div>
+              </details>
 
-              <Link href="/our-work" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
+              <Link href="/our-work" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red">
                 Our Work
               </Link>
 
-              <div className="border-t border-white/10 pt-2">
-                <button
-                  className="flex min-h-11 w-full items-center justify-between px-3 py-3 text-left text-white transition-colors hover:text-accent-red"
-                  onClick={() => {
-                    setMobileAreasOpen((current) => !current);
-                    setMobileServicesOpen(false);
-                  }}
-                  aria-expanded={mobileAreasOpen}
-                >
+              <details name="mobile-nav" className="group/sub border-t border-white/10 pt-2">
+                <summary className="flex min-h-11 w-full cursor-pointer list-none items-center justify-between px-3 py-3 text-left text-white transition-colors hover:text-accent-red [&::-webkit-details-marker]:hidden">
                   <span>Areas We Serve</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    className={`h-5 w-5 transition-transform duration-200 ${mobileAreasOpen ? 'rotate-180' : ''}`}
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" className="h-5 w-5 transition-transform duration-200 group-open/sub:rotate-180">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m6 9 6 6 6-6" />
                   </svg>
-                </button>
-                {mobileAreasOpen && (
+                </summary>
                   <div className="grid grid-cols-2 gap-2 px-3 pb-2">
                     {cities.map((city) => (
                       <Link
                         key={city.slug}
                         href={city.slug}
                         className="block min-h-11 rounded-sm border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-gray-100 transition-all duration-200 hover:border-accent-red hover:bg-white/8"
-                        onClick={closeMobileMenu}
+                       
                       >
                         {city.name}
                       </Link>
                     ))}
                   </div>
-                )}
-              </div>
+              </details>
 
-              <Link href="/about" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
+              <Link href="/about" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red">
                 About
               </Link>
-              <Link href="/faq" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
+              <Link href="/faq" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red">
                 FAQ
               </Link>
-              <Link href="/pricing" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
+              <Link href="/pricing" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red">
                 Pricing
               </Link>
-              <Link href="/blog" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red" onClick={closeMobileMenu}>
+              <Link href="/blog" className="block min-h-11 border-t border-white/10 px-3 py-3 text-white transition-colors hover:text-accent-red">
                 Blog
               </Link>
             </nav>
@@ -424,14 +318,13 @@ export const Navbar = () => {
               <Link
                 href="/contact"
                 className="cta cta-block"
-                onClick={closeMobileMenu}
+               
               >
                 Get an Estimate
               </Link>
             </div>
           </div>
         </div>
-      )}
     </div>
   );
 };

@@ -216,7 +216,7 @@ export default async function CostGuidePage({ params }: PageProps) {
             <div className="space-y-6 mb-16">
               {guide.faqs.map((faq, i) => (
                 <div key={i} className="bg-warm-white p-6 rounded border border-gray-200">
-                  <h4 className="font-bold text-lg text-text-dark mb-3">{faq.q}</h4>
+                  <h3 className="font-sans font-bold text-lg text-text-dark mb-3">{faq.q}</h3>
                   <p className="text-text-body leading-relaxed">{faq.a}</p>
                 </div>
               ))}

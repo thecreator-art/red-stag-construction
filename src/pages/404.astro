@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+const meta = { title: 'Page Not Found | Red Stag Construction', robots: { index: false, follow: true } };
+---
+
+<Base meta={meta}>
+  <section class="bg-warm-white px-6 py-28 text-center md:py-40">
+    <p class="text-xs font-bold uppercase tracking-[0.28em] text-accent-red">Error 404</p>
+    <h1 class="mt-4 font-serif text-4xl font-bold text-text-dark md:text-6xl">We could not find that page.</h1>
+    <p class="mx-auto mt-5 max-w-xl text-lg text-text-body">
+      The link may be old or mistyped. Start from the home page, or call us at
+      <a href="tel:3239224235" class="font-bold text-navy-deep">(323) 922-4235</a>.
+    </p>
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <a href="/" class="cta">Back to Home</a>
+      <a href="/search" class="cta cta-ghost text-text-dark">Search the Site</a>
+    </div>
+  </section>
+</Base>
