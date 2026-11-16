@@ -147,7 +147,7 @@ export const Navbar = () => {
             isScrolled ? 'h-[72px]' : 'h-24 md:h-28'
           }`}
         >
-          <Link href="/" className="flex items-center" onClick={closeMobileMenu}>
+          <Link href="/" className="flex shrink-0 items-center" onClick={closeMobileMenu}>
             <img
               src="/images/logo/logo-primary.png"
               alt="Red Stag Construction Corporation"
@@ -157,7 +157,7 @@ export const Navbar = () => {
             />
           </Link>
 
-          <nav className="hidden lg:flex items-center space-x-8 text-sm font-semibold tracking-wide">
+          <nav className="hidden xl:flex items-center space-x-6 whitespace-nowrap text-sm font-semibold tracking-wide 2xl:space-x-8">
             <Link href="/" className="hover:text-accent-red transition-colors">Home</Link>
 
             <div className="relative">
@@ -275,8 +275,8 @@ export const Navbar = () => {
           </nav>
 
           <div className="flex items-center space-x-4">
-            <SearchBox variant="header" className="hidden lg:block" />
-            <div className="hidden lg:flex flex-col items-end mr-4">
+            <SearchBox variant="header" className="hidden xl:block" />
+            <div className="hidden xl:flex flex-col items-end mr-4 whitespace-nowrap">
               <span className="text-xs text-gray-400">Call Us Anytime</span>
               <a href="tel:3239224235" className="font-bold text-accent-red hover:text-white transition-colors">(323) 922-4235</a>
             </div>
@@ -284,7 +284,7 @@ export const Navbar = () => {
               Get an Estimate
             </Button>
             <button
-              className="min-h-11 min-w-11 p-2 text-white lg:hidden"
+              className="min-h-11 min-w-11 p-2 text-white xl:hidden"
               onClick={() => setIsOpen((current) => !current)}
               aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={isOpen}
@@ -303,7 +303,7 @@ export const Navbar = () => {
 
       {isOpen && (
         <div
-          className={`fixed inset-0 z-40 bg-navy-deep lg:hidden ${
+          className={`fixed inset-0 z-40 bg-navy-deep xl:hidden ${
             isScrolled ? 'pt-[72px]' : 'pt-24'
           }`}
         >
