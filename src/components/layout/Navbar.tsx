@@ -37,6 +37,16 @@ const services = [
     description: 'Whole-home scopes managed under one licensed design-build team.'
   },
   {
+    name: 'Construction Management',
+    slug: '/construction-management-los-angeles',
+    description: 'Budgets, bids, permits, schedule, and daily site supervision.'
+  },
+  {
+    name: 'Development Services',
+    slug: '/real-estate-development-los-angeles',
+    description: 'Feasibility, entitlements, design team, and ground-up delivery.'
+  },
+  {
     name: 'Hardscaping',
     slug: '/hardscape-contractor-los-angeles',
     description: 'Driveways, retaining walls, patios, pool decks, and concrete.'

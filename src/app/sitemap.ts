@@ -28,6 +28,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     createEntry('/our-work', 0.5, 'monthly'),
     createEntry('/cost-guides', 0.6, 'monthly'),
     createEntry('/pricing', 0.6, 'monthly'),
+    createEntry('/construction-management-los-angeles', 0.9, 'weekly'),
+    createEntry('/real-estate-development-los-angeles', 0.9, 'weekly'),
     createEntry('/areas-we-serve', 0.5, 'monthly'),
     createEntry('/faq', 0.5, 'monthly'),
     createEntry('/our-process', 0.5, 'monthly'),

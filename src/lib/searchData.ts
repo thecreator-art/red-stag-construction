@@ -56,6 +56,12 @@ const staticPages: SearchDoc[] = [
   { title: 'Terms of Service', url: '/terms', type: 'Page', description: 'Terms governing use of the Red Stag Construction website.', keywords: 'terms legal conditions' },
 ];
 
+// Professional services with their own standalone pages.
+const proServiceDocs: SearchDoc[] = [
+  { title: 'Construction Management in Los Angeles, CA', url: '/construction-management-los-angeles', type: 'Service', description: 'Budgets, bids, permits, schedule and daily site supervision. Typical fees 5% to 15% of construction cost.', keywords: 'construction management manager owner rep cm fee service' },
+  { title: 'Real Estate Development Services in Los Angeles, CA', url: '/real-estate-development-los-angeles', type: 'Service', description: 'Feasibility, entitlements, design team, budget and construction for homes, ADUs, SB 9 and small lot projects.', keywords: 'development developer feasibility entitlements sb 9 lot split small lot investor service' },
+];
+
 // Cost guides are defined inline in the cost-guides route; mirror their slugs here.
 const costGuides: SearchDoc[] = [
   { slug: 'kitchen-remodel-cost-los-angeles', title: 'Kitchen Remodel Cost in Los Angeles (2026)' },
@@ -114,6 +120,7 @@ const blogDocs: SearchDoc[] = blogsData.map((b) => ({
 export const SEARCH_DOCS: SearchDoc[] = [
   ...staticPages,
   ...serviceDocs,
+  ...proServiceDocs,
   ...costGuides,
   ...matrixDocs,
   ...locationDocs,
