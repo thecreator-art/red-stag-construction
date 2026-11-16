@@ -280,7 +280,7 @@ export const Navbar = () => {
               <span className="text-xs text-gray-400">Call Us Anytime</span>
               <a href="tel:3239224235" className="font-bold text-accent-red hover:text-white transition-colors">(323) 922-4235</a>
             </div>
-            <Button href="/contact" variant="primary" className="hidden md:inline-flex">
+            <Button href="/contact" variant="primary" className="cta-sm hidden md:inline-flex">
               Get an Estimate
             </Button>
             <button
@@ -413,7 +413,7 @@ export const Navbar = () => {
               </a>
               <Link
                 href="/contact"
-                className="inline-flex w-full items-center justify-center bg-accent-red px-6 py-4 text-sm font-bold uppercase tracking-wider text-white transition-colors duration-300 hover:bg-red-800"
+                className="cta cta-block"
                 onClick={closeMobileMenu}
               >
                 Get an Estimate

@@ -98,7 +98,7 @@ export default function OurWorkPage() {
               href="https://www.instagram.com/redstagcc/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center justify-center bg-accent-red px-7 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-all duration-200 hover:brightness-110"
+              className="cta"
             >
               See More of Our Work on Instagram
             </a>
@@ -147,7 +147,7 @@ export default function OurWorkPage() {
           </a>
           <Link
             href="/contact"
-            className="mt-8 inline-flex min-h-11 items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-all duration-200 hover:brightness-110"
+            className="cta mt-8"
           >
             Start Your Estimate
           </Link>

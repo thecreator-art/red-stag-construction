@@ -32,7 +32,7 @@ export const TeamSection = () => {
         </div>
 
         <div className="mt-14 text-center md:mt-20">
-          <Link href="/contact" className="inline-block bg-accent-red px-10 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-all duration-300 hover:bg-[#B31217] hover:shadow-2xl hover:-translate-y-1 md:px-12 md:py-5 md:text-base md:tracking-[0.2em]">
+          <Link href="/contact" className="cta">
             Schedule a Consultation
           </Link>
         </div>

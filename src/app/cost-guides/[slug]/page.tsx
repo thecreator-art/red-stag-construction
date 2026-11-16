@@ -226,7 +226,7 @@ export default async function CostGuidePage({ params }: PageProps) {
           <div className="text-center bg-gray-50 border border-gray-200 p-12 rounded">
              <h3 className="text-3xl font-serif font-bold text-text-dark mb-4">Ready for an Exact Quote?</h3>
              <p className="text-lg text-text-body mb-8">Stop guessing based on online averages. Contact our design-build team for a detailed site evaluation and a firm proposal.</p>
-             <Link href="/contact" className="bg-accent-red text-white px-10 py-4 rounded hover:bg-[#990000] font-bold shadow-lg transition-colors inline-block text-lg">Schedule Your Free Estimate</Link>
+             <Link href="/contact" className="cta">Schedule Your Free Estimate</Link>
           </div>
 
         </div>

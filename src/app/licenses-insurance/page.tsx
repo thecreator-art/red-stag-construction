@@ -33,7 +33,7 @@ export default function Licenses() {
               href="https://www.cslb.ca.gov"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center justify-center rounded-sm bg-accent-red px-8 py-4 text-sm font-extrabold uppercase tracking-widest text-white transition-all duration-200 hover:scale-[1.02] hover:bg-[#990000]"
+              className="cta"
             >
               Verify License
             </a>

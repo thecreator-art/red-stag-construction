@@ -16,7 +16,7 @@ export const StickyMobileHeader = () => {
       </a>
 
       {/* Right: Pathing CTA Block */}
-      <Link href="/contact" className="inline-flex min-h-11 items-center rounded-sm bg-accent-red px-3 py-2 text-[10px] font-extrabold uppercase tracking-widest text-white whitespace-nowrap truncate">
+      <Link href="/contact" className="cta cta-sm">
         Get Estimate
       </Link>
       

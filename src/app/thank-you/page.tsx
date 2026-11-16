@@ -28,7 +28,7 @@ export default function ThankYou() {
       </div>
       
       <div className="flex flex-col sm:flex-row gap-6">
-        <Link href="/our-work" className="bg-accent-red text-white px-8 py-4 rounded hover:bg-[#990000] font-bold shadow-lg transition-colors">
+        <Link href="/our-work" className="cta">
           View Our Work
         </Link>
         <Link href="/about" className="bg-transparent border-2 border-white text-white px-8 py-4 rounded hover:bg-white hover:text-text-dark font-bold transition-colors">

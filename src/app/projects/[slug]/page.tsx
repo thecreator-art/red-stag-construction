@@ -201,7 +201,7 @@ export default async function ProjectPage({ params }: PageProps) {
           </a>
           <Link
             href="/contact"
-            className="mt-8 inline-flex min-h-11 items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-all duration-200 hover:brightness-110"
+            className="cta mt-8"
           >
             Get a Free Estimate
           </Link>

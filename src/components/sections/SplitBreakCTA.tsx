@@ -31,7 +31,7 @@ export const SplitBreakCTA = () => {
             (323) 922-4235
           </a>
 
-          <Link href="/contact" className="rounded-sm border border-accent-red/50 bg-accent-red px-10 py-4 text-sm font-extrabold uppercase tracking-widest text-white shadow-2xl transition-colors duration-300 hover:-translate-y-1 hover:bg-[#990000] hover:shadow-[0_0_25px_rgba(179,18,23,0.5)]">
+          <Link href="/contact" className="cta">
             Get a Free Estimate
           </Link>
         </div>

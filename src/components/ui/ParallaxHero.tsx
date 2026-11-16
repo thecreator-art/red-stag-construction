@@ -248,7 +248,7 @@ export const ParallaxHero = ({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="relative z-[1] h-12 min-w-[170px] rounded-sm bg-accent-red px-6 text-sm font-extrabold uppercase tracking-[0.14em] text-white transition-all duration-200 hover:scale-[1.02] hover:bg-[#990000] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="cta min-w-[170px]"
                 >
                   {isSubmitting ? 'Sending...' : 'Get Estimate'}
                 </button>

@@ -2368,7 +2368,7 @@ export default async function DynamicSlugPage({ params }: PageProps) {
                           </a>
                           <Link
                             href="/contact"
-                            className="mt-6 inline-flex items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90"
+                            className="cta mt-6"
                           >
                             Get a Free Estimate
                           </Link>
@@ -2578,7 +2578,7 @@ export default async function DynamicSlugPage({ params }: PageProps) {
             </a>
             <Link
               href="/contact"
-              className="mt-8 inline-flex items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90"
+              className="cta mt-8"
             >
               Get a Free Estimate
             </Link>
@@ -2728,7 +2728,7 @@ export default async function DynamicSlugPage({ params }: PageProps) {
             </a>
             <Link
               href="/contact"
-              className="mt-8 inline-flex items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90"
+              className="cta mt-8"
             >
               Get a Free Estimate
             </Link>
@@ -2846,7 +2846,7 @@ export default async function DynamicSlugPage({ params }: PageProps) {
             </a>
             <Link
               href="/contact"
-              className="mt-8 inline-flex items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90"
+              className="cta mt-8"
             >
               Get a Free Estimate
             </Link>
@@ -2978,7 +2978,7 @@ export default async function DynamicSlugPage({ params }: PageProps) {
             </a>
             <Link
               href="/contact"
-              className="mt-8 inline-flex items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90"
+              className="cta mt-8"
             >
               Get a Free Estimate
             </Link>
@@ -3124,7 +3124,7 @@ export default async function DynamicSlugPage({ params }: PageProps) {
             </a>
             <Link
               href="/contact"
-              className="mt-8 inline-flex items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90"
+              className="cta mt-8"
             >
               Get a Free Estimate
             </Link>
@@ -3240,7 +3240,7 @@ export default async function DynamicSlugPage({ params }: PageProps) {
             </a>
             <Link
               href="/contact"
-              className="mt-8 inline-flex items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90"
+              className="cta mt-8"
             >
               Get a Free Estimate
             </Link>

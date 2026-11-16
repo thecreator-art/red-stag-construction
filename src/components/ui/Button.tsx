@@ -15,14 +15,14 @@ export const Button: React.FC<ButtonProps> = ({
   className = '',
   ...props
 }) => {
-  const baseStyles = "relative z-[1] inline-flex min-h-11 cursor-pointer items-center justify-center px-6 py-3 text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:scale-[1.02] hover:brightness-110 active:scale-[0.99]";
+  const baseStyles = "cta";
   const variants = {
-    primary: "bg-accent-red text-white hover:bg-red-800",
-    secondary: "bg-navy-deep text-white hover:bg-navy-deep",
-    outline: "border-2 border-primary-dark text-text-dark hover:bg-navy-deep hover:text-white"
+    primary: "",
+    secondary: "cta-navy",
+    outline: "cta-ghost"
   };
   
-  const widthClass = fullWidth ? "w-full" : "w-auto";
+  const widthClass = fullWidth ? "cta-block" : "";
   const styles = `${baseStyles} ${variants[variant]} ${widthClass} ${className}`;
 
   if (href) {

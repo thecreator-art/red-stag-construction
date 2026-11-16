@@ -57,7 +57,7 @@ export default function OurProcess() {
           
           <div className="mt-24 text-center">
              <p className="text-xl font-bold text-text-dark mb-6">Experience the difference of a true design-build firm.</p>
-             <Link href="/contact" className="bg-accent-red text-white px-8 py-4 rounded shadow-md hover:bg-[#990000] font-bold transition-colors inline-block">Schedule a Site Visit</Link>
+             <Link href="/contact" className="cta">Schedule a Site Visit</Link>
           </div>
         </div>
       </section>

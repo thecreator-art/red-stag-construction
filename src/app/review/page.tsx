@@ -48,7 +48,7 @@ export default function ReviewPage() {
             href="https://www.google.com/maps?cid=1546060090964512284"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center bg-accent-red px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white hover:opacity-90"
+            className="cta"
           >
             Leave a Google Review &rarr;
           </a>

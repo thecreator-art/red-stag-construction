@@ -37,7 +37,7 @@ export const Footer = () => {
                   </a>
                   <Link
                     href="/contact"
-                    className="inline-flex min-h-11 items-center justify-center rounded-sm bg-accent-red px-6 py-3 text-sm font-bold uppercase tracking-[0.18em] text-white transition-all duration-200 hover:bg-[#990000] hover:brightness-110"
+                    className="cta"
                   >
                     Request Formal Estimate
                   </Link>

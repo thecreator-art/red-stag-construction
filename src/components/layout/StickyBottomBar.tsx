@@ -21,7 +21,7 @@ export const StickyBottomBar = () => {
       </a>
       <Link
         href="/contact"
-        className="mr-2 inline-flex min-h-11 items-center justify-center bg-accent-red px-5 py-3 font-sans text-xs font-bold uppercase tracking-wider text-white"
+        className="cta cta-sm mr-2"
       >
         Get Estimate
       </Link>

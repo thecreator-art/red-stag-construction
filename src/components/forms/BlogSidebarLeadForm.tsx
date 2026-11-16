@@ -89,7 +89,7 @@ export const BlogSidebarLeadForm = ({ source }: { source: string }) => {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-accent-red px-4 py-3 text-sm font-bold uppercase tracking-[0.16em] text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+        className="cta cta-block cta-sm"
       >
         {isSubmitting ? 'Sending...' : 'Send Message'}
       </button>
