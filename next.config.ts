@@ -13,6 +13,17 @@ const nextConfig: NextConfig = {
       { source: '/services/hardscaping', destination: '/hardscape-contractor-los-angeles', permanent: true },
     ];
   },
+  // One canonical host: www always lands on the bare domain.
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.redstagcc.com" }],
+        destination: "https://redstagcc.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
