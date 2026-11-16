@@ -116,6 +116,17 @@ function keepChatWidgetClearOfStickyBar() {
 }
 
 /* ------------------------------------------------------------------ */
+/* The italic headline face is only used below the fold: add it late.  */
+/* ------------------------------------------------------------------ */
+window.addEventListener('load', () => {
+  const css = document.documentElement.dataset.italicFont;
+  if (!css) return;
+  const style = document.createElement('style');
+  style.textContent = css;
+  document.head.appendChild(style);
+});
+
+/* ------------------------------------------------------------------ */
 /* Navigation                                                          */
 /* ------------------------------------------------------------------ */
 const nav = $<HTMLElement>('[data-nav]');

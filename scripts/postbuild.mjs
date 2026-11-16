@@ -16,7 +16,8 @@ const OUT = join(DIST, '_img');
 const CACHE = join(ROOT, 'node_modules', '.cache', 'site-img');
 const WIDTHS = [384, 640, 828, 1080, 1280, 1920];
 const QUALITY = 68;
-const HERO_QUALITY = 52; // hero photos sit under a dark overlay, so they can be lighter
+const HERO_QUALITY = 52;
+const HERO_AVIF_QUALITY = 42; // hero photos sit under a dark overlay, so they can be lighter
 const DEFAULT_SIZES = '(max-width: 768px) 100vw, 50vw';
 
 mkdirSync(OUT, { recursive: true });
@@ -30,8 +31,8 @@ const walk = (dir) =>
 /** src path -> { width, height, variants: [{ w, url }] } | null */
 const manifest = new Map();
 
-async function prepare(src, quality = QUALITY) {
-  const cacheKey = `${src}@${quality}`;
+async function prepare(src, quality = QUALITY, format = 'webp') {
+  const cacheKey = `${src}@${quality}@${format}`;
   if (manifest.has(cacheKey)) return manifest.get(cacheKey);
   const file = join(PUBLIC, decodeURIComponent(src));
   if (!/\.(jpe?g|png)$/i.test(src) || !existsSync(file)) {
@@ -40,7 +41,7 @@ async function prepare(src, quality = QUALITY) {
   }
 
   const stat = statSync(file);
-  const key = createHash('sha1').update(`${src}:${stat.size}:${stat.mtimeMs}:${quality}`).digest('hex').slice(0, 12);
+  const key = createHash('sha1').update(`${src}:${stat.size}:${stat.mtimeMs}:${quality}:${format}`).digest('hex').slice(0, 12);
   const base = src.replace(/^\/images\//, '').replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase();
 
   const metaFile = join(CACHE, `${key}.json`);
@@ -58,10 +59,11 @@ async function prepare(src, quality = QUALITY) {
 
   const variants = [];
   for (const w of unique) {
-    const name = `${base}-${key}-${w}.webp`;
+    const name = `${base}-${key}-${w}.${format}`;
     const cached = join(CACHE, name);
     if (!existsSync(cached)) {
-      await sharp(file).rotate().resize({ width: w, withoutEnlargement: true }).webp({ quality, effort: 5 }).toFile(cached);
+      const resized = sharp(file).rotate().resize({ width: w, withoutEnlargement: true });
+      await (format === 'avif' ? resized.avif({ quality, effort: 5 }) : resized.webp({ quality, effort: 5 })).toFile(cached);
     }
     copyFileSync(cached, join(OUT, name));
     variants.push({ w, url: `/_img/${name}` });
@@ -119,8 +121,15 @@ async function processHtml(file) {
         tag = setAttr(setAttr(tag, 'width', entry.width), 'height', entry.height);
       }
 
-      if (priority === 'true' && !preload) {
-        preload = `<link rel="preload" as="image" imagesrcset="${srcset}" imagesizes="${sizes}" fetchpriority="high">`;
+      if (priority === 'true') {
+        // Hero image: AVIF first (smaller), WebP as the fallback, and a typed
+        // preload that browsers without AVIF simply ignore.
+        const avif = await prepare(src, HERO_AVIF_QUALITY, 'avif');
+        const avifSrcset = avif.variants.map((v) => `${v.url} ${v.w}w`).join(', ');
+        if (!preload) {
+          preload = `<link rel="preload" as="image" type="image/avif" imagesrcset="${avifSrcset}" imagesizes="${sizes}" fetchpriority="high">`;
+        }
+        tag = `<picture><source type="image/avif" srcset="${avifSrcset}" sizes="${sizes}">${tag}</picture>`;
       }
     }
 
